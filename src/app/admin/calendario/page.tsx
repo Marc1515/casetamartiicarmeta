@@ -1,5 +1,6 @@
 import CalendarAdmin from "@/components/CalendarAdmin";
 import LogoutButton from "@/components/LogoutButton";
+import ReservaForm from "@/components/ReservaForm";
 
 export default function Page() {
   return (
@@ -8,7 +9,9 @@ export default function Page() {
         <h1 className="text-2xl font-bold">Calendario (admin)</h1>
         <LogoutButton />
       </div>
+
       <CalendarAdmin />
+      <ReservaForm />
     </main>
   );
 }

@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Calendar, dateFnsLocalizer, type SlotInfo } from "react-big-calendar";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 
 type ApiEvent = {
   id: string;
   title: string;
-  start: string; // viene como string desde la API
+  start: string;
   end: string;
   allDay?: boolean;
   notes?: string | null;
 };
 
-type Evt = {
+export type Evt = {
   id: string;
   title: string;
   start: Date;
@@ -46,7 +46,7 @@ export default function CalendarAdmin() {
         title: e.title,
         start: new Date(e.start),
         end: new Date(e.end),
-        allDay: e.allDay ?? true,
+        allDay: e.allDay ?? false,
         notes: e.notes ?? null,
       }))
     );
@@ -54,57 +54,32 @@ export default function CalendarAdmin() {
 
   useEffect(() => {
     void load();
+    const reload = () => void load();
+    window.addEventListener("admin:events:changed", reload);
+    return () => window.removeEventListener("admin:events:changed", reload);
   }, []);
 
-  async function create(ev: Omit<Evt, "id">) {
-    await fetch("/api/admin/events", {
-      method: "POST",
-      body: JSON.stringify(ev),
-    });
-    void load();
-  }
-  async function update(ev: Evt) {
-    await fetch(`/api/admin/events/${ev.id}`, {
-      method: "PUT",
-      body: JSON.stringify(ev),
-    });
-    void load();
-  }
-  async function remove(id: string) {
-    await fetch(`/api/admin/events/${id}`, { method: "DELETE" });
-    void load();
+  function openEdit(ev: Evt) {
+    window.dispatchEvent(new CustomEvent("admin:event:edit", { detail: ev }));
+    // Desplaza a la zona del formulario por comodidad
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   }
 
   return (
     <div style={{ height: 650 }}>
       <Calendar<Evt>
         culture="es"
-        selectable
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
         views={["month", "week", "day"]}
         defaultView="month"
-        onSelectSlot={(slot: SlotInfo) => {
-          const { start, end } = slot;
-          const title = window.prompt("Título de la reserva:", "Reserva");
-          if (!title) return;
-          void create({ title, start, end, allDay: true, notes: null });
-        }}
-        onSelectEvent={(ev: Evt) => {
-          const action = window.prompt(
-            `Editar título o escribe DELETE para borrar\nActual: ${ev.title}`,
-            ev.title
-          );
-          if (!action) return;
-          if (action.toUpperCase() === "DELETE") {
-            if (confirm("¿Seguro?")) void remove(ev.id);
-          } else {
-            void update({ ...ev, title: action });
-          }
-        }}
+        onSelectEvent={openEdit}
       />
+      <p className="mt-2 text-sm text-gray-600">
+        Haz clic en un evento para editarlo abajo.
+      </p>
     </div>
   );
 }

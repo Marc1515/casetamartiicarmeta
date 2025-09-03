@@ -21,15 +21,65 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const unauthorized = await requireAdmin(req);
   if (unauthorized) return unauthorized;
-  const body = await req.json();
+
+  const body = (await req.json()) as {
+    title?: string;
+    start?: string;
+    end?: string;
+    allDay?: boolean;
+    notes?: string | null;
+  };
+
+  if (!body.title?.trim()) {
+    return NextResponse.json({ error: "Título obligatorio" }, { status: 400 });
+  }
+  if (!body.start || !body.end) {
+    return NextResponse.json(
+      { error: "Inicio y fin son obligatorios" },
+      { status: 400 }
+    );
+  }
+
+  const start = new Date(body.start);
+  const end = new Date(body.end);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+    return NextResponse.json(
+      { error: "Fechas/horas inválidas" },
+      { status: 400 }
+    );
+  }
+  if (end <= start) {
+    return NextResponse.json(
+      { error: "Fin debe ser posterior a inicio" },
+      { status: 400 }
+    );
+  }
+
+  // Fin exclusivo: dos reservas que se tocan exactamente (end == start) NO solapan
+  const overlapping = await prisma.event.findFirst({
+    where: {
+      AND: [{ start: { lt: end } }, { end: { gt: start } }],
+    },
+  });
+  if (overlapping) {
+    return NextResponse.json(
+      {
+        error:
+          "Las fechas/horas seleccionadas solapan con una reserva existente.",
+      },
+      { status: 409 }
+    );
+  }
+
   const event = await prisma.event.create({
     data: {
-      title: body.title,
-      start: new Date(body.start),
-      end: new Date(body.end),
-      allDay: body.allDay ?? true,
+      title: body.title.trim(),
+      start,
+      end,
+      allDay: body.allDay ?? false, // ahora por defecto es con horas
       notes: body.notes ?? null,
     },
   });
+
   return NextResponse.json(event, { status: 201 });
 }

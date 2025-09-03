@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getToken } from "next-auth/jwt";
-import type { NextRequest } from "next/server";
 
 async function requireAdmin(req: NextRequest) {
   const token = await getToken({ req });
@@ -13,19 +13,28 @@ async function requireAdmin(req: NextRequest) {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  ctx: { params: Promise<{ id: string }> } // 👈 params es Promise
 ) {
   const unauthorized = await requireAdmin(req);
   if (unauthorized) return unauthorized;
-  const body = await req.json();
+
+  const { id } = await ctx.params; // 👈 await
+  const body = (await req.json()) as {
+    title?: string;
+    start?: string;
+    end?: string;
+    allDay?: boolean;
+    notes?: string | null;
+  };
+
   const updated = await prisma.event.update({
-    where: { id: params.id },
+    where: { id },
     data: {
-      title: body.title,
-      start: new Date(body.start),
-      end: new Date(body.end),
-      allDay: body.allDay ?? true,
-      notes: body.notes ?? null,
+      title: body.title ?? undefined,
+      start: body.start ? new Date(body.start) : undefined,
+      end: body.end ? new Date(body.end) : undefined,
+      allDay: body.allDay ?? undefined,
+      notes: body.notes ?? undefined,
     },
   });
   return NextResponse.json(updated);
@@ -33,10 +42,12 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  ctx: { params: Promise<{ id: string }> } // 👈 params es Promise
 ) {
   const unauthorized = await requireAdmin(req);
   if (unauthorized) return unauthorized;
-  await prisma.event.delete({ where: { id: params.id } });
+
+  const { id } = await ctx.params; // 👈 await
+  await prisma.event.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
