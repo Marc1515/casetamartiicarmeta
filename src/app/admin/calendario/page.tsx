@@ -1,6 +1,7 @@
 import CalendarAdmin from "@/components/CalendarAdmin";
 import LogoutButton from "@/components/LogoutButton";
 import ReservaForm from "@/components/ReservaForm";
+import EditReservaModal from "@/components/EditReservaModal";
 
 export default function Page() {
   return (
@@ -12,6 +13,7 @@ export default function Page() {
 
       <CalendarAdmin />
       <ReservaForm />
+      <EditReservaModal />
     </main>
   );
 }

@@ -17,7 +17,7 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime? // <-- faltaba este campo
+  emailVerified DateTime?
   image         String?
   role          Role      @default(VIEWER)
   createdAt     DateTime  @default(now())
@@ -25,20 +25,27 @@ model User {
 
   accounts Account[]
   sessions Session[]
-  events   Event[]   @relation("UserEvents")
+
+  // Relación 1:N con Event (lado "uno")
+  events Event[] @relation("UserEvents")
 }
 
 model Event {
-  id          String   @id @default(cuid())
-  title       String
-  start       DateTime
-  end         DateTime
-  allDay      Boolean  @default(true)
-  notes       String?
-  createdBy   User?    @relation("UserEvents", fields: [createdById], references: [id])
-  createdById String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  title     String
+  start     DateTime
+  end       DateTime
+  allDay    Boolean  @default(false)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Lado "muchos" de la relación (inverso de User.events)
+  createdBy   User?   @relation("UserEvents", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById String? // opcional para no romper migración con datos existentes
+
+  @@index([start, end])
+  @@index([createdById])
 }
 
 model Account {

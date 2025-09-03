@@ -22,6 +22,9 @@ export async function POST(req: NextRequest) {
   const unauthorized = await requireAdmin(req);
   if (unauthorized) return unauthorized;
 
+  const token = await getToken({ req });
+  const userId = token?.sub ?? null;
+
   const body = (await req.json()) as {
     title?: string;
     start?: string;
@@ -40,26 +43,26 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const start = new Date(body.start);
-  const end = new Date(body.end);
+  let start = new Date(body.start);
+  let end = new Date(body.end);
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
     return NextResponse.json(
       { error: "Fechas/horas inválidas" },
       { status: 400 }
     );
   }
-  if (end <= start) {
-    return NextResponse.json(
-      { error: "Fin debe ser posterior a inicio" },
-      { status: 400 }
-    );
-  }
 
-  // Fin exclusivo: dos reservas que se tocan exactamente (end == start) NO solapan
+  // clamp básico
+  const now = new Date();
+  if (start < now) start = now;
+  if (end <= start) end = new Date(start.getTime() + 30 * 60 * 1000);
+
+  // SOLAPE (end exclusivo): new.start < e.end AND new.end > e.start
   const overlapping = await prisma.event.findFirst({
     where: {
       AND: [{ start: { lt: end } }, { end: { gt: start } }],
     },
+    select: { id: true, title: true, start: true, end: true },
   });
   if (overlapping) {
     return NextResponse.json(
@@ -76,8 +79,10 @@ export async function POST(req: NextRequest) {
       title: body.title.trim(),
       start,
       end,
-      allDay: body.allDay ?? false, // ahora por defecto es con horas
+      allDay: body.allDay ?? false,
       notes: body.notes ?? null,
+      // nuevo:
+      createdById: userId ?? undefined,
     },
   });
 

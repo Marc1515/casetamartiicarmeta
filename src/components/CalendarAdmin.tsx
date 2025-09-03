@@ -60,9 +60,8 @@ export default function CalendarAdmin() {
   }, []);
 
   function openEdit(ev: Evt) {
+    // abriremos un modal que escucha este evento
     window.dispatchEvent(new CustomEvent("admin:event:edit", { detail: ev }));
-    // Desplaza a la zona del formulario por comodidad
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   }
 
   return (
