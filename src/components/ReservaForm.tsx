@@ -78,11 +78,22 @@ export default function ReservaForm() {
       }),
     });
     if (!res.ok) {
-      const j = await res.json().catch(() => ({}));
+      const j = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        overlapping?: { id?: string };
+      };
       if (res.status === 409) {
+        // dispara highlight en el calendario
+        if (j.overlapping?.id) {
+          window.dispatchEvent(
+            new CustomEvent("admin:event:highlight", {
+              detail: { id: j.overlapping.id! },
+            })
+          );
+        }
         setError("end", {
           type: "overlap",
-          message: j?.error ?? "Hay solape con otra reserva.",
+          message: j.error ?? "Las fechas solapan con otra reserva.",
         });
       } else {
         alert(j?.error ?? "No se pudo guardar.");

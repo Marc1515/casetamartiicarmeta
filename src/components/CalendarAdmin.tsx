@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
@@ -32,13 +32,14 @@ const localizer = dateFnsLocalizer({
 
 export default function CalendarAdmin() {
   const [events, setEvents] = useState<Evt[]>([]);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
   async function load() {
     const r = await fetch("/api/admin/events", { cache: "no-store" });
-    if (r.status === 401) {
-      window.location.href = "/login";
-      return;
-    }
+    if (!r.ok) return;
     const data: ApiEvent[] = await r.json();
     setEvents(
       data.map((e) => ({
@@ -56,12 +57,47 @@ export default function CalendarAdmin() {
     void load();
     const reload = () => void load();
     window.addEventListener("admin:events:changed", reload);
-    return () => window.removeEventListener("admin:events:changed", reload);
+
+    // ✅ Handler correcto: toma Event, castea dentro y NO devuelve nada
+    const onHighlight = (ev: CustomEvent<{ id: string }>) => {
+      const { id } = ev.detail;
+      setHighlightedId(id);
+
+      if (highlightTimeoutRef.current)
+        clearTimeout(highlightTimeoutRef.current);
+      highlightTimeoutRef.current = setTimeout(() => {
+        setHighlightedId((curr) => (curr === id ? null : curr));
+        highlightTimeoutRef.current = null;
+      }, 3000);
+    };
+
+    window.addEventListener("admin:event:highlight", onHighlight);
+
+    return () => {
+      window.removeEventListener("admin:event:highlight", onHighlight);
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+        highlightTimeoutRef.current = null;
+      }
+    };
   }, []);
 
+  // ✅ Faltaba esta función
   function openEdit(ev: Evt) {
-    // abriremos un modal que escucha este evento
     window.dispatchEvent(new CustomEvent("admin:event:edit", { detail: ev }));
+  }
+
+  function eventPropGetter(event: Evt) {
+    if (event.id === highlightedId) {
+      return {
+        style: {
+          outline: "3px solid #f59e0b",
+          backgroundColor: "#fff7ed",
+          boxShadow: "0 0 0 2px rgba(245,158,11,.25) inset",
+        },
+      };
+    }
+    return {};
   }
 
   return (
@@ -75,9 +111,10 @@ export default function CalendarAdmin() {
         views={["month", "week", "day"]}
         defaultView="month"
         onSelectEvent={openEdit}
+        eventPropGetter={eventPropGetter}
       />
       <p className="mt-2 text-sm text-gray-600">
-        Haz clic en un evento para editarlo abajo.
+        Haz clic en un evento para editarlo.
       </p>
     </div>
   );

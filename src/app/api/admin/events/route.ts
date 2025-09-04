@@ -1,22 +1,31 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getToken } from "next-auth/jwt";
-import type { NextRequest } from "next/server";
 
 async function requireAdmin(req: NextRequest) {
   const token = await getToken({ req });
-  if (!token || token.role !== "ADMIN") {
+  if (!token)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (token.role !== "ADMIN")
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   return null;
 }
 
 export async function GET(req: NextRequest) {
   const unauthorized = await requireAdmin(req);
   if (unauthorized) return unauthorized;
+
   const events = await prisma.event.findMany({ orderBy: { start: "asc" } });
   return NextResponse.json(events);
 }
+
+type EventBody = {
+  title?: string;
+  start?: string;
+  end?: string;
+  allDay?: boolean;
+  notes?: string | null;
+};
 
 export async function POST(req: NextRequest) {
   const unauthorized = await requireAdmin(req);
@@ -25,13 +34,12 @@ export async function POST(req: NextRequest) {
   const token = await getToken({ req });
   const userId = token?.sub ?? null;
 
-  const body = (await req.json()) as {
-    title?: string;
-    start?: string;
-    end?: string;
-    allDay?: boolean;
-    notes?: string | null;
-  };
+  let body: EventBody;
+  try {
+    body = (await req.json()) as EventBody;
+  } catch {
+    return NextResponse.json({ error: "JSON inválido" }, { status: 400 });
+  }
 
   if (!body.title?.trim()) {
     return NextResponse.json({ error: "Título obligatorio" }, { status: 400 });
@@ -52,16 +60,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // clamp básico
+  // Clamp cómodo en creación
   const now = new Date();
   if (start < now) start = now;
   if (end <= start) end = new Date(start.getTime() + 30 * 60 * 1000);
 
-  // SOLAPE (end exclusivo): new.start < e.end AND new.end > e.start
+  // Solape end-exclusivo
   const overlapping = await prisma.event.findFirst({
-    where: {
-      AND: [{ start: { lt: end } }, { end: { gt: start } }],
-    },
+    where: { AND: [{ start: { lt: end } }, { end: { gt: start } }] },
     select: { id: true, title: true, start: true, end: true },
   });
   if (overlapping) {
@@ -69,6 +75,7 @@ export async function POST(req: NextRequest) {
       {
         error:
           "Las fechas/horas seleccionadas solapan con una reserva existente.",
+        overlapping,
       },
       { status: 409 }
     );
@@ -81,7 +88,6 @@ export async function POST(req: NextRequest) {
       end,
       allDay: body.allDay ?? false,
       notes: body.notes ?? null,
-      // nuevo:
       createdById: userId ?? undefined,
     },
   });

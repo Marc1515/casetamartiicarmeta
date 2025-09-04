@@ -71,24 +71,24 @@ export default function EditReservaModal() {
 
   // Abre el modal al clicar un evento del calendario
   useEffect(() => {
-    const handler = (ev: Event) => {
-      const e = ev as CustomEvent<EditEventDetail>;
-      const s = e.detail.start < new Date() ? new Date() : e.detail.start;
-      const en = isAfter(e.detail.end, s) ? e.detail.end : addMinutes(s, 30);
+    const onEdit = (e: Event) => {
+      const ev = e as CustomEvent<EditEventDetail>;
+      const s = ev.detail.start < new Date() ? new Date() : ev.detail.start;
+      const en = isAfter(ev.detail.end, s) ? ev.detail.end : addMinutes(s, 30);
 
-      setEditingId(e.detail.id);
+      setEditingId(ev.detail.id);
       reset({
-        title: e.detail.title,
+        title: ev.detail.title,
         start: s,
         end: en,
-        notes: e.detail.notes ?? "",
+        notes: ev.detail.notes ?? "",
       });
 
       dialogRef.current?.showModal();
     };
 
-    window.addEventListener("admin:event:edit", handler);
-    return () => window.removeEventListener("admin:event:edit", handler);
+    window.addEventListener("admin:event:edit", onEdit);
+    return () => window.removeEventListener("admin:event:edit", onEdit);
   }, [reset]);
 
   function close() {
@@ -115,14 +115,24 @@ export default function EditReservaModal() {
       }),
     });
     if (!res.ok) {
-      const j = await res.json().catch(() => ({}));
+      const j = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        overlapping?: { id?: string };
+      };
       if (res.status === 409) {
+        if (j.overlapping?.id) {
+          window.dispatchEvent(
+            new CustomEvent("admin:event:highlight", {
+              detail: { id: j.overlapping.id! },
+            })
+          );
+        }
         setError("end", {
           type: "overlap",
-          message: j?.error ?? "Hay solape con otra reserva.",
+          message: j.error ?? "Las fechas solapan con otra reserva.",
         });
       } else {
-        alert((j as { error?: string }).error ?? "No se pudo guardar.");
+        alert(j?.error ?? "No se pudo guardar.");
       }
       return;
     }
