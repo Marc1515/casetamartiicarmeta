@@ -1,7 +1,5 @@
 @import "tailwindcss";
-/* …tu CSS después… */
 
-/* === Tokens de color usados por shadcn === */
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
@@ -48,10 +46,19 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  /* Usa CSS directo con tus tokens en vez de @apply */
+  *,
+  ::before,
+  ::after {
+    border-color: hsl(var(--border));
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
+}
+
+/* si usas backdrop del modal nativo en alguna parte: */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
 }
