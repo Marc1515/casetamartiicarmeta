@@ -1,13 +1,16 @@
-import CalendarPublic from "@/components/CalendarPublic";
+// src/app/page.tsx
+import HomeSection from "@/components/public/HomeSection";
+import CalendarSection from "@/components/public/CalendarSection";
+import GallerySection from "@/components/public/GallerySection";
+import ContactSection from "@/components/public/ContactSection";
 
 export default function Home() {
   return (
-    <main className="container mx-auto p-6 space-y-8">
-      <section>
-        <h1 className="text-3xl font-bold">Caseta Martí i Carmeta</h1>
-        <p>Disponibilidad del alojamiento:</p>
-      </section>
-      <CalendarPublic />
+    <main className="w-full">
+      <HomeSection />
+      <CalendarSection />
+      <GallerySection />
+      <ContactSection />
     </main>
   );
 }
