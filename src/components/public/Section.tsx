@@ -19,7 +19,9 @@ export default function Section({
   return (
     <section
       id={id}
-      className={`w-full min-h-screen py-16 md:py-24 ${className ?? ""}`}
+      className={`w-full scroll-mt-20 min-h-screen py-16 md:py-24 ${
+        className ?? ""
+      }`}
     >
       <div
         className={`mx-auto w-full max-w-5xl px-4 ${
