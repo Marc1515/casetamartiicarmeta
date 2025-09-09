@@ -185,7 +185,7 @@ export default function Navbar() {
             onClick={goto("home")}
             className="text-white font-semibold"
           >
-            Caseta Martí i Carmeta
+            {/* Caseta Martí i Carmeta */}
           </Link>
 
           {/* DESKTOP: píldora + bubble */}
