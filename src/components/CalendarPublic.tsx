@@ -1,7 +1,14 @@
+// src/components/CalendarPublic.tsx
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import { format, parse, startOfWeek, getDay } from "date-fns";
+import {
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  eachDayOfInterval,
+} from "date-fns";
 import { es } from "date-fns/locale";
 
 type ApiEvent = {
@@ -29,9 +36,10 @@ const localizer = dateFnsLocalizer({
 
 export default function CalendarPublic() {
   const [events, setEvents] = useState<Evt[]>([]);
+
   useEffect(() => {
     (async () => {
-      const res = await fetch("/api/public/events");
+      const res = await fetch("/api/public/events", { cache: "no-store" });
       const data: ApiEvent[] = await res.json();
       setEvents(
         data.map((e) => ({
@@ -45,8 +53,30 @@ export default function CalendarPublic() {
     })();
   }, []);
 
+  // Precalcula un Set con todos los días ocupados (yyyy-MM-dd)
+  const busyDays = useMemo(() => {
+    const s = new Set<string>();
+    for (const ev of events) {
+      // evitamos incluir el día "end" si termina justo a medianoche del día siguiente
+      const endMinus = new Date(ev.end.getTime() - 1);
+      for (const d of eachDayOfInterval({ start: ev.start, end: endMinus })) {
+        s.add(format(d, "yyyy-MM-dd"));
+      }
+    }
+    return s;
+  }, [events]);
+
+  // Marca las celdas del mes que están ocupadas
+  function dayPropGetter(date: Date) {
+    const key = format(date, "yyyy-MM-dd");
+    if (busyDays.has(key)) {
+      return { className: "is-busy-day" };
+    }
+    return {};
+  }
+
   return (
-    <div style={{ height: 600 }}>
+    <div className="public-calendar" style={{ height: 600 }}>
       <Calendar<Evt>
         culture="es"
         localizer={localizer}
@@ -56,6 +86,7 @@ export default function CalendarPublic() {
         views={["month"]}
         defaultView="month"
         toolbar
+        dayPropGetter={dayPropGetter}
         messages={{
           month: "Mes",
           week: "Semana",
