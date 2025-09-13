@@ -41,27 +41,6 @@ export default function Navbar() {
   const spyLockedRef = useRef(false);
   const unlockTimerRef = useRef<number | null>(null);
 
-  // libera bloqueo cuando la sección objetivo ya está bajo la línea de referencia
-  const unlockWhenReached = (target: HTMLElement) => {
-    const NAV_H = window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
-    const probeY = NAV_H + Math.min(window.innerHeight * 0.25, 200);
-
-    const check = () => {
-      if (!spyLockedRef.current) return; // ya liberado
-      const r = target.getBoundingClientRect();
-      if (r.top <= probeY && r.bottom >= probeY) {
-        spyLockedRef.current = false;
-        if (unlockTimerRef.current) {
-          clearTimeout(unlockTimerRef.current);
-          unlockTimerRef.current = null;
-        }
-        return;
-      }
-      requestAnimationFrame(check);
-    };
-    requestAnimationFrame(check);
-  };
-
   useEffect(() => {
     sectionElsRef.current = TABS.map((t) =>
       document.getElementById(t.id)
@@ -84,13 +63,6 @@ export default function Navbar() {
         setActive(containing.id);
         return;
       }
-      const nearest = sections
-        .map((el) => {
-          const r = el.getBoundingClientRect();
-          return { id: el.id, d: Math.abs(r.top - probeY) };
-        })
-        .sort((a, b) => a.d - b.d)[0];
-      if (nearest?.id) setActive(nearest.id);
     };
 
     const onScrollOrResize = () => {
@@ -162,7 +134,6 @@ export default function Navbar() {
       unlockTimerRef.current = null;
     }, 1200); // “paraguas” si el scroll es largo
 
-    unlockWhenReached(el); // libera antes si ya llegó
     el.scrollIntoView({ behavior: "smooth", block: "start" });
 
     if (history.replaceState) history.replaceState(null, "", `#${id}`);
@@ -189,7 +160,7 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP: píldora + bubble */}
-          <div className="relative hidden md:flex items-center gap-1 rounded-full bg-white/10 p-1 ring-1 ring-white/15 backdrop-blur-md">
+          <div className="relative hidden md:flex items-center gap-1">
             {TABS.map((t) => {
               const isActive = active === t.id;
               return (
@@ -197,8 +168,9 @@ export default function Navbar() {
                   key={t.id}
                   href={`#${t.id}`}
                   onClick={goto(t.id)}
-                  aria-current={isActive ? "page" : undefined}
-                  className="relative rounded-full px-3 py-1.5 text-sm font-medium text-white/90 hover:text-white transition-colors"
+                  className={`relative rounded-full px-3 py-1.5 text-sm font-medium ${
+                    isActive ? "text-black" : "text-white/90 hover:text-white"
+                  } transition-colors`}
                   style={{ WebkitTapHighlightColor: "transparent" }}
                 >
                   {isActive && (

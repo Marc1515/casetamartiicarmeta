@@ -55,38 +55,30 @@ export default function HomeSection() {
     >
       {/* 👇 Wrapper que DEFINE el límite del sticky */}
       <div className="relative min-h-[100svh]">
-        {/* Espaciador superior: cuándo empieza a pegarse */}
-        <div className="h-[0vh] md:h-[0vh]" aria-hidden />
-
-        {/* Bloque que se pega bajo la navbar (64px/80px) */}
+        {/* Bloque que se pega bajo la navbar */}
         <div className="sticky top-16 md:top-20 py-4">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-              Caseta Martí i Carmeta
-            </h1>
-            <p className="mt-3 text-white/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
-              Alojamiento acogedor para escapadas cerca del mar y la naturaleza.
-            </p>
+          <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+            Caseta Martí i Carmeta
+          </h1>
+          <p className="mt-3 text-white/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+            Alojamiento acogedor para escapadas cerca del mar y la naturaleza.
+          </p>
 
-            <div className="mt-6 flex gap-3">
-              <a
-                href="#calendario"
-                className="rounded-md bg-white/90 px-5 py-3 font-medium text-slate-900 hover:bg-white"
-              >
-                Ver disponibilidad
-              </a>
-              <a
-                href="#fotos"
-                className="rounded-md border border-white/70 bg-white/10 px-5 py-3 font-medium text-white hover:bg-white/15"
-              >
-                Ver fotos
-              </a>
-            </div>
+          <div className="mt-6 flex gap-3">
+            <a
+              href="#calendario"
+              className="rounded-md bg-white/90 px-5 py-3 font-medium text-slate-900 hover:bg-white"
+            >
+              Ver disponibilidad
+            </a>
+            <a
+              href="#fotos"
+              className="rounded-md border border-white/70 bg-white/10 px-5 py-3 font-medium text-white hover:bg-white/15"
+            >
+              Ver fotos
+            </a>
           </div>
         </div>
-
-        {/* Espaciador inferior: controla cuándo se “despega” */}
-        <div className="h-[24vh]" aria-hidden />
       </div>
     </Section>
   );
