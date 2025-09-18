@@ -155,7 +155,7 @@ dialog::backdrop {
 
 /* WATERMARK diagonal */
 .public-calendar .rbc-month-view .is-busy-day::before {
-  content: "OCUPADO"; /* cámbialo a "ocupado" si lo prefieres en minúsculas */
+  content: "RESERVADO"; /* cámbialo a "ocupado" si lo prefieres en minúsculas */
   position: absolute;
   inset: 0;
   display: grid;
