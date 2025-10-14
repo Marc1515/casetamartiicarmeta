@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Navbar from "@/components/public/Navbar";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+export const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
 });
 
 export const metadata: Metadata = {
@@ -22,9 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
         <Navbar />
         {children}
       </body>

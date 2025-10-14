@@ -29,22 +29,33 @@ export default function Section({
       id={id}
       ref={sectionRef}
       className={`relative w-full scroll-mt-20 min-h-screen ${
-        noPadding ? "" : "py-16 md:py-24"
+        noPadding ? "" : "pt-48"
       } ${className ?? ""}`}
     >
       {bg ? <div className="absolute inset-0 -z-10">{bg}</div> : null}
 
       <div
-        className={`mx-auto w-full max-w-5xl px-4 ${
+        className={`mx-auto w-full max-w-7xl px-4 ${
           center ? "flex flex-col justify-center" : ""
         }`}
       >
         {title && (
-          <h2 className="mb-2 text-3xl font-semibold tracking-tight">
+          <h2 className="mb-2 pb-24 text-4xl md:text-7xl font-semibold tracking-tight">
             {title}
           </h2>
         )}
-        {lead && <p className="mb-6 text-muted-foreground">{lead}</p>}
+        {lead && (
+          <p
+            className="
+              mb-18 text-muted-foreground
+              pl-4 md:pl-6
+              border-l-4 border-primary/60
+              [text-wrap:pretty] max-w-prose
+            "
+          >
+            {lead}
+          </p>
+        )}
         {children}
       </div>
     </section>

@@ -82,7 +82,11 @@ export default function GallerySection() {
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
 
   return (
-    <Section id="fotos" title="Galería">
+    <Section
+      id="fotos"
+      title="Galería"
+      lead="Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. Navega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto."
+    >
       {/* Mosaico principal */}
       <div className="grid gap-3 md:grid-cols-2 md:grid-rows-3 md:aspect-[16/9]">
         {/* Izquierda grande */}
