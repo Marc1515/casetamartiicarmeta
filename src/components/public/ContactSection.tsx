@@ -1,4 +1,7 @@
 import Section from "./Section";
+import { Icon } from "@iconify/react";
+import { Phone, Mail } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 // Coordenadas de la caseta (ejemplo). Cambia por las reales.
@@ -17,6 +20,13 @@ export default function ContactSection() {
   const whatsapp =
     "https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20la%20caseta";
 
+  // arriba del componente, puedes preparar la URL:
+  const subject = "Reserva caseta";
+  const body = "Hola, me interesa la caseta. Fechas: ____  Personas: ____";
+  const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    email
+  )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
   return (
     <Section
       id="contacto"
@@ -27,25 +37,64 @@ export default function ContactSection() {
       <div className="grid gap-6 md:grid-cols-2">
         {/* Datos de contacto */}
         <div className="space-y-1">
-          <p>
-            <span className="font-medium">Teléfono:</span> {phone}
+          <p className="flex items-center gap-2">
+            <Phone className="h-5 w-5 text-muted-foreground" aria-hidden />
+            <a
+              href={`tel:${phone.replace(/\s+/g, "")}`}
+              className="hover:underline underline-offset-2"
+            >
+              {phone}
+            </a>
           </p>
-          <p>
-            <span className="font-medium">Email:</span> {email}
+
+          <p className="flex items-center gap-2">
+            <Mail className="h-5 w-5 text-muted-foreground" aria-hidden />
+            <a
+              href={`mailto:${email}`}
+              className="hover:underline underline-offset-2"
+            >
+              {email}
+            </a>
           </p>
+
           <p className="text-muted-foreground">
             Indica fechas y número de personas, te responderemos pronto.
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Button asChild>
-              <a href={`mailto:${email}`}>Escribir email</a>
-            </Button>
-            <Button asChild variant="secondary">
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                WhatsApp
+          <div className="mt-3 flex flex-wrap gap-6">
+            <Button
+              asChild
+              size="icon"
+              className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+              title="Escribir email"
+              aria-label="Escribir email"
+            >
+              <a href={gmailCompose} target="_blank" rel="noopener noreferrer">
+                <Icon icon="logos:google-gmail" />
+                <span className="sr-only">Escribir email</span>
               </a>
             </Button>
-            <Button asChild variant="outline">
+
+            <Button
+              asChild
+              size="icon"
+              variant="secondary"
+              className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+              title="WhatsApp"
+              aria-label="WhatsApp"
+            >
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer">
+                <Icon icon="logos:whatsapp-icon" />
+                <span className="sr-only">WhatsApp</span>
+              </a>
+            </Button>
+
+            {/* Cómo llegar (texto) */}
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full"
+              title="Cómo llegar"
+            >
               <a
                 href={directionsHref}
                 target="_blank"
