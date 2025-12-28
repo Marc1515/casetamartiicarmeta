@@ -27,10 +27,32 @@ export default function Navbar() {
 
   // Fondo sólido al hacer scroll
   useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)"); // md
+
     const onScroll = () => setScrolled(window.scrollY > 10);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const apply = () => {
+      if (mq.matches) {
+        // desktop/tablet
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      } else {
+        // mobile: no scroll effect
+        setScrolled(false);
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+
+    apply();
+
+    // si se redimensiona, recalcula
+    const onChange = () => apply();
+    mq.addEventListener("change", onChange);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      mq.removeEventListener("change", onChange);
+    };
   }, []);
 
   // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
@@ -146,7 +168,7 @@ export default function Navbar() {
           "pointer-events-none absolute inset-0 -z-10 transition-colors",
           scrolled
             ? "bg-black/65"
-            : "bg-gradient-to-b from-black/60 to-transparent"
+            : "md:bg-gradient-to-b from-black/60 to-transparent"
         )}
       />
       <div className="mx-auto max-w-5xl px-4">
