@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Navbar from "@/components/public/Navbar";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -27,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
-        <Navbar />
         {children}
       </body>
     </html>
