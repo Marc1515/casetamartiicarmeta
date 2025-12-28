@@ -28,8 +28,8 @@ export default function Section({
     <section
       id={id}
       ref={sectionRef}
-      className={`relative w-full scroll-mt-20 min-h-screen ${
-        noPadding ? "" : "pt-48"
+      className={`relative w-full min-h-screen ${
+        noPadding ? "" : "pt-24 md:pt-48"
       } ${className ?? ""}`}
     >
       {bg ? <div className="absolute inset-0 -z-10">{bg}</div> : null}
