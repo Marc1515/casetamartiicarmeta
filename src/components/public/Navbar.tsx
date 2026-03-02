@@ -77,10 +77,11 @@ export default function Navbar() {
 
   useEffect(() => {
     sectionElsRef.current = TABS.map((t) =>
-      document.getElementById(t.id)
+      document.getElementById(t.id),
     ).filter(Boolean) as HTMLElement[];
 
-    const NAV_H = !isTouch && window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
+    const NAV_H =
+      !isTouch && window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
 
     const computeActive = () => {
       if (spyLockedRef.current) return; // 🔒 no re-calcular mientras hay scroll por click
@@ -182,14 +183,14 @@ export default function Navbar() {
             ? "bg-black/65"
             : isTouch
               ? "bg-transparent"
-              : "bg-gradient-to-b from-black/60 to-transparent"
+              : "bg-gradient-to-b from-black/60 to-transparent",
         )}
       />
       <div className="mx-auto max-w-5xl px-4">
         <nav
           className={cx(
             "flex items-center justify-between",
-            isTouch ? "h-16" : "h-20"
+            isTouch ? "h-16" : "h-20",
           )}
         >
           <Link
@@ -204,7 +205,7 @@ export default function Navbar() {
           <div
             className={cx(
               "relative items-center gap-1",
-              isTouch ? "hidden" : "flex"
+              isTouch ? "hidden" : "flex",
             )}
           >
             {TABS.map((t) => {
@@ -298,7 +299,7 @@ export default function Navbar() {
                       "relative text-white/90 text-2xl font-semibold px-3 py-1 transition-colors",
                       isActive ? "text-white" : "hover:text-white",
                       "after:absolute after:left-1/2 after:-bottom-2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:bg-white after:transition-[width] after:duration-300",
-                      isActive ? "after:w-1/2" : "hover:after:w-1/2"
+                      isActive ? "after:w-1/2" : "hover:after:w-1/2",
                     )}
                   >
                     {t.label}

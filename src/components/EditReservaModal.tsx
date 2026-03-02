@@ -121,7 +121,7 @@ export default function EditReservaModal() {
           window.dispatchEvent(
             new CustomEvent("admin:event:highlight", {
               detail: { id: j.overlapping.id! },
-            })
+            }),
           );
         }
         setError("end", {

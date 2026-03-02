@@ -88,7 +88,7 @@ export default function ReservaForm() {
           window.dispatchEvent(
             new CustomEvent("admin:event:highlight", {
               detail: { id: j.overlapping.id! },
-            })
+            }),
           );
         }
         setError("end", {
