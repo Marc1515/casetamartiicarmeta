@@ -76,7 +76,7 @@ export default function CalendarPublic() {
   }
 
   return (
-    <div className="public-calendar" style={{ height: 600 }}>
+    <div className="public-calendar h-[320px] sm:h-[520px] lg:h-[600px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
       <Calendar<Evt>
         culture="es"
         localizer={localizer}

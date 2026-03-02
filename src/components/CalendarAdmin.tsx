@@ -98,10 +98,10 @@ const ToolbarComp = (props: ToolbarProps<Evt>) => {
             {v === "month"
               ? "Mes"
               : v === "week"
-              ? "Semana"
-              : v === "day"
-              ? "Día"
-              : v}
+                ? "Semana"
+                : v === "day"
+                  ? "Día"
+                  : v}
           </Button>
         ))}
       </div>
@@ -113,7 +113,7 @@ export default function CalendarAdmin() {
   const [events, setEvents] = useState<Evt[]>([]);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
+    null,
   );
 
   async function load() {
@@ -128,7 +128,7 @@ export default function CalendarAdmin() {
         end: new Date(e.end),
         allDay: e.allDay ?? false,
         notes: e.notes ?? null,
-      }))
+      })),
     );
   }
 
@@ -170,7 +170,7 @@ export default function CalendarAdmin() {
     event: Evt,
     _start?: Date,
     _end?: Date,
-    isSelected?: boolean
+    isSelected?: boolean,
   ) {
     // 🎯 override de highlight (tuyo)
     if (event.id === highlightedId) {
@@ -214,7 +214,7 @@ export default function CalendarAdmin() {
   }
 
   return (
-    <div style={{ height: 650 }}>
+    <div className="admin-calendar h-[320px] sm:h-[600px] lg:h-[650px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
       <Calendar<Evt>
         culture="es"
         localizer={localizer}
@@ -243,7 +243,7 @@ export default function CalendarAdmin() {
           showMore: (total) => `+${total} más`,
         }}
       />
-      <p className="mt-2 text-sm text-gray-600">
+      <p className="mt-2 text-sm text-gray-600 [@media(max-height:500px)]:hidden">
         Haz clic en un evento para editarlo.
       </p>
     </div>

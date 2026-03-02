@@ -5,14 +5,14 @@ import EditReservaModal from "@/components/EditReservaModal";
 
 export default function Page() {
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-slate-50 py-8">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 lg:px-8">
-        <header className="flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-center sm:justify-between">
+    <main className="min-h-[calc(100vh-4rem)] bg-slate-50 py-4 sm:py-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-6 px-4 lg:px-8">
+        <header className="flex flex-col gap-2 sm:gap-3 border-b pb-3 sm:pb-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
               Panel de reservas
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-slate-600 [@media(max-height:500px)]:hidden">
               Gestiona el calendario y las reservas de la caseta desde esta
               vista.
             </p>
