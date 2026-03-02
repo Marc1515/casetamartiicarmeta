@@ -20,26 +20,38 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>(TABS[0].id);
+  // En móviles (pantallas táctiles) mantenemos SIEMPRE el modo burger,
+  // incluso en horizontal, para no depender del ancho del viewport.
+  const [isTouch, setIsTouch] = useState(true);
 
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    const apply = () => setIsTouch(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   // Fondo sólido al hacer scroll
   useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
     const mq = window.matchMedia("(min-width: 768px)"); // md
 
-    const onScroll = () => setScrolled(window.scrollY > 10);
-
     const apply = () => {
-      if (mq.matches) {
+      // evita duplicar listeners
+      window.removeEventListener("scroll", onScroll);
+
+      if (!isTouch && mq.matches) {
         // desktop/tablet
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
       } else {
         // mobile: no scroll effect
         setScrolled(false);
-        window.removeEventListener("scroll", onScroll);
       }
     };
 
@@ -53,7 +65,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", onScroll);
       mq.removeEventListener("change", onChange);
     };
-  }, []);
+  }, [isTouch]);
 
   // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
   const sectionElsRef = useRef<HTMLElement[]>([]);
@@ -68,7 +80,7 @@ export default function Navbar() {
       document.getElementById(t.id)
     ).filter(Boolean) as HTMLElement[];
 
-    const NAV_H = window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
+    const NAV_H = !isTouch && window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
 
     const computeActive = () => {
       if (spyLockedRef.current) return; // 🔒 no re-calcular mientras hay scroll por click
@@ -105,7 +117,7 @@ export default function Navbar() {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current);
     };
-  }, []);
+  }, [isTouch]);
 
   // Bloquear scroll + accesibilidad del menú móvil
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -168,11 +180,18 @@ export default function Navbar() {
           "pointer-events-none absolute inset-0 -z-10 transition-colors",
           scrolled
             ? "bg-black/65"
-            : "md:bg-gradient-to-b from-black/60 to-transparent"
+            : isTouch
+              ? "bg-transparent"
+              : "bg-gradient-to-b from-black/60 to-transparent"
         )}
       />
       <div className="mx-auto max-w-5xl px-4">
-        <nav className="flex h-16 md:h-20 items-center justify-between">
+        <nav
+          className={cx(
+            "flex items-center justify-between",
+            isTouch ? "h-16" : "h-20"
+          )}
+        >
           <Link
             href="#home"
             onClick={goto("home")}
@@ -182,7 +201,12 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP: píldora + bubble */}
-          <div className="relative hidden md:flex items-center gap-1">
+          <div
+            className={cx(
+              "relative items-center gap-1",
+              isTouch ? "hidden" : "flex"
+            )}
+          >
             {TABS.map((t) => {
               const isActive = active === t.id;
               return (
@@ -215,7 +239,7 @@ export default function Navbar() {
           {/* BURGER (móvil) */}
           <button
             aria-label="Abrir menú"
-            className="md:hidden text-white"
+            className={cx("text-white", isTouch ? "" : "hidden")}
             onClick={() => setOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -225,10 +249,10 @@ export default function Navbar() {
 
       {/* MENÚ MÓVIL FULL-SCREEN */}
       <AnimatePresence>
-        {open && (
+        {open && isTouch && (
           <motion.div
             key="overlay"
-            className="fixed inset-0 z-[60] md:hidden"
+            className="fixed inset-0 z-[60]"
             role="dialog"
             aria-modal="true"
             aria-label="Menú de navegación"
