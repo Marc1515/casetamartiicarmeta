@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Navbar from "@/components/public/Navbar";
+import Footer from "@/components/public/Footer";
 
 export const metadata: Metadata = {
   title: "Caseta Martí i Carmeta",
@@ -16,6 +17,7 @@ export default function SiteLayout({
     <>
       <Navbar />
       {children}
+      <Footer />
     </>
   );
 }

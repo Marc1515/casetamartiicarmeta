@@ -4,7 +4,7 @@
 import Section from "./Section";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 const IMAGES = [
   "/img/house.jpg",
@@ -153,6 +153,9 @@ export default function GallerySection() {
       {/* Modal con carrusel */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-5xl bg-background p-0 overflow-hidden">
+          <DialogTitle className="sr-only">{`Galería - Foto ${
+            index + 1
+          } de ${IMAGES.length}`}</DialogTitle>
           <div className="relative">
             {/* Imagen grande */}
             <Image
