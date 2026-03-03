@@ -15,16 +15,16 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT
 const embedSrc = `https://www.google.com/maps?q=${LAT},${LNG}&hl=es&z=15&output=embed`;
 
 export default function ContactSection() {
-  const email = "alquiler@casetamartiicarmeta.es";
-  const phone = "+34 600 000 000";
+  const email = "pajuanf@gmail.com";
+  const phone = "+34 652 75 92 94";
   const whatsapp =
-    "https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20la%20caseta";
+    "https://wa.me/34652759294?text=Hola%2C%20me%20interesa%20la%20caseta";
 
   // arriba del componente, puedes preparar la URL:
   const subject = "Reserva caseta";
   const body = "Hola, me interesa la caseta. Fechas: ____  Personas: ____";
   const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-    email
+    email,
   )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   return (
