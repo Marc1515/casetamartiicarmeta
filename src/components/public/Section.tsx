@@ -29,7 +29,7 @@ export default function Section({
       id={id}
       ref={sectionRef}
       className={`relative w-full min-h-screen ${
-        noPadding ? "" : "pt-24 md:pt-48"
+        noPadding ? "" : "pt-20 md:pt-32 pb-16"
       } ${className ?? ""}`}
     >
       {bg ? <div className="absolute inset-0 -z-10">{bg}</div> : null}
@@ -40,18 +40,13 @@ export default function Section({
         }`}
       >
         {title && (
-          <h2 className="mb-2 pb-24 text-4xl md:text-7xl font-semibold tracking-tight">
+          <h2 className="text-4xl md:text-7xl font-semibold tracking-tight mb-8">
             {title}
           </h2>
         )}
         {lead && (
           <p
-            className="
-              mb-18 text-muted-foreground
-              pl-4 md:pl-6
-              border-l-4 border-primary/60
-              [text-wrap:pretty] max-w-prose
-            "
+            className="mt-4 mb-14 text-muted-foreground pl-4 md:pl-6 border-l-4 border-[#FEBA17] [text-wrap:pretty] max-w-prose"
           >
             {lead}
           </p>
