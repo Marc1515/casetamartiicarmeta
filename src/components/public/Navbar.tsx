@@ -240,7 +240,7 @@ export default function Navbar() {
           {/* BURGER (móvil) */}
           <button
             aria-label="Abrir menú"
-            className={cx("text-white", isTouch ? "" : "hidden")}
+            className={cx("text-[#4E1F00]", isTouch ? "" : "hidden")}
             onClick={() => setOpen(true)}
           >
             <Menu className="h-6 w-6" />

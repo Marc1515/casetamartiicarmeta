@@ -57,10 +57,10 @@ export default function HomeSection() {
       <div className="relative min-h-[100svh]">
         {/* Bloque que se pega bajo la navbar */}
         <div className="sticky top-16 md:top-20 py-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+          <h1 className="text-4xl md:text-6xl font-bold text-[#F8F4E1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
             Caseta Martí i Carmeta
           </h1>
-          <p className="mt-3 text-white/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+          <p className="mt-3 text-[#F8F4E1] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
             Alojamiento acogedor para escapadas cerca del mar y la naturaleza.
           </p>
 
