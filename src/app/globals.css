@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  /* Colores base personalizados para la web pública */
+  /* Fondo general: #F8F4E1 ≈ hsl(50 62% 93%) */
+  --background: 50 62% 93%;
+  /* Tipografía principal: #4E1F00 ≈ hsl(24 100% 15%) */
+  --foreground: 24 100% 15%;
   --card: 0 0% 100%;
   --card-foreground: 240 10% 3.9%;
   --popover: 0 0% 100%;
