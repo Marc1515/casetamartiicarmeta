@@ -107,13 +107,13 @@ export default function GallerySection() {
           </button>
         )}
 
-        {/* Derecha 3 apiladas */}
+        {/* Derecha 3 apiladas (solo en escritorio y tablets) */}
         {stack.map((src) => (
           <button
             key={src}
             onClick={() => openModalAt(src)}
             aria-label="Ver foto"
-            className="group relative overflow-hidden rounded-lg border h-40 md:h-auto"
+            className="hidden md:block group relative overflow-hidden rounded-lg border h-40 md:h-auto"
           >
             <Image
               src={src}
