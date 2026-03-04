@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import { Phone, Mail } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 // Coordenadas de la caseta (ejemplo). Cambia por las reales.
 const LAT = 40.72502884042648;
@@ -17,6 +18,7 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT
 const embedSrc = `https://www.google.com/maps?q=${LAT},${LNG}&hl=es&z=15&output=embed`;
 
 export default function ContactSection() {
+  const t = useTranslations("contact");
   const email = "pajuanf@gmail.com";
   const phone = "+34 652 75 92 94";
   const whatsapp =
@@ -33,10 +35,10 @@ export default function ContactSection() {
     <Section
       id="contacto"
       className="whitespace-pre-line"
-      title="Contacto"
+      title={t("title")}
       titleClassName="text-[#393E46]"
       leadClassName="text-[#393E46]"
-      lead={`¿Tienes dudas o quieres reservar? Escríbenos y te respondemos lo antes posible. \n\nPuedes contactarnos por WhatsApp, teléfono o correo. \n\nTambién te ayudamos con cómo llegar, recomendaciones de la zona y cualquier detalle que necesites para tu estancia.`}
+      lead={t("lead")}
       center
     >
       <div className="grid gap-6 md:grid-cols-2">
@@ -64,15 +66,15 @@ export default function ContactSection() {
             </p>
 
             <p className="text-muted-foreground py-3">
-              Indica fechas y número de personas, te responderemos pronto.
+              {t("hint")}
             </p>
             <div className="mt-3 flex flex-wrap gap-6 pb-3">
               <Button
                 asChild
                 size="icon"
                 className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
-                title="Escribir email"
-                aria-label="Escribir email"
+                title={t("emailLabel")}
+                aria-label={t("emailLabel")}
               >
                 <a
                   href={gmailCompose}
@@ -80,7 +82,7 @@ export default function ContactSection() {
                   rel="noopener noreferrer"
                 >
                   <Icon icon="logos:google-gmail" />
-                  <span className="sr-only">Escribir email</span>
+                  <span className="sr-only">{t("emailLabel")}</span>
                 </a>
               </Button>
 
@@ -89,12 +91,12 @@ export default function ContactSection() {
                 size="icon"
                 variant="secondary"
                 className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
-                title="WhatsApp"
-                aria-label="WhatsApp"
+                title={t("whatsapp")}
+                aria-label={t("whatsapp")}
               >
                 <a href={whatsapp} target="_blank" rel="noopener noreferrer">
                   <Icon icon="logos:whatsapp-icon" />
-                  <span className="sr-only">WhatsApp</span>
+                  <span className="sr-only">{t("whatsapp")}</span>
                 </a>
               </Button>
 
@@ -103,14 +105,14 @@ export default function ContactSection() {
                 asChild
                 variant="outline"
                 className="rounded-full"
-                title="Cómo llegar"
+                title={t("directions")}
               >
                 <a
                   href={directionsHref}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Cómo llegar
+                  {t("directions")}
                 </a>
               </Button>
             </div>
@@ -123,7 +125,7 @@ export default function ContactSection() {
             <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
               {/* 16:9 ratio */}
               <iframe
-                title="Ubicación Caseta Martí i Carmeta"
+                title={t("mapTitle")}
                 src={embedSrc}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

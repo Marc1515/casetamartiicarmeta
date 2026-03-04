@@ -1,30 +1,24 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { headers } from "next/headers";
+import { inter, fraunces } from "@/lib/fonts";
 import "./globals.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
-export const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-});
 
 export const metadata: Metadata = {
   title: "Caseta Martí i Carmeta",
   description: "Alquiler turístico",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-next-intl-locale") ?? "ca";
+
   return (
-    <html lang="es" className="scroll-smooth">
+    <html lang={locale} className="scroll-smooth">
       <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
         {children}
       </body>

@@ -1,25 +1,105 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Icon } from "@iconify/react";
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 
-const TABS = [
-  { id: "home", label: "Inicio" },
-  { id: "calendario", label: "Calendario" },
-  { id: "fotos", label: "Fotos" },
-  { id: "contacto", label: "Contacto" },
-];
+const TAB_IDS = [
+  { id: "home", key: "home" },
+  { id: "calendario", key: "calendario" },
+  { id: "fotos", key: "fotos" },
+  { id: "contacto", key: "contacto" },
+] as const;
+
+const LOCALES = [
+  { locale: "ca" as const, label: "Català" },
+  { locale: "es" as const, label: "Castellano" },
+  { locale: "en" as const, label: "English" },
+] as const;
+
+const FLAG_SIZE = 20;
+const FLAG_SIZE_MOBILE = 28;
+
+function FlagCatalan({
+  className,
+  width = FLAG_SIZE,
+  height = FLAG_SIZE,
+}: {
+  className?: string;
+  width?: number;
+  height?: number;
+}) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className={className}
+      aria-hidden
+      width={width}
+      height={height}
+    >
+      <defs>
+        <clipPath id="circle-flag-ca">
+          <circle cx="10" cy="10" r="10" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#circle-flag-ca)">
+        <rect y="3" width="20" height="14" fill="#FCDD09" />
+        <rect y="5.33" width="20" height="1.56" fill="#DA121A" />
+        <rect y="8.22" width="20" height="1.56" fill="#DA121A" />
+        <rect y="11.11" width="20" height="1.56" fill="#DA121A" />
+        <rect y="14" width="20" height="1.56" fill="#DA121A" />
+      </g>
+    </svg>
+  );
+}
+
+function LocaleFlag({
+  locale,
+  className,
+  size = "md",
+}: {
+  locale: (typeof LOCALES)[number]["locale"];
+  className?: string;
+  size?: "md" | "lg";
+}) {
+  const s = size === "lg" ? FLAG_SIZE_MOBILE : FLAG_SIZE;
+  if (locale === "ca")
+    return <FlagCatalan className={className} width={s} height={s} />;
+  if (locale === "es")
+    return (
+      <Icon
+        icon="circle-flags:es"
+        width={s}
+        height={s}
+        className={className}
+        aria-hidden
+      />
+    );
+  return (
+    <Icon
+      icon="circle-flags:gb"
+      width={s}
+      height={s}
+      className={className}
+      aria-hidden
+    />
+  );
+}
 
 function cx(...c: Array<string | false | null | undefined>) {
   return c.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const t = useTranslations("nav");
+  const currentLocale = useLocale();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>(TABS[0].id);
+  const [active, setActive] = useState<string>(TAB_IDS[0].id);
   // En móviles (pantallas táctiles) mantenemos SIEMPRE el modo burger,
   // incluso en horizontal, para no depender del ancho del viewport.
   const [isTouch, setIsTouch] = useState(true);
@@ -76,8 +156,8 @@ export default function Navbar() {
   const unlockTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    sectionElsRef.current = TABS.map((t) =>
-      document.getElementById(t.id),
+    sectionElsRef.current = TAB_IDS.map((tab) =>
+      document.getElementById(tab.id),
     ).filter(Boolean) as HTMLElement[];
 
     const NAV_H =
@@ -193,28 +273,28 @@ export default function Navbar() {
             isTouch ? "h-16" : "h-20",
           )}
         >
-          <Link
+          <a
             href="#home"
             onClick={goto("home")}
             className="text-white font-semibold"
           >
-            {/* Caseta Martí i Carmeta */}
-          </Link>
+            Caseta Martí i Carmeta
+          </a>
 
-          {/* DESKTOP: píldora + bubble */}
+          {/* DESKTOP: píldora + bubble + idioma */}
           <div
             className={cx(
               "relative items-center gap-1",
               isTouch ? "hidden" : "flex",
             )}
           >
-            {TABS.map((t) => {
-              const isActive = active === t.id;
+            {TAB_IDS.map((tab) => {
+              const isActive = active === tab.id;
               return (
                 <a
-                  key={t.id}
-                  href={`#${t.id}`}
-                  onClick={goto(t.id)}
+                  key={tab.id}
+                  href={`#${tab.id}`}
+                  onClick={goto(tab.id)}
                   className={`relative rounded-full px-3 py-1.5 text-sm font-medium ${
                     isActive ? "text-black" : "text-white/90 hover:text-white"
                   } transition-colors`}
@@ -231,15 +311,36 @@ export default function Navbar() {
                       }
                     />
                   )}
-                  <span className="relative z-10">{t.label}</span>
+                  <span className="relative z-10">{t(tab.key)}</span>
                 </a>
               );
             })}
+            {/* Selector de idioma */}
+            <span className="ml-2 flex items-center gap-1.5 border-l border-white/40 pl-2 text-sm text-white/90">
+              {LOCALES.map(({ locale, label }, i) => (
+                <span key={locale} className="flex items-center gap-1.5">
+                  {i > 0 && <span aria-hidden>|</span>}
+                  <a
+                    href={`/${locale}${pathname === "/" ? "" : pathname}`}
+                    title={label}
+                    aria-label={label}
+                    className={
+                      currentLocale === locale
+                        ? "opacity-100 ring-2 ring-white ring-offset-2 ring-offset-transparent rounded-sm"
+                        : "opacity-80 hover:opacity-100"
+                    }
+                    aria-current={currentLocale === locale ? "true" : undefined}
+                  >
+                    <LocaleFlag locale={locale} />
+                  </a>
+                </span>
+              ))}
+            </span>
           </div>
 
           {/* BURGER (móvil) */}
           <button
-            aria-label="Abrir menú"
+            aria-label={t("openMenu")}
             className={cx("text-[#222831]", isTouch ? "" : "hidden")}
             onClick={() => setOpen(true)}
           >
@@ -256,7 +357,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[60]"
             role="dialog"
             aria-modal="true"
-            aria-label="Menú de navegación"
+            aria-label={t("menuAria")}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -274,7 +375,7 @@ export default function Navbar() {
               transition={{ duration: prefersReduced ? 0 : 0.25 }}
             >
               <button
-                aria-label="Cerrar menú"
+                aria-label={t("closeMenu")}
                 className="absolute right-4 top-4 text-white"
                 onClick={() => setOpen(false)}
                 ref={closeBtnRef}
@@ -282,14 +383,14 @@ export default function Navbar() {
                 <X className="h-7 w-7" />
               </button>
 
-              {TABS.map((t, idx) => {
-                const isActive = active === t.id;
+              {TAB_IDS.map((tab, idx) => {
+                const isActive = active === tab.id;
                 return (
                   <motion.a
-                    key={t.id}
-                    href={`#${t.id}`}
+                    key={tab.id}
+                    href={`#${tab.id}`}
                     onClick={(e) => {
-                      goto(t.id)(e);
+                      goto(tab.id)(e);
                       setOpen(false);
                     }}
                     aria-current={isActive ? "page" : undefined}
@@ -302,10 +403,29 @@ export default function Navbar() {
                       isActive ? "after:w-1/2" : "hover:after:w-1/2",
                     )}
                   >
-                    {t.label}
+                    {t(tab.key)}
                   </motion.a>
                 );
               })}
+              {/* Selector idioma en móvil */}
+              <div className="mt-4 flex gap-4 text-white/90">
+                {LOCALES.map(({ locale, label }) => (
+                  <a
+                    key={locale}
+                    href={`/${locale}${pathname === "/" ? "" : pathname}`}
+                    title={label}
+                    aria-label={label}
+                    className={
+                      currentLocale === locale
+                        ? "opacity-100 ring-2 ring-white ring-offset-2 ring-offset-black/90 rounded-sm"
+                        : "opacity-70 hover:opacity-100"
+                    }
+                    aria-current={currentLocale === locale ? "true" : undefined}
+                  >
+                    <LocaleFlag locale={locale} size="lg" />
+                  </a>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         )}

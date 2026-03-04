@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Holiday rental"
+  },
+  "nav": {
+    "home": "Home",
+    "calendario": "Calendar",
+    "fotos": "Photos",
+    "contacto": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuAria": "Navigation menu"
+  },
+  "footer": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Holiday rental. Book with peace of mind and check availability in the calendar.",
+    "sections": "Sections",
+    "backToTop": "Back to top",
+    "links": {
+      "home": "Home",
+      "calendario": "Calendar",
+      "fotos": "Photos",
+      "contacto": "Contact"
+    },
+    "copyright": "© {year} Caseta Martí i Carmeta"
+  },
+  "home": {
+    "title": "Caseta Martí i Carmeta",
+    "subtitle": "Cosy accommodation for getaways near the sea and nature.",
+    "ctaAvailability": "Check availability",
+    "ctaPhotos": "View photos",
+    "imageAlt": "Caseta Martí i Carmeta"
+  },
+  "calendar": {
+    "title": "Availability calendar",
+    "leadIntro": "Check the caseta’s real availability here.",
+    "leadMarkedAs": "The days marked as",
+    "reserved": "BOOKED",
+    "reservedDayTitle": "Booked day",
+    "leadMiddle": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit.",
+    "leadEnd": "Once you have your dates, head to the contact section and we’ll get back to you as soon as possible."
+  },
+  "calendarMessages": {
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "today": "Today",
+    "previous": "Back",
+    "next": "Next"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "lead": "Explore the gallery and discover every corner of the caseta: the porch for a slow breakfast, the pool to unwind, the bright rooms and the details that make it special.\n\nBrowse the photos at your own pace, view them full screen and see what it’s like to stay here—calm, nature and good taste."
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Have questions or want to book? Get in touch and we’ll reply as soon as we can.\n\nYou can reach us by WhatsApp, phone or email.\n\nWe can also help with directions, local tips and any details you need for your stay.",
+    "hint": "Include dates and number of guests; we’ll get back to you soon.",
+    "emailLabel": "Send email",
+    "whatsapp": "WhatsApp",
+    "directions": "Get directions",
+    "mapTitle": "Caseta Martí i Carmeta location"
+  },
+  "banner1": {
+    "ariaLabel": "Caseta garden"
+  },
+  "banner2": {
+    "ariaLabel": "Delta landscape"
+  }
+}

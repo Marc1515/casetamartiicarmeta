@@ -9,7 +9,8 @@ import {
   getDay,
   eachDayOfInterval,
 } from "date-fns";
-import { es } from "date-fns/locale";
+import { ca, es, enUS } from "date-fns/locale";
+import { useLocale, useTranslations } from "next-intl";
 
 type ApiEvent = {
   id: string;
@@ -31,10 +32,12 @@ const localizer = dateFnsLocalizer({
   parse,
   startOfWeek: (date: Date) => startOfWeek(date, { weekStartsOn: 1 }),
   getDay: (date: Date) => getDay(date),
-  locales: { es },
+  locales: { ca, es, en: enUS },
 });
 
 export default function CalendarPublic() {
+  const locale = useLocale() as "ca" | "es" | "en";
+  const t = useTranslations("calendarMessages");
   const [events, setEvents] = useState<Evt[]>([]);
 
   useEffect(() => {
@@ -78,7 +81,7 @@ export default function CalendarPublic() {
   return (
     <div className="public-calendar h-[320px] sm:h-[520px] lg:h-[600px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
       <Calendar<Evt>
-        culture="es"
+        culture={locale}
         localizer={localizer}
         events={events}
         startAccessor="start"
@@ -88,12 +91,12 @@ export default function CalendarPublic() {
         toolbar
         dayPropGetter={dayPropGetter}
         messages={{
-          month: "Mes",
-          week: "Semana",
-          day: "Día",
-          today: "Hoy",
-          previous: "Atrás",
-          next: "Siguiente",
+          month: t("month"),
+          week: t("week"),
+          day: t("day"),
+          today: t("today"),
+          previous: t("previous"),
+          next: t("next"),
         }}
       />
     </div>

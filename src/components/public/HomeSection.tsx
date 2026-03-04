@@ -9,9 +9,11 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Section from "@/components/public/Section";
 
 export default function HomeSection() {
+  const t = useTranslations("home");
   const sectionRef = useRef<HTMLElement>(null!);
   const prefersReduced = useReducedMotion();
 
@@ -39,7 +41,7 @@ export default function HomeSection() {
           >
             <Image
               src="/img/housebetter.png"
-              alt="Caseta Martí i Carmeta"
+              alt={t("imageAlt")}
               fill
               priority
               sizes="100vw"
@@ -67,7 +69,7 @@ export default function HomeSection() {
                 : { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
             }
           >
-            Caseta Martí i Carmeta
+            {t("title")}
           </motion.h1>
           <motion.p
             className="mt-3 text-[#EEEEEE] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
@@ -83,7 +85,7 @@ export default function HomeSection() {
                   }
             }
           >
-            Alojamiento acogedor para escapadas cerca del mar y la naturaleza.
+            {t("subtitle")}
           </motion.p>
 
           <motion.div
@@ -104,13 +106,13 @@ export default function HomeSection() {
               href="#calendario"
               className="rounded-md bg-white/90 px-5 py-3 font-medium text-slate-900 hover:bg-white"
             >
-              Ver disponibilidad
+              {t("ctaAvailability")}
             </a>
             <a
               href="#fotos"
               className="rounded-md border border-white/70 bg-white/10 px-5 py-3 font-medium text-white hover:bg-white/15"
             >
-              Ver fotos
+              {t("ctaPhotos")}
             </a>
           </motion.div>
         </div>

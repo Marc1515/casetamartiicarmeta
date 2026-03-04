@@ -2,12 +2,14 @@
 "use client";
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { useTranslations } from "next-intl";
 
 export default function Banner2() {
+  const t = useTranslations("banner2");
   return (
     <section
       id="banner2"
-      aria-label="Paisaje del delta"
+      aria-label={t("ariaLabel")}
       className="relative w-full min-h-screen"
     >
       {/* Imagen de fondo fija a pantalla completa */}

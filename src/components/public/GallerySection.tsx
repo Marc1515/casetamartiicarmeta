@@ -4,6 +4,7 @@
 import Section from "./Section";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
@@ -53,6 +54,7 @@ const IMAGES = [
 ] as const;
 
 export default function GallerySection() {
+  const t = useTranslations("gallery");
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState<number>(0); // índice de la imagen activa en el modal
 
@@ -102,10 +104,10 @@ export default function GallerySection() {
     <Section
       id="fotos"
       className="whitespace-pre-line"
-      title="Galería"
+      title={t("title")}
       titleClassName="text-[#393E46]"
       leadClassName="text-[#393E46]"
-      lead={`Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. \n\nNavega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto.`}
+      lead={t("lead")}
     >
       {/* Mosaico principal con stagger */}
       <motion.div

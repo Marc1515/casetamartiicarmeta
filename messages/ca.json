@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Allotjament turístic"
+  },
+  "nav": {
+    "home": "Inici",
+    "calendario": "Calendari",
+    "fotos": "Fotos",
+    "contacto": "Contacte",
+    "openMenu": "Obrir menú",
+    "closeMenu": "Tancar menú",
+    "menuAria": "Menú de navegació"
+  },
+  "footer": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Allotjament turístic. Reserva amb tranquil·litat i consulta la disponibilitat al calendari.",
+    "sections": "Seccions",
+    "backToTop": "Tornar amunt",
+    "links": {
+      "home": "Inici",
+      "calendario": "Calendari",
+      "fotos": "Fotos",
+      "contacto": "Contacte"
+    },
+    "copyright": "© {year} Caseta Martí i Carmeta"
+  },
+  "home": {
+    "title": "Caseta Martí i Carmeta",
+    "subtitle": "Allotjament acollidor per a escapades a prop del mar i la natura.",
+    "ctaAvailability": "Veure disponibilitat",
+    "ctaPhotos": "Veure fotos",
+    "imageAlt": "Caseta Martí i Carmeta"
+  },
+  "calendar": {
+    "title": "Calendari de disponibilitat",
+    "leadIntro": "Consulta aquí la disponibilitat real de la caseta.",
+    "leadMarkedAs": "Els dies assenyalats com a",
+    "reserved": "RESERVAT",
+    "reservedDayTitle": "Dia reservat",
+    "leadMiddle": "no estan lliures; la resta es poden sol·licitar. Si estàs planificant una estada llarga o tens flexibilitat de dates, et recomanem revisar diverses setmanes per trobar el millor encaix.",
+    "leadEnd": "Quan tinguis les teves dates, continua cap a la secció de contacte, et respondrem el més aviat possible."
+  },
+  "calendarMessages": {
+    "month": "Mes",
+    "week": "Setmana",
+    "day": "Dia",
+    "today": "Avui",
+    "previous": "Enrere",
+    "next": "Següent"
+  },
+  "gallery": {
+    "title": "Galeria",
+    "lead": "Explora la galeria i coneix cada racó de la caseta: el porxo on esmorzar amb calma, la piscina per desconnectar, les habitacions enllumenades i els detalls que la fan especial.\n\nNavega per les fotos al teu ritme, amplia-les a pantalla completa i descobreix com es viu aquí, entre calma, natura i bon gust."
+  },
+  "contact": {
+    "title": "Contacte",
+    "lead": "Tens dubtes o vols reservar? Escriu-nos i et respondrem el més aviat possible.\n\nPots contactar-nos per WhatsApp, telèfon o correu.\n\nTambé et podem ajudar amb com arribar, recomanacions de la zona i qualsevol detall que necessitis per a la teva estada.",
+    "hint": "Indica dates i nombre de persones, et respondrem aviat.",
+    "emailLabel": "Escriure email",
+    "whatsapp": "WhatsApp",
+    "directions": "Com arribar",
+    "mapTitle": "Ubicació Caseta Martí i Carmeta"
+  },
+  "banner1": {
+    "ariaLabel": "Jardí de la caseta"
+  },
+  "banner2": {
+    "ariaLabel": "Paisatge del delta"
+  }
+}

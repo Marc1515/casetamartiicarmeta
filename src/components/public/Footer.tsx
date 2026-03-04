@@ -1,11 +1,16 @@
-const LINKS = [
-  { href: "#home", label: "Inicio" },
-  { href: "#calendario", label: "Calendario" },
-  { href: "#fotos", label: "Fotos" },
-  { href: "#contacto", label: "Contacto" },
-];
+"use client";
+
+import { useTranslations } from "next-intl";
+
+const LINK_KEYS = [
+  { href: "#home", key: "home" },
+  { href: "#calendario", key: "calendario" },
+  { href: "#fotos", key: "fotos" },
+  { href: "#contacto", key: "contacto" },
+] as const;
 
 export default function Footer() {
+  const t = useTranslations("footer");
   const year = new Date().getFullYear();
 
   return (
@@ -13,27 +18,24 @@ export default function Footer() {
       <div className="mx-auto max-w-5xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-3">
-            <div className="font-semibold text-[#EEEEEE]">
-              Caseta Martí i Carmeta
-            </div>
+            <div className="font-semibold text-[#EEEEEE]">{t("title")}</div>
             <p className="text-sm text-[#EEEEEE] opacity-80">
-              Alquiler turístico. Reserva con tranquilidad y consulta la
-              disponibilidad en el calendario.
+              {t("description")}
             </p>
           </div>
 
           <div className="space-y-3">
             <div className="text-sm font-semibold text-[#EEEEEE]">
-              Secciones
+              {t("sections")}
             </div>
             <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-              {LINKS.map((l) => (
+              {LINK_KEYS.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
                   className="text-[#EEEEEE] opacity-80 hover:opacity-100 transition-colors"
                 >
-                  {l.label}
+                  {t(`links.${l.key}`)}
                 </a>
               ))}
             </nav>
@@ -45,14 +47,14 @@ export default function Footer() {
                 href="#home"
                 className="rounded-full bg-[#EEEEEE] text-[#222831] px-4 py-2 hover:opacity-90 transition-colors"
               >
-                Volver arriba
+                {t("backToTop")}
               </a>
             </div>
           </div>
         </div>
 
         <div className="mt-10 border-t border-[#393E46] pt-6 text-sm text-[#EEEEEE] opacity-75 text-center">
-          © {year} Caseta Martí i Carmeta
+          {t("copyright", { year })}
         </div>
       </div>
     </footer>
