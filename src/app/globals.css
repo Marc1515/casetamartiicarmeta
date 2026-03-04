@@ -2,10 +2,12 @@
 
 :root {
   /* Colores base personalizados para la web pública */
-  /* Fondo general: #F8F4E1 ≈ hsl(50 62% 93%) */
-  --background: 50 62% 93%;
-  /* Tipografía principal: #4E1F00 ≈ hsl(24 100% 15%) */
-  --foreground: 24 100% 15%;
+  /* Fondo general: #EEEEEE */
+  --background: 0 0% 93%;
+  /* Tipografía principal: #393E46 */
+  --foreground: 217 10% 25%;
+  /* Fondo calendario: tono muy claro de la paleta (mismo matiz que #222831/#393E46) */
+  --calendar-bg: 217 10% 97%;
   --card: 0 0% 100%;
   --card-foreground: 240 10% 3.9%;
   --popover: 0 0% 100%;
@@ -156,6 +158,33 @@
     border-radius: 0.75rem; /* 12px */
     border: 1px solid #e5e7eb;
   }
+}
+
+/* Calendario público: fondo en tono claro de la paleta */
+.public-calendar .rbc-calendar {
+  border-radius: 0.75rem;
+}
+.public-calendar .rbc-month-view,
+.public-calendar .rbc-time-view {
+  background-color: hsl(var(--calendar-bg));
+}
+.public-calendar .rbc-toolbar button {
+  background: hsl(var(--calendar-bg));
+  border-color: hsl(217 10% 85%);
+}
+.public-calendar .rbc-toolbar button:hover {
+  background: hsl(217 10% 95%);
+}
+.public-calendar .rbc-toolbar .rbc-active {
+  background: #393e46;
+  color: #eeeeee;
+  border-color: #393e46;
+}
+.public-calendar .rbc-off-range-bg {
+  background: hsl(217 8% 96%);
+}
+.public-calendar .rbc-today {
+  background: hsl(217 12% 94%);
 }
 
 /* Admin calendario: compacto en alturas bajas (p.ej. h-[320px]) */

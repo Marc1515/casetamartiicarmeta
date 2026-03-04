@@ -102,6 +102,8 @@ export default function GallerySection() {
     <Section
       id="fotos"
       title="Galería"
+      titleClassName="text-[#393E46]"
+      leadClassName="text-[#393E46]"
       lead="Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. Navega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto."
     >
       {/* Mosaico principal con stagger */}

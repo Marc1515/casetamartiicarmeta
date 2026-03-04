@@ -10,6 +10,8 @@ type Props = {
   lead?: string;
   children: React.ReactNode;
   className?: string;
+  titleClassName?: string; // color/estilo del título de sección (ej. Calendario, Galería, Contacto)
+  leadClassName?: string; // color/estilo del párrafo descripción (lead)
   center?: boolean; // centra verticalmente el contenido
   bg?: React.ReactNode; // (opcional) capa de fondo full-bleed
   noPadding?: boolean; // (opcional) desactiva padding vertical
@@ -22,6 +24,8 @@ export default function Section({
   lead,
   children,
   className,
+  titleClassName,
+  leadClassName,
   center = false,
   bg,
   noPadding = false,
@@ -44,7 +48,7 @@ export default function Section({
       >
         {title && (
           <ScrollReveal>
-            <h2 className="text-4xl md:text-7xl font-semibold tracking-tight mb-8">
+            <h2 className={`text-4xl md:text-7xl font-semibold tracking-tight mb-8 ${titleClassName ?? ""}`}>
               {title}
             </h2>
           </ScrollReveal>
@@ -52,7 +56,7 @@ export default function Section({
         {lead && (
           <ScrollReveal delay={0.1}>
             <p
-              className="mt-4 mb-14 text-muted-foreground pl-4 md:pl-6 border-l-4 border-[#FEBA17] [text-wrap:pretty] max-w-prose"
+              className={`mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose ${leadClassName ?? "text-muted-foreground"}`}
             >
               {lead}
             </p>

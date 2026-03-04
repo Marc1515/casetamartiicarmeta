@@ -33,6 +33,8 @@ export default function ContactSection() {
     <Section
       id="contacto"
       title="Contacto"
+      titleClassName="text-[#393E46]"
+      leadClassName="text-[#393E46]"
       lead="¿Tienes dudas o quieres reservar? Escríbenos y te respondemos lo antes posible. Puedes contactarnos por WhatsApp, teléfono o correo, o usar el formulario de esta página para indicarnos fechas y número de personas. También te ayudamos con cómo llegar, recomendaciones de la zona y cualquier detalle que necesites para tu estancia."
       center
     >
