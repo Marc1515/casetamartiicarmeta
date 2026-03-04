@@ -40,7 +40,6 @@ export default function Footer() {
           </div>
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-[#EEEEEE]">Acceso</div>
             <div className="flex flex-wrap gap-3 text-sm text-[#EEEEEE]">
               <a
                 href="#home"
