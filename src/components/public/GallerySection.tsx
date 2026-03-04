@@ -101,10 +101,11 @@ export default function GallerySection() {
   return (
     <Section
       id="fotos"
+      className="whitespace-pre-line"
       title="Galería"
       titleClassName="text-[#393E46]"
       leadClassName="text-[#393E46]"
-      lead="Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. Navega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto."
+      lead={`Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. \n\nNavega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto.`}
     >
       {/* Mosaico principal con stagger */}
       <motion.div
@@ -112,7 +113,9 @@ export default function GallerySection() {
         variants={prefersReducedMotion ? undefined : galleryContainerVariants}
         initial={prefersReducedMotion ? false : "hidden"}
         whileInView={prefersReducedMotion ? undefined : "visible"}
-        viewport={prefersReducedMotion ? undefined : { once: true, amount: 0.15 }}
+        viewport={
+          prefersReducedMotion ? undefined : { once: true, amount: 0.15 }
+        }
       >
         {/* Izquierda grande */}
         {main && (
@@ -169,7 +172,9 @@ export default function GallerySection() {
           variants={prefersReducedMotion ? undefined : galleryContainerVariants}
           initial={prefersReducedMotion ? false : "hidden"}
           whileInView={prefersReducedMotion ? undefined : "visible"}
-          viewport={prefersReducedMotion ? undefined : { once: true, amount: 0.15 }}
+          viewport={
+            prefersReducedMotion ? undefined : { once: true, amount: 0.15 }
+          }
         >
           {restLine.map((src) => (
             <motion.div

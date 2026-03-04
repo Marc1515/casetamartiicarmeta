@@ -7,7 +7,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 type Props = {
   id: string;
   title?: string;
-  lead?: string;
+  lead?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   titleClassName?: string; // color/estilo del título de sección (ej. Calendario, Galería, Contacto)
@@ -53,10 +53,10 @@ export default function Section({
             </h2>
           </ScrollReveal>
         )}
-        {lead && (
+        {lead != null && (
           <ScrollReveal delay={0.1}>
             <p
-              className={`mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose ${leadClassName ?? "text-muted-foreground"}`}
+              className={`mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose whitespace-pre-line ${leadClassName ?? "text-muted-foreground"}`}
             >
               {lead}
             </p>
