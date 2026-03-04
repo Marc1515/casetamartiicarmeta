@@ -1,5 +1,8 @@
 // src/components/public/Section.tsx
+"use client";
+
 import type { Ref } from "react";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 type Props = {
   id: string;
@@ -40,18 +43,22 @@ export default function Section({
         }`}
       >
         {title && (
-          <h2 className="text-4xl md:text-7xl font-semibold tracking-tight mb-8">
-            {title}
-          </h2>
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-7xl font-semibold tracking-tight mb-8">
+              {title}
+            </h2>
+          </ScrollReveal>
         )}
         {lead && (
-          <p
-            className="mt-4 mb-14 text-muted-foreground pl-4 md:pl-6 border-l-4 border-[#FEBA17] [text-wrap:pretty] max-w-prose"
-          >
-            {lead}
-          </p>
+          <ScrollReveal delay={0.1}>
+            <p
+              className="mt-4 mb-14 text-muted-foreground pl-4 md:pl-6 border-l-4 border-[#FEBA17] [text-wrap:pretty] max-w-prose"
+            >
+              {lead}
+            </p>
+          </ScrollReveal>
         )}
-        {children}
+        <ScrollReveal delay={0.2}>{children}</ScrollReveal>
       </div>
     </section>
   );

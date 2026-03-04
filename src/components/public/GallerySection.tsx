@@ -4,7 +4,23 @@
 import Section from "./Section";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+
+const galleryContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const galleryItemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const IMAGES = [
   "/img/house.jpg",
@@ -80,6 +96,7 @@ export default function GallerySection() {
 
   // Previene layout shift calculando tamaño de la imagen grande
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <Section
@@ -87,67 +104,93 @@ export default function GallerySection() {
       title="Galería"
       lead="Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial. Navega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto."
     >
-      {/* Mosaico principal */}
-      <div className="grid gap-3 md:grid-cols-2 md:grid-rows-3 md:aspect-[16/9]">
+      {/* Mosaico principal con stagger */}
+      <motion.div
+        className="grid gap-3 md:grid-cols-2 md:grid-rows-3 md:aspect-[16/9]"
+        variants={prefersReducedMotion ? undefined : galleryContainerVariants}
+        initial={prefersReducedMotion ? false : "hidden"}
+        whileInView={prefersReducedMotion ? undefined : "visible"}
+        viewport={prefersReducedMotion ? undefined : { once: true, amount: 0.15 }}
+      >
         {/* Izquierda grande */}
         {main && (
-          <button
-            onClick={() => openModalAt(main)}
-            aria-label="Ver foto"
-            className="group relative overflow-hidden rounded-lg border md:row-span-3 h-56 md:h-auto"
+          <motion.div
+            variants={prefersReducedMotion ? undefined : galleryItemVariants}
+            className="md:row-span-3"
           >
-            <Image
-              src={main}
-              alt="Foto del alojamiento"
-              fill
-              priority
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-            />
-          </button>
+            <button
+              onClick={() => openModalAt(main)}
+              aria-label="Ver foto"
+              className="group relative overflow-hidden rounded-lg border h-56 md:h-full w-full"
+            >
+              <Image
+                src={main}
+                alt="Foto del alojamiento"
+                fill
+                priority
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+            </button>
+          </motion.div>
         )}
 
         {/* Derecha 3 apiladas (solo en escritorio y tablets) */}
         {stack.map((src) => (
-          <button
+          <motion.div
             key={src}
-            onClick={() => openModalAt(src)}
-            aria-label="Ver foto"
-            className="hidden md:block group relative overflow-hidden rounded-lg border h-40 md:h-auto"
+            variants={prefersReducedMotion ? undefined : galleryItemVariants}
+            className="hidden md:block"
           >
-            <Image
-              src={src}
-              alt="Foto del alojamiento"
-              fill
-              loading="lazy"
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-            />
-          </button>
-        ))}
-      </div>
-
-      {/* Línea extra de 4 imágenes */}
-      {restLine.length > 0 && (
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-          {restLine.map((src) => (
             <button
-              key={src}
               onClick={() => openModalAt(src)}
               aria-label="Ver foto"
-              className="group relative overflow-hidden rounded-lg border aspect-[4/3]"
+              className="group relative overflow-hidden rounded-lg border h-40 md:h-auto w-full"
             >
               <Image
                 src={src}
                 alt="Foto del alojamiento"
                 fill
                 loading="lazy"
-                sizes="(min-width: 768px) 25vw, 50vw"
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </button>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Línea extra de 4 imágenes */}
+      {restLine.length > 0 && (
+        <motion.div
+          className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3"
+          variants={prefersReducedMotion ? undefined : galleryContainerVariants}
+          initial={prefersReducedMotion ? false : "hidden"}
+          whileInView={prefersReducedMotion ? undefined : "visible"}
+          viewport={prefersReducedMotion ? undefined : { once: true, amount: 0.15 }}
+        >
+          {restLine.map((src) => (
+            <motion.div
+              key={src}
+              variants={prefersReducedMotion ? undefined : galleryItemVariants}
+            >
+              <button
+                onClick={() => openModalAt(src)}
+                aria-label="Ver foto"
+                className="group relative overflow-hidden rounded-lg border aspect-[4/3] w-full"
+              >
+                <Image
+                  src={src}
+                  alt="Foto del alojamiento"
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+              </button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       {/* Modal con carrusel */}

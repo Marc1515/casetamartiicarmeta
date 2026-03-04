@@ -1,7 +1,9 @@
+"use client";
+
 import Section from "./Section";
 import { Icon } from "@iconify/react";
 import { Phone, Mail } from "lucide-react";
-
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 
 // Coordenadas de la caseta (ejemplo). Cambia por las reales.
@@ -36,7 +38,8 @@ export default function ContactSection() {
     >
       <div className="grid gap-6 md:grid-cols-2">
         {/* Datos de contacto */}
-        <div className="space-y-1">
+        <ScrollReveal>
+          <div className="space-y-1">
           <p className="flex items-center gap-2">
             <Phone className="h-5 w-5 text-muted-foreground" aria-hidden />
             <a
@@ -105,9 +108,11 @@ export default function ContactSection() {
             </Button>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Mapa embed (responsive) */}
-        <div className="rounded-lg border overflow-hidden">
+        <ScrollReveal delay={0.15}>
+          <div className="rounded-lg border overflow-hidden">
           <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
             {/* 16:9 ratio */}
             <iframe
@@ -119,6 +124,7 @@ export default function ContactSection() {
             />
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </Section>
   );

@@ -57,14 +57,49 @@ export default function HomeSection() {
       <div className="relative min-h-[100svh]">
         {/* Bloque que se pega bajo la navbar */}
         <div className="sticky top-16 md:top-20 py-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-[#F8F4E1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold text-[#F8F4E1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+            }
+          >
             Caseta Martí i Carmeta
-          </h1>
-          <p className="mt-3 text-[#F8F4E1] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+          </motion.h1>
+          <motion.p
+            className="mt-3 text-[#F8F4E1] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+            initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : {
+                    duration: 0.5,
+                    delay: 0.15,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }
+            }
+          >
             Alojamiento acogedor para escapadas cerca del mar y la naturaleza.
-          </p>
+          </motion.p>
 
-          <div className="mt-6 flex gap-3">
+          <motion.div
+            className="mt-6 flex gap-3"
+            initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : {
+                    duration: 0.5,
+                    delay: 0.25,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }
+            }
+          >
             <a
               href="#calendario"
               className="rounded-md bg-white/90 px-5 py-3 font-medium text-slate-900 hover:bg-white"
@@ -77,7 +112,7 @@ export default function HomeSection() {
             >
               Ver fotos
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
     </Section>
