@@ -398,9 +398,12 @@ export default function Navbar() {
                 );
               })}
               {/* Selector idioma en móvil */}
-              <div className="mt-4 flex gap-6 text-white/90">
-                {LOCALES.map(({ locale, label }) => (
-                  <a
+              <motion.div
+                className="mt-4 flex gap-6 text-white/90"
+                variants={itemVariants}
+              >
+                {LOCALES.map(({ locale, label }, idx) => (
+                  <motion.a
                     key={locale}
                     href={`/${locale}${pathname === "/" ? "" : pathname}`}
                     title={label}
@@ -411,11 +414,24 @@ export default function Navbar() {
                         : "opacity-70 hover:opacity-100"
                     }
                     aria-current={currentLocale === locale ? "true" : undefined}
+                    initial={
+                      prefersReduced ? false : { opacity: 0, y: 8, scale: 0.9 }
+                    }
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={
+                      prefersReduced
+                        ? { duration: 0 }
+                        : {
+                            duration: 0.35,
+                            delay: 0.1 + idx * 0.05,
+                            ease: [0.25, 0.1, 0.25, 1],
+                          }
+                    }
                   >
                     <LocaleFlag locale={locale} size="lg" />
-                  </a>
+                  </motion.a>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
