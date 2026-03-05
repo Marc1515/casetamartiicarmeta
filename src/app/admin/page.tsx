@@ -6,10 +6,11 @@ import { authOptions } from "@/lib/auth";
 export default async function AdminLanding({
   searchParams,
 }: {
-  searchParams?: { error?: string };
+  searchParams?: Promise<{ error?: string }>;
 }) {
   const session = await getServerSession(authOptions);
-  const hasAccessDenied = searchParams?.error === "AccessDenied";
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const hasAccessDenied = resolvedSearchParams.error === "AccessDenied";
   if (session?.user?.role === "ADMIN") {
     redirect("/admin/calendario");
   }
