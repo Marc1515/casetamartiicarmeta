@@ -90,6 +90,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>(TAB_IDS[0].id);
+  const [showBrandMobile, setShowBrandMobile] = useState(false);
   // En móviles (pantallas táctiles) mantenemos SIEMPRE el modo burger,
   // incluso en horizontal, para no depender del ancho del viewport.
   const [isTouch, setIsTouch] = useState(true);
@@ -106,7 +107,7 @@ export default function Navbar() {
     return () => mq.removeEventListener("change", apply);
   }, []);
 
-  // Fondo sólido al hacer scroll
+  // Fondo sólido al hacer scroll (desktop) + fondo/blur en móvil a partir de calendario
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     const mq = window.matchMedia("(min-width: 768px)"); // md
@@ -120,7 +121,7 @@ export default function Navbar() {
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
       } else {
-        // mobile: no scroll effect
+        // mobile: manejamos el fondo con showBrandMobile, no por scroll
         setScrolled(false);
       }
     };
@@ -136,6 +137,46 @@ export default function Navbar() {
       mq.removeEventListener("change", onChange);
     };
   }, [isTouch]);
+
+  // Mostrar/ocultar título en móvil cuando el calendario llega al top
+  useEffect(() => {
+    if (!isTouch || typeof window === "undefined") {
+      setShowBrandMobile(false);
+      return;
+    }
+
+    const calendarEl = document.getElementById("calendario");
+    if (!calendarEl) {
+      // fallback: usa la sección activa si por algún motivo no existe el id
+      setShowBrandMobile(active !== "home");
+      return;
+    }
+
+    const NAV_H = 0;
+    let rafId: number | null = null;
+
+    const update = () => {
+      rafId = null;
+      const rect = calendarEl.getBoundingClientRect();
+      const shouldShow = rect.top <= NAV_H + 1;
+      setShowBrandMobile(shouldShow);
+    };
+
+    const onScrollOrResize = () => {
+      if (rafId != null) return;
+      rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      if (rafId != null) cancelAnimationFrame(rafId);
+    };
+  }, [isTouch, active]);
 
   // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
   const sectionElsRef = useRef<HTMLElement[]>([]);
@@ -252,7 +293,9 @@ export default function Navbar() {
           scrolled
             ? "bg-black/65"
             : isTouch
-              ? "bg-transparent"
+              ? showBrandMobile
+                ? "bg-black/5 backdrop-blur-md"
+                : "bg-transparent"
               : "bg-gradient-to-b from-black/60 to-transparent",
         )}
       />
@@ -263,19 +306,37 @@ export default function Navbar() {
             isTouch ? "h-16" : "h-20",
           )}
         >
-          <a
-            href="#home"
-            onClick={goto("home")}
-            className="text-white font-semibold"
-          >
-            Caseta Martí i Carmeta
-          </a>
+          <div className="flex-1">
+            <AnimatePresence initial={false}>
+              {(!isTouch || showBrandMobile) && (
+                <motion.a
+                  key="brand-link"
+                  href="#home"
+                  onClick={goto("home")}
+                  className={cx(
+                    "inline-block font-semibold",
+                    !isTouch
+                      ? "text-white"
+                      : showBrandMobile
+                        ? "text-[#222831]"
+                        : "text-[#EEEEEE]",
+                  )}
+                  initial={isTouch ? { opacity: 0, y: -8 } : false}
+                  animate={isTouch ? { opacity: 1, y: 0 } : { opacity: 1 }}
+                  exit={isTouch ? { opacity: 0, y: -8 } : { opacity: 1 }}
+                  transition={{ duration: prefersReduced ? 0 : 0.25 }}
+                >
+                  Caseta Martí i Carmeta
+                </motion.a>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* DESKTOP: píldora + bubble + idioma */}
           <div
             className={cx(
               "relative items-center gap-1",
-              isTouch ? "hidden" : "flex",
+              isTouch ? "hidden flex-none" : "flex",
             )}
           >
             {TAB_IDS.map((tab) => {
@@ -331,7 +392,13 @@ export default function Navbar() {
           {/* BURGER (móvil) */}
           <button
             aria-label={t("openMenu")}
-            className={cx("text-[#222831]", isTouch ? "" : "hidden")}
+            className={cx(
+              isTouch
+                ? showBrandMobile
+                  ? "text-[#222831]"
+                  : "text-[#EEEEEE]"
+                : "hidden",
+            )}
             onClick={() => setOpen(true)}
           >
             <Menu className="h-6 w-6" />
