@@ -6,7 +6,7 @@
   "nav": {
     "home": "Inicio",
     "calendario": "Calendario",
-    "fotos": "Fotos",
+    "fotos": "Galería",
     "contacto": "Contacto",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
@@ -20,7 +20,7 @@
     "links": {
       "home": "Inicio",
       "calendario": "Calendario",
-      "fotos": "Fotos",
+      "fotos": "Galería",
       "contacto": "Contacto"
     },
     "copyright": "© {year} Caseta Martí i Carmeta"
