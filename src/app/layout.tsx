@@ -19,6 +19,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className="scroll-smooth">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="6TBlT6bZDo84-eHiwR0ABuIlA2DxMqkIWVEf2UX9Jcc"
+        />
+      </head>
       <body className={`${inter.variable} ${fraunces.variable} antialiased`}>
         {children}
       </body>
