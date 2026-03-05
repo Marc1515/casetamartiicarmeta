@@ -24,35 +24,26 @@ const FLAG_SIZE = 20;
 const FLAG_SIZE_MOBILE = 28;
 
 function FlagCatalan({
+  size,
   className,
-  width = FLAG_SIZE,
-  height = FLAG_SIZE,
 }: {
+  size: number;
   className?: string;
-  width?: number;
-  height?: number;
 }) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      className={className}
+    <span
+      className={`inline-flex overflow-hidden rounded-full bg-[#FCDD09] ${className ?? ""}`}
+      style={{ width: size, height: size }}
       aria-hidden
-      width={width}
-      height={height}
     >
-      <defs>
-        <clipPath id="circle-flag-ca">
-          <circle cx="10" cy="10" r="10" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#circle-flag-ca)">
-        <rect y="3" width="20" height="14" fill="#FCDD09" />
-        <rect y="5.33" width="20" height="1.56" fill="#DA121A" />
-        <rect y="8.22" width="20" height="1.56" fill="#DA121A" />
-        <rect y="11.11" width="20" height="1.56" fill="#DA121A" />
-        <rect y="14" width="20" height="1.56" fill="#DA121A" />
-      </g>
-    </svg>
+      <svg viewBox="0 0 20 14" className="w-full h-full">
+        <rect width="20" height="14" fill="#FCDD09" />
+        <rect y="2.33" width="20" height="1.56" fill="#DA121A" />
+        <rect y="5.22" width="20" height="1.56" fill="#DA121A" />
+        <rect y="8.11" width="20" height="1.56" fill="#DA121A" />
+        <rect y="11" width="20" height="1.56" fill="#DA121A" />
+      </svg>
+    </span>
   );
 }
 
@@ -67,7 +58,12 @@ function LocaleFlag({
 }) {
   const s = size === "lg" ? FLAG_SIZE_MOBILE : FLAG_SIZE;
   if (locale === "ca")
-    return <FlagCatalan className={className} width={s} height={s} />;
+    return (
+      <FlagCatalan
+        size={s}
+        className={className}
+      />
+    );
   if (locale === "es")
     return (
       <Icon
