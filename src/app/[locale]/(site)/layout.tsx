@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Navbar from "@/components/public/Navbar";
 import Footer from "@/components/public/Footer";
+import AppShell from "@/components/public/AppShell";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 
@@ -24,10 +25,10 @@ export default async function SiteLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <AppShell>
       <Navbar />
       {children}
       <Footer />
-    </>
+    </AppShell>
   );
 }
