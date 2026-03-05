@@ -9,8 +9,6 @@ const admins = (process.env.ADMIN_EMAILS || "")
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
 
-const PUBLIC_REDIRECT = "/";
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -22,6 +20,10 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+
+  pages: {
+    error: "/admin",
+  },
 
   events: {
     async createUser({ user }: { user: User }) {
@@ -36,10 +38,10 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async signIn({ user }: { user: User }): Promise<boolean | string> {
+    async signIn({ user }: { user: User }): Promise<boolean> {
       const email = user.email?.toLowerCase();
-      if (!email) return PUBLIC_REDIRECT;
-      return admins.includes(email) || PUBLIC_REDIRECT;
+      if (!email) return false;
+      return admins.includes(email);
     },
     async jwt({ token, user }) {
       const email = (user?.email || token.email)?.toLowerCase();
