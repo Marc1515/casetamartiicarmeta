@@ -57,13 +57,7 @@ function LocaleFlag({
   size?: "md" | "lg";
 }) {
   const s = size === "lg" ? FLAG_SIZE_MOBILE : FLAG_SIZE;
-  if (locale === "ca")
-    return (
-      <FlagCatalan
-        size={s}
-        className={className}
-      />
-    );
+  if (locale === "ca") return <FlagCatalan size={s} className={className} />;
   if (locale === "es")
     return (
       <Icon
@@ -404,7 +398,7 @@ export default function Navbar() {
                 );
               })}
               {/* Selector idioma en móvil */}
-              <div className="mt-4 flex gap-4 text-white/90">
+              <div className="mt-4 flex gap-6 text-white/90">
                 {LOCALES.map(({ locale, label }) => (
                   <a
                     key={locale}
@@ -413,7 +407,7 @@ export default function Navbar() {
                     aria-label={label}
                     className={
                       currentLocale === locale
-                        ? "opacity-100 ring-2 ring-white ring-offset-2 ring-offset-black/90 rounded-sm"
+                        ? "opacity-100 rounded-sm"
                         : "opacity-70 hover:opacity-100"
                     }
                     aria-current={currentLocale === locale ? "true" : undefined}
