@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: caseta_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: caseta
+      POSTGRES_USER: caseta_user
+      POSTGRES_PASSWORD: cambia_esta_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
