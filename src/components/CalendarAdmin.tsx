@@ -147,7 +147,7 @@ export default function CalendarAdmin() {
       highlightTimeoutRef.current = setTimeout(() => {
         setHighlightedId((curr) => (curr === id ? null : curr));
         highlightTimeoutRef.current = null;
-      }, 3000);
+      }, 4000);
     };
 
     window.addEventListener("admin:event:highlight", onHighlight);
