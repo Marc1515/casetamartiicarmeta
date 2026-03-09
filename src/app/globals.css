@@ -364,6 +364,7 @@ dialog::backdrop {
     align-items: flex-start;
     max-width: calc(100vw - 1rem);
     --admin-dp-day-size: 2rem;
+    --admin-time-width: 82px;
   }
 
   .admin-datepicker-popper .react-datepicker__month-container,
@@ -372,8 +373,16 @@ dialog::backdrop {
   }
 
   .admin-datepicker-popper .react-datepicker__time-container {
-    width: 82px;
+    width: var(--admin-time-width);
     border-left: 1px solid #c4c4c4;
+  }
+
+  .admin-datepicker-popper .react-datepicker__time-container .react-datepicker__time,
+  .admin-datepicker-popper
+    .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box {
+    width: 100%;
   }
 
   .admin-datepicker-popper
@@ -389,8 +398,19 @@ dialog::backdrop {
   .admin-datepicker-popper .react-datepicker__day-name,
   .admin-datepicker-popper .react-datepicker__day,
   .admin-datepicker-popper .react-datepicker__time-name {
-    width: 2rem;
-    line-height: 2rem;
+    width: var(--admin-dp-day-size);
+    line-height: var(--admin-dp-day-size);
+  }
+
+  .admin-datepicker-popper
+    .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item {
+    height: 28px;
+    padding: 4px 6px;
+    font-size: 0.9rem;
   }
 
   .admin-datepicker-popper .react-datepicker__current-month,
@@ -400,5 +420,35 @@ dialog::backdrop {
 
   .admin-datepicker-popper .react-datepicker__triangle {
     display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .admin-datepicker-popper .react-datepicker {
+    --admin-dp-day-size: 1.75rem;
+    --admin-time-width: 72px;
+  }
+
+  .admin-datepicker-popper .react-datepicker__current-month,
+  .admin-datepicker-popper .react-datepicker-time__header {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .admin-datepicker-popper .react-datepicker {
+    --admin-dp-day-size: 1.6rem;
+    --admin-time-width: 64px;
+  }
+
+  .admin-datepicker-popper
+    .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item {
+    height: 24px;
+    padding: 3px 4px;
+    font-size: 0.8rem;
   }
 }
