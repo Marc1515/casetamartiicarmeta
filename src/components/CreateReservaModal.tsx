@@ -144,7 +144,12 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[680px]">
+      <DialogContent
+        className="sm:max-w-[680px]"
+        onOpenAutoFocus={(event) => {
+          if (isMobile) event.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Nueva reserva</DialogTitle>
         </DialogHeader>

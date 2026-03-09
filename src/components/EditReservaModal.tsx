@@ -175,7 +175,12 @@ export default function EditReservaModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[680px]">
+      <DialogContent
+        className="sm:max-w-[680px]"
+        onOpenAutoFocus={(event) => {
+          if (isMobile) event.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Editar reserva</DialogTitle>
         </DialogHeader>
