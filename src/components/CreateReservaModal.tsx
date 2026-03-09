@@ -88,6 +88,16 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     return () => media.removeEventListener("change", update);
   }, []);
 
+  // En móvil: al abrir el modal, no enfocar ningún input automáticamente
+  useEffect(() => {
+    if (!isMobile || !open) return;
+    const id = window.setTimeout(() => {
+      const el = document.activeElement as HTMLElement | null;
+      if (el && typeof el.blur === "function") el.blur();
+    }, 50);
+    return () => window.clearTimeout(id);
+  }, [isMobile, open]);
+
   async function onSubmit(data: FormValues) {
     const res = await fetch("/api/admin/events", {
       method: "POST",

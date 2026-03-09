@@ -86,6 +86,16 @@ export default function EditReservaModal() {
     return () => media.removeEventListener("change", update);
   }, []);
 
+  // En móvil: al abrir el modal, evitamos que ningún input reciba foco inicial
+  useEffect(() => {
+    if (!isMobile || !open) return;
+    const id = window.setTimeout(() => {
+      const el = document.activeElement as HTMLElement | null;
+      if (el && typeof el.blur === "function") el.blur();
+    }, 50);
+    return () => window.clearTimeout(id);
+  }, [isMobile, open]);
+
   // Abrir al clicar un evento del calendario
   useEffect(() => {
     const onEdit = (e: Event) => {
