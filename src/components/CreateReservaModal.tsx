@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,6 +51,7 @@ type Props = {
 };
 
 export default function CreateReservaModal({ open, onOpenChange }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
   const now = new Date();
   const defaultStart = addMinutes(now, 30 - (now.getMinutes() % 30 || 30));
   const defaultEnd = addDays(defaultStart, 1);
@@ -78,6 +79,14 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
   const end = watch("end");
 
   const [endAuto, setEndAuto] = useState(true);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   async function onSubmit(data: FormValues) {
     const res = await fetch("/api/admin/events", {
@@ -161,6 +170,10 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
                 minDate={new Date()}
                 className="w-full border rounded p-2"
                 placeholderText="Selecciona fecha y hora"
+                popperClassName="admin-datepicker-popper"
+                popperPlacement={isMobile ? "top-start" : "bottom-start"}
+                showPopperArrow={!isMobile}
+                popperProps={{ strategy: "fixed" }}
               />
               {errors.start && (
                 <p className="text-red-600 text-sm">{errors.start.message}</p>
@@ -185,6 +198,10 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
                 minDate={start ?? new Date()}
                 className="w-full border rounded p-2"
                 placeholderText="Selecciona fecha y hora"
+                popperClassName="admin-datepicker-popper"
+                popperPlacement={isMobile ? "top-start" : "bottom-start"}
+                showPopperArrow={!isMobile}
+                popperProps={{ strategy: "fixed" }}
               />
               {errors.end && (
                 <p className="text-red-600 text-sm">{errors.end.message}</p>
@@ -228,4 +245,3 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     </Dialog>
   );
 }
-

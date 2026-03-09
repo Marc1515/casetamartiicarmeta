@@ -352,3 +352,53 @@ dialog::backdrop {
 .public-calendar .rbc-month-view .rbc-event-content {
   display: none !important;
 }
+
+/* DatePicker en modales admin: que el popup (calendario + hora) quede por encima */
+.admin-datepicker-popper {
+  z-index: 130 !important;
+}
+
+@media (max-width: 640px) {
+  .admin-datepicker-popper .react-datepicker {
+    display: flex;
+    align-items: flex-start;
+    max-width: calc(100vw - 1rem);
+    --admin-dp-day-size: 2rem;
+  }
+
+  .admin-datepicker-popper .react-datepicker__month-container,
+  .admin-datepicker-popper .react-datepicker__time-container {
+    float: none;
+  }
+
+  .admin-datepicker-popper .react-datepicker__time-container {
+    width: 82px;
+    border-left: 1px solid #c4c4c4;
+  }
+
+  .admin-datepicker-popper
+    .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .admin-datepicker-popper .react-datepicker__day-name,
+  .admin-datepicker-popper .react-datepicker__day,
+  .admin-datepicker-popper .react-datepicker__time-name {
+    width: 2rem;
+    line-height: 2rem;
+  }
+
+  .admin-datepicker-popper .react-datepicker__current-month,
+  .admin-datepicker-popper .react-datepicker-time__header {
+    font-size: 1.15rem;
+  }
+
+  .admin-datepicker-popper .react-datepicker__triangle {
+    display: none;
+  }
+}

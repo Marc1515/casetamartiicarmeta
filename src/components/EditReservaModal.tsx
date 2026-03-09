@@ -54,6 +54,7 @@ type EditEventDetail = {
 export default function EditReservaModal() {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const {
     register,
@@ -76,6 +77,14 @@ export default function EditReservaModal() {
 
   const start = watch("start");
   const end = watch("end");
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   // Abrir al clicar un evento del calendario
   useEffect(() => {
@@ -187,6 +196,10 @@ export default function EditReservaModal() {
                 locale="es"
                 minDate={new Date()}
                 className="w-full border rounded p-2"
+                popperClassName="admin-datepicker-popper"
+                popperPlacement={isMobile ? "top-start" : "bottom-start"}
+                showPopperArrow={!isMobile}
+                popperProps={{ strategy: "fixed" }}
               />
               {errors.start && (
                 <p className="text-red-600 text-sm">{errors.start.message}</p>
@@ -206,6 +219,10 @@ export default function EditReservaModal() {
                 locale="es"
                 minDate={start ?? new Date()}
                 className="w-full border rounded p-2"
+                popperClassName="admin-datepicker-popper"
+                popperPlacement={isMobile ? "top-start" : "bottom-start"}
+                showPopperArrow={!isMobile}
+                popperProps={{ strategy: "fixed" }}
               />
               {errors.end && (
                 <p className="text-red-600 text-sm">{errors.end.message}</p>
