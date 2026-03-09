@@ -119,7 +119,7 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
           message: j.error ?? "Las fechas solapan con otra reserva.",
         });
       } else {
-        alert(j?.error ?? "No se pudo guardar.");
+        alert(j?.error ?? `Error ${res.status} al guardar.`);
       }
       return;
     }
