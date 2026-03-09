@@ -196,7 +196,9 @@ export default function EditReservaModal() {
                 locale="es"
                 minDate={new Date()}
                 className="w-full border rounded p-2"
-                readOnly={isMobile}
+                onFocus={(e) => {
+                  if (isMobile) (e.target as HTMLInputElement).blur();
+                }}
                 popperClassName="admin-datepicker-popper"
                 popperPlacement={isMobile ? "top-start" : "bottom-start"}
                 showPopperArrow={!isMobile}
@@ -220,7 +222,9 @@ export default function EditReservaModal() {
                 locale="es"
                 minDate={start ?? new Date()}
                 className="w-full border rounded p-2"
-                readOnly={isMobile}
+                onFocus={(e) => {
+                  if (isMobile) (e.target as HTMLInputElement).blur();
+                }}
                 popperClassName="admin-datepicker-popper"
                 popperPlacement={isMobile ? "top-start" : "bottom-start"}
                 showPopperArrow={!isMobile}

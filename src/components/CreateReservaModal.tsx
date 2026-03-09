@@ -170,7 +170,9 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
                 minDate={new Date()}
                 className="w-full border rounded p-2"
                 placeholderText="Selecciona fecha y hora"
-                readOnly={isMobile}
+                onFocus={(e) => {
+                  if (isMobile) (e.target as HTMLInputElement).blur();
+                }}
                 popperClassName="admin-datepicker-popper"
                 popperPlacement={isMobile ? "top-start" : "bottom-start"}
                 showPopperArrow={!isMobile}
@@ -190,7 +192,10 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
                   setEndAuto(false);
                   setValue("end", d, { shouldValidate: true });
                 }}
-                onFocus={() => setEndAuto(false)}
+                onFocus={(e) => {
+                  setEndAuto(false);
+                  if (isMobile) (e.target as HTMLInputElement).blur();
+                }}
                 onCalendarOpen={() => setEndAuto(false)}
                 showTimeSelect
                 timeIntervals={30}
@@ -199,7 +204,6 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
                 minDate={start ?? new Date()}
                 className="w-full border rounded p-2"
                 placeholderText="Selecciona fecha y hora"
-                readOnly={isMobile}
                 popperClassName="admin-datepicker-popper"
                 popperPlacement={isMobile ? "top-start" : "bottom-start"}
                 showPopperArrow={!isMobile}
