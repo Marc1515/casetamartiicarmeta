@@ -1,9 +1,16 @@
+"use client";
+
+import { useState } from "react";
+import { Plus } from "lucide-react";
 import CalendarAdmin from "@/components/CalendarAdmin";
 import LogoutButton from "@/components/LogoutButton";
-import ReservaForm from "@/components/ReservaForm";
 import EditReservaModal from "@/components/EditReservaModal";
+import CreateReservaModal from "@/components/CreateReservaModal";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
+  const [createOpen, setCreateOpen] = useState(false);
+
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-slate-50 py-4 sm:py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-6 px-4 lg:px-8">
@@ -22,38 +29,32 @@ export default function Page() {
           </div>
         </header>
 
-        <section className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+        <section className="grid gap-6 lg:grid-cols-1">
           <div className="rounded-xl border bg-white/80 p-4 shadow-sm backdrop-blur-sm sm:p-6">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold text-slate-900">
                 Calendario
               </h2>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                Vista general
-              </span>
+              <Button
+                type="button"
+                size="icon"
+                variant="outline"
+                className="rounded-full border-slate-200 text-slate-700 hover:bg-slate-100"
+                onClick={() => setCreateOpen(true)}
+                aria-label="Crear reserva"
+                title="Crear reserva"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
             </div>
             <div className="rounded-lg border border-slate-100 bg-white p-2 sm:p-3">
               <CalendarAdmin />
             </div>
           </div>
-
-          <div className="rounded-xl border bg-white/80 p-4 shadow-sm backdrop-blur-sm sm:p-6">
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-slate-900">
-                Crear / editar reserva
-              </h2>
-              <p className="mt-1 text-sm text-slate-600">
-                Completa los datos para añadir una nueva reserva o modificar una
-                existente seleccionada en el calendario.
-              </p>
-            </div>
-            <div className="rounded-lg border border-slate-100 bg-slate-50/80 p-3 sm:p-4">
-              <ReservaForm />
-            </div>
-          </div>
         </section>
 
         <EditReservaModal />
+        <CreateReservaModal open={createOpen} onOpenChange={setCreateOpen} />
       </div>
     </main>
   );
