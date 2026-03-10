@@ -38,6 +38,7 @@ const localizer = dateFnsLocalizer({
 export default function CalendarPublic() {
   const locale = useLocale() as "ca" | "es" | "en" | "fr" | "de";
   const t = useTranslations("calendarMessages");
+  const tCal = useTranslations("calendar");
   const [events, setEvents] = useState<Evt[]>([]);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function CalendarPublic() {
           start: new Date(e.start),
           end: new Date(e.end),
           allDay: e.allDay ?? true,
-        }))
+        })),
       );
     })();
   }, []);
@@ -73,7 +74,14 @@ export default function CalendarPublic() {
   function dayPropGetter(date: Date) {
     const key = format(date, "yyyy-MM-dd");
     if (busyDays.has(key)) {
-      return { className: "is-busy-day" };
+      return {
+        className: "is-busy-day",
+        style: {
+          // CSS custom property usada en globals.css
+          // Las comillas son necesarias para que content reciba un string
+          "--reserved-label": `"${tCal("reserved")}"`,
+        } as React.CSSProperties,
+      };
     }
     return {};
   }

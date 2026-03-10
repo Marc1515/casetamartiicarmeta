@@ -239,7 +239,7 @@ dialog::backdrop {
 /* WATERMARK diagonal (solo >= sm) */
 @media (min-width: 640px) {
   .public-calendar .rbc-month-view .is-busy-day::before {
-    content: "RESERVADO";
+    content: var(--reserved-label);
     position: absolute;
     inset: 0;
     display: grid;
@@ -377,7 +377,9 @@ dialog::backdrop {
     border-left: 1px solid #c4c4c4;
   }
 
-  .admin-datepicker-popper .react-datepicker__time-container .react-datepicker__time,
+  .admin-datepicker-popper
+    .react-datepicker__time-container
+    .react-datepicker__time,
   .admin-datepicker-popper
     .react-datepicker__time-container
     .react-datepicker__time
