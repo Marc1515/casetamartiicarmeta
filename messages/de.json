@@ -33,7 +33,7 @@
     "imageAlt": "Caseta Martí i Carmeta"
   },
   "calendar": {
-    "title": "Verfügbarkeitskalender",
+    "title": "Kalender",
     "leadIntro": "Hier sehen Sie die tatsächliche Verfügbarkeit der Caseta.",
     "leadMarkedAs": "Die als",
     "reserved": "GEBUCHT",
@@ -69,4 +69,3 @@
     "ariaLabel": "Landschaft des Deltas"
   }
 }
-
