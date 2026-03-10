@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Location de vacances"
+  },
+  "nav": {
+    "home": "Accueil",
+    "calendario": "Calendrier",
+    "fotos": "Galerie",
+    "contacto": "Contact",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "menuAria": "Menu de navigation"
+  },
+  "footer": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Location de vacances. Réservez en toute tranquillité et consultez les disponibilités dans le calendrier.",
+    "sections": "Sections",
+    "backToTop": "Retour en haut",
+    "links": {
+      "home": "Accueil",
+      "calendario": "Calendrier",
+      "fotos": "Galerie",
+      "contacto": "Contact"
+    },
+    "copyright": "© {year} Caseta Martí i Carmeta"
+  },
+  "home": {
+    "title": "Caseta Martí i Carmeta",
+    "subtitle": "Hébergement chaleureux pour des escapades près de la mer et de la nature.",
+    "ctaAvailability": "Voir les disponibilités",
+    "ctaPhotos": "Voir les photos",
+    "imageAlt": "Caseta Martí i Carmeta"
+  },
+  "calendar": {
+    "title": "Calendrier des disponibilités",
+    "leadIntro": "Consultez ici les disponibilités réelles de la caseta.",
+    "leadMarkedAs": "Les jours marqués",
+    "reserved": "RÉSERVÉ",
+    "reservedDayTitle": "Jour réservé",
+    "leadMiddle": "ne sont pas disponibles ; les autres peuvent être demandés. Si vous prévoyez un long séjour ou que vos dates sont flexibles, nous vous recommandons de regarder plusieurs semaines pour trouver le meilleur créneau.",
+    "leadEnd": "Une fois vos dates choisies, rendez-vous dans la section contact, nous vous répondrons au plus vite."
+  },
+  "calendarMessages": {
+    "month": "Mois",
+    "week": "Semaine",
+    "day": "Jour",
+    "today": "Aujourd'hui",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "lead": "Parcourez la galerie et découvrez chaque recoin de la caseta : le porche pour prendre le petit-déjeuner en douceur, la piscine pour se détendre, les chambres lumineuses et tous les détails qui la rendent spéciale.\n\nFeuilletez les photos à votre rythme, affichez-les en plein écran et imaginez votre séjour ici, entre calme, nature et bon goût."
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Vous avez des questions ou vous souhaitez réserver ? Écrivez-nous et nous vous répondrons dès que possible.\n\nVous pouvez nous contacter par WhatsApp, téléphone ou e-mail.\n\nNous pouvons aussi vous aider pour l’itinéraire, les recommandations dans la région et tout détail nécessaire pour votre séjour.",
+    "hint": "Indiquez les dates et le nombre de personnes, nous vous répondrons rapidement.",
+    "emailLabel": "Envoyer un e-mail",
+    "whatsapp": "WhatsApp",
+    "directions": "Comment venir",
+    "mapTitle": "Emplacement de la Caseta Martí i Carmeta"
+  },
+  "banner1": {
+    "ariaLabel": "Jardin de la caseta"
+  },
+  "banner2": {
+    "ariaLabel": "Paysage du delta"
+  }
+}
+

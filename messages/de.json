@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Ferienunterkunft"
+  },
+  "nav": {
+    "home": "Startseite",
+    "calendario": "Kalender",
+    "fotos": "Galerie",
+    "contacto": "Kontakt",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "menuAria": "Navigationsmenü"
+  },
+  "footer": {
+    "title": "Caseta Martí i Carmeta",
+    "description": "Ferienunterkunft. Buchen Sie ganz entspannt und prüfen Sie die Verfügbarkeit im Kalender.",
+    "sections": "Bereiche",
+    "backToTop": "Nach oben",
+    "links": {
+      "home": "Startseite",
+      "calendario": "Kalender",
+      "fotos": "Galerie",
+      "contacto": "Kontakt"
+    },
+    "copyright": "© {year} Caseta Martí i Carmeta"
+  },
+  "home": {
+    "title": "Caseta Martí i Carmeta",
+    "subtitle": "Gemütliche Unterkunft für Auszeiten in der Nähe von Meer und Natur.",
+    "ctaAvailability": "Verfügbarkeit prüfen",
+    "ctaPhotos": "Fotos ansehen",
+    "imageAlt": "Caseta Martí i Carmeta"
+  },
+  "calendar": {
+    "title": "Verfügbarkeitskalender",
+    "leadIntro": "Hier sehen Sie die tatsächliche Verfügbarkeit der Caseta.",
+    "leadMarkedAs": "Die als",
+    "reserved": "GEBUCHT",
+    "reservedDayTitle": "Gebuchter Tag",
+    "leadMiddle": "markierten Tage sind nicht verfügbar; die übrigen können angefragt werden. Wenn Sie einen längeren Aufenthalt planen oder flexible Daten haben, empfehlen wir, mehrere Wochen zu betrachten, um die beste Option zu finden.",
+    "leadEnd": "Wenn Ihre Wunschdaten feststehen, fahren Sie mit dem Kontaktbereich fort – wir melden uns so schnell wie möglich."
+  },
+  "calendarMessages": {
+    "month": "Monat",
+    "week": "Woche",
+    "day": "Tag",
+    "today": "Heute",
+    "previous": "Zurück",
+    "next": "Weiter"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "lead": "Entdecken Sie in der Galerie jeden Winkel der Caseta: die Veranda für ein entspanntes Frühstück, den Pool zum Abschalten, die hellen Zimmer und all die Details, die sie besonders machen.\n\nBlättern Sie in Ruhe durch die Fotos, zeigen Sie sie im Vollbild an und spüren Sie, wie sich ein Aufenthalt hier anfühlt – zwischen Ruhe, Natur und gutem Geschmack."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "lead": "Sie haben Fragen oder möchten buchen? Schreiben Sie uns, wir antworten Ihnen so schnell wie möglich.\n\nSie erreichen uns per WhatsApp, Telefon oder E-Mail.\n\nGerne helfen wir auch mit Anreisehinweisen, Tipps für die Umgebung und allen weiteren Details für Ihren Aufenthalt.",
+    "hint": "Bitte geben Sie Daten und Personenzahl an – wir melden uns zeitnah.",
+    "emailLabel": "E-Mail senden",
+    "whatsapp": "WhatsApp",
+    "directions": "Anreise",
+    "mapTitle": "Lage der Caseta Martí i Carmeta"
+  },
+  "banner1": {
+    "ariaLabel": "Garten der Caseta"
+  },
+  "banner2": {
+    "ariaLabel": "Landschaft des Deltas"
+  }
+}
+

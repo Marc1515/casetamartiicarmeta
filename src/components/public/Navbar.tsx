@@ -18,6 +18,8 @@ const LOCALES = [
   { locale: "ca" as const, label: "Català" },
   { locale: "es" as const, label: "Castellano" },
   { locale: "en" as const, label: "English" },
+  { locale: "fr" as const, label: "Français" },
+  { locale: "de" as const, label: "Deutsch" },
 ] as const;
 
 const FLAG_SIZE = 20;
@@ -62,6 +64,26 @@ function LocaleFlag({
     return (
       <Icon
         icon="circle-flags:es"
+        width={s}
+        height={s}
+        className={className}
+        aria-hidden
+      />
+    );
+  if (locale === "fr")
+    return (
+      <Icon
+        icon="circle-flags:fr"
+        width={s}
+        height={s}
+        className={className}
+        aria-hidden
+      />
+    );
+  if (locale === "de")
+    return (
+      <Icon
+        icon="circle-flags:de"
         width={s}
         height={s}
         className={className}
@@ -464,40 +486,52 @@ export default function Navbar() {
                   </motion.a>
                 );
               })}
-              {/* Selector idioma en móvil */}
+              {/* Selector idioma en móvil (3 arriba + 2 abajo) */}
               <motion.div
-                className="mt-4 flex gap-6 text-white/90"
+                className="mt-4 flex flex-col items-center gap-3 text-white/90"
                 variants={itemVariants}
               >
-                {LOCALES.map(({ locale, label }, idx) => (
-                  <motion.a
-                    key={locale}
-                    href={`/${locale}${pathname === "/" ? "" : pathname}`}
-                    title={label}
-                    aria-label={label}
-                    className={
-                      currentLocale === locale
-                        ? "opacity-100 rounded-sm"
-                        : "opacity-70 hover:opacity-100"
-                    }
-                    aria-current={currentLocale === locale ? "true" : undefined}
-                    initial={
-                      prefersReduced ? false : { opacity: 0, y: 8, scale: 0.9 }
-                    }
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={
-                      prefersReduced
-                        ? { duration: 0 }
-                        : {
-                            duration: 0.35,
-                            delay: 0.1 + idx * 0.05,
-                            ease: [0.25, 0.1, 0.25, 1],
+                {[LOCALES.slice(0, 3), LOCALES.slice(3)].map(
+                  (row, rowIndex) => (
+                    <div key={rowIndex} className="flex gap-6">
+                      {row.map(({ locale, label }, idx) => (
+                        <motion.a
+                          key={locale}
+                          href={`/${locale}${
+                            pathname === "/" ? "" : pathname
+                          }`}
+                          title={label}
+                          aria-label={label}
+                          className={
+                            currentLocale === locale
+                              ? "opacity-100 rounded-sm"
+                              : "opacity-70 hover:opacity-100"
                           }
-                    }
-                  >
-                    <LocaleFlag locale={locale} size="lg" />
-                  </motion.a>
-                ))}
+                          aria-current={
+                            currentLocale === locale ? "true" : undefined
+                          }
+                          initial={
+                            prefersReduced
+                              ? false
+                              : { opacity: 0, y: 8, scale: 0.9 }
+                          }
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={
+                            prefersReduced
+                              ? { duration: 0 }
+                              : {
+                                  duration: 0.35,
+                                  delay: 0.1 + (rowIndex * 3 + idx) * 0.04,
+                                  ease: [0.25, 0.1, 0.25, 1],
+                                }
+                          }
+                        >
+                          <LocaleFlag locale={locale} size="lg" />
+                        </motion.a>
+                      ))}
+                    </div>
+                  ),
+                )}
               </motion.div>
             </motion.div>
           </motion.div>

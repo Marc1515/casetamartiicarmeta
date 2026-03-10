@@ -9,7 +9,7 @@ import {
   getDay,
   eachDayOfInterval,
 } from "date-fns";
-import { ca, es, enUS } from "date-fns/locale";
+import { ca, es, enUS, fr, de } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 
 type ApiEvent = {
@@ -32,11 +32,11 @@ const localizer = dateFnsLocalizer({
   parse,
   startOfWeek: (date: Date) => startOfWeek(date, { weekStartsOn: 1 }),
   getDay: (date: Date) => getDay(date),
-  locales: { ca, es, en: enUS },
+  locales: { ca, es, en: enUS, fr, de },
 });
 
 export default function CalendarPublic() {
-  const locale = useLocale() as "ca" | "es" | "en";
+  const locale = useLocale() as "ca" | "es" | "en" | "fr" | "de";
   const t = useTranslations("calendarMessages");
   const [events, setEvents] = useState<Evt[]>([]);
 
