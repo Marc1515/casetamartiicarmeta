@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { inter, fraunces } from "@/lib/fonts";
 import "./globals.css";
@@ -7,6 +7,11 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 export const metadata: Metadata = {
   title: "Caseta Martí i Carmeta",
   description: "Alquiler turístico",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default async function RootLayout({
