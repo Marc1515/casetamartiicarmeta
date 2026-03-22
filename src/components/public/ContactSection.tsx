@@ -14,10 +14,13 @@ const LNG = 0.6799424640762735;
 // Enlace a “Cómo llegar” (abre Google Maps con destino)
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT},${LNG}`;
 
-// Google en iframe: usar embed oficial. Opciones (por prioridad):
-// 1) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC — URL completa del iframe (Maps → Compartir → Insertar mapa).
-// 2) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY — Maps Embed API (modo place) con estas coordenadas.
-// Sin ninguna de las dos, se usa OpenStreetMap (fiable en Instagram / WebViews).
+// Google en iframe: el pin rojo grande es típico de “sitios” en la base de datos de Google (negocios, POI).
+// Una vivienda sin ficha suele verse solo como punto gris; eso no lo arregla el HTML del iframe.
+// Opciones (por prioridad):
+// 1) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY — Embed API modo place en LAT/LNG: pin rojo en la caseta.
+//    Vista hybrid (satélite + calles). Si también tienes EMBED_SRC, manda la clave (esta opción tiene prioridad).
+// 2) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC — URL de Compartir → Insertar (encuadre manual, puede ser sin pin rojo).
+// Sin ninguna de las dos, OpenStreetMap (fiable en Instagram / WebViews).
 const OSM_DELTA_LNG = 0.006;
 const OSM_DELTA_LAT = 0.004;
 const osmEmbedSrc = (() => {
@@ -30,15 +33,22 @@ const osmEmbedSrc = (() => {
 })();
 
 function mapEmbedSrc(locale: string): string {
-  const fromShare = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC?.trim();
-  if (fromShare) {
-    return fromShare;
-  }
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY?.trim();
   if (key) {
     const language = locale.split("-")[0] || "es";
     const q = `${LAT},${LNG}`;
-    return `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(key)}&q=${encodeURIComponent(q)}&zoom=15&language=${encodeURIComponent(language)}`;
+    const params = new URLSearchParams({
+      key,
+      q,
+      zoom: "18",
+      language,
+      maptype: "hybrid",
+    });
+    return `https://www.google.com/maps/embed/v1/place?${params.toString()}`;
+  }
+  const fromShare = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC?.trim();
+  if (fromShare) {
+    return fromShare;
   }
   return osmEmbedSrc;
 }
