@@ -18,6 +18,7 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT
 // Una vivienda sin ficha suele verse solo como punto gris; eso no lo arregla el HTML del iframe.
 // Opciones (por prioridad):
 // 1) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY — Embed API modo place en LAT/LNG: pin rojo en la caseta.
+//    Zoom: NEXT_PUBLIC_GOOGLE_MAPS_EMBED_ZOOM (0–21, por defecto 15; menos número = más lejos).
 //    En modo place solo valen maptype roadmap | satellite (no hybrid). Si también tienes EMBED_SRC, manda la clave.
 // 2) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC — URL de Compartir → Insertar (encuadre manual, puede ser sin pin rojo).
 // Sin ninguna de las dos, OpenStreetMap (fiable en Instagram / WebViews).
@@ -32,6 +33,17 @@ const osmEmbedSrc = (() => {
   return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${LAT},${LNG}`;
 })();
 
+function googleEmbedZoom(): string {
+  const raw = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_ZOOM?.trim();
+  if (raw) {
+    const n = Number.parseInt(raw, 10);
+    if (Number.isFinite(n) && n >= 0 && n <= 21) {
+      return String(n);
+    }
+  }
+  return "15";
+}
+
 function mapEmbedSrc(locale: string): string {
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY?.trim();
   if (key) {
@@ -40,7 +52,7 @@ function mapEmbedSrc(locale: string): string {
     const params = new URLSearchParams({
       key,
       q,
-      zoom: "18",
+      zoom: googleEmbedZoom(),
       language,
       maptype: "satellite",
     });
