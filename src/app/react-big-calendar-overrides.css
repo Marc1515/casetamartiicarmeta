@@ -1,0 +1,10 @@
+/* Importar DESPUÉS de react-big-calendar.css en layout.
+   La librería pone .rbc-toolbar { font-size: 16px } (px fijos); así el texto de
+   Hoy / Atrás / Siguiente escala con el mismo rem que el resto de la app
+   (p. ej. data-inapp-browser + --app-inapp-root-font-size en globals.css). */
+.rbc-toolbar {
+  font-size: 0.95rem;
+}
+.rbc-toolbar button {
+  font-size: inherit;
+}

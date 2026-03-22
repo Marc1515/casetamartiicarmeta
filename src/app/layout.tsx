@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { inter, fraunces } from "@/lib/fonts";
 import "./globals.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./react-big-calendar-overrides.css";
 
 export const metadata: Metadata = {
   title: "Caseta Martí i Carmeta",
