@@ -34,6 +34,9 @@
   ::before,
   ::after {
     border-color: hsl(var(--border));
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   html {
     scroll-behavior: smooth;
@@ -41,6 +44,11 @@
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
+  }
+
+  /* Instagram / Facebook in-app (Android WebView): suele renderizar ~1 escalón más grande que Chrome */
+  html[data-inapp-browser="1"] {
+    font-size: 14px;
   }
 
   body {
