@@ -18,7 +18,7 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT
 // Una vivienda sin ficha suele verse solo como punto gris; eso no lo arregla el HTML del iframe.
 // Opciones (por prioridad):
 // 1) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY — Embed API modo place en LAT/LNG: pin rojo en la caseta.
-//    Vista hybrid (satélite + calles). Si también tienes EMBED_SRC, manda la clave (esta opción tiene prioridad).
+//    En modo place solo valen maptype roadmap | satellite (no hybrid). Si también tienes EMBED_SRC, manda la clave.
 // 2) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC — URL de Compartir → Insertar (encuadre manual, puede ser sin pin rojo).
 // Sin ninguna de las dos, OpenStreetMap (fiable en Instagram / WebViews).
 const OSM_DELTA_LNG = 0.006;
@@ -42,7 +42,7 @@ function mapEmbedSrc(locale: string): string {
       q,
       zoom: "18",
       language,
-      maptype: "hybrid",
+      maptype: "satellite",
     });
     return `https://www.google.com/maps/embed/v1/place?${params.toString()}`;
   }
