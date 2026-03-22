@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { Phone, Mail } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Coordenadas de la caseta (ejemplo). Cambia por las reales.
 const LAT = 40.72502884042648;
@@ -14,8 +14,10 @@ const LNG = 0.6799424640762735;
 // Enlace a “Cómo llegar” (abre Google Maps con destino)
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT},${LNG}`;
 
-// Mapa incrustado: Google con `?q=...&output=embed` no es el embed oficial y en WebViews (p. ej. Instagram)
-// suele fallar con net::ERR_BLOCKED_BY_RESPONSE. OpenStreetMap sí permite iframe de forma fiable.
+// Google en iframe: usar embed oficial. Opciones (por prioridad):
+// 1) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC — URL completa del iframe (Maps → Compartir → Insertar mapa).
+// 2) NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY — Maps Embed API (modo place) con estas coordenadas.
+// Sin ninguna de las dos, se usa OpenStreetMap (fiable en Instagram / WebViews).
 const OSM_DELTA_LNG = 0.006;
 const OSM_DELTA_LAT = 0.004;
 const osmEmbedSrc = (() => {
@@ -27,8 +29,23 @@ const osmEmbedSrc = (() => {
   return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${LAT},${LNG}`;
 })();
 
+function mapEmbedSrc(locale: string): string {
+  const fromShare = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_SRC?.trim();
+  if (fromShare) {
+    return fromShare;
+  }
+  const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_API_KEY?.trim();
+  if (key) {
+    const language = locale.split("-")[0] || "es";
+    const q = `${LAT},${LNG}`;
+    return `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(key)}&q=${encodeURIComponent(q)}&zoom=15&language=${encodeURIComponent(language)}`;
+  }
+  return osmEmbedSrc;
+}
+
 export default function ContactSection() {
   const t = useTranslations("contact");
+  const locale = useLocale();
   const email = "pajuanf@gmail.com";
   const phone = "+34 652 75 92 94";
   const whatsapp =
@@ -136,7 +153,7 @@ export default function ContactSection() {
               {/* 16:9 ratio */}
               <iframe
                 title={t("mapTitle")}
-                src={osmEmbedSrc}
+                src={mapEmbedSrc(locale)}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 h-full w-full border-0"
