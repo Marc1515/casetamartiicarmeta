@@ -14,8 +14,18 @@ const LNG = 0.6799424640762735;
 // Enlace a “Cómo llegar” (abre Google Maps con destino)
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${LAT},${LNG}`;
 
-// URL del iframe (embed). Puedes sustituir por una URL de “Compartir > Insertar mapa” de Google Maps si prefieres.
-const embedSrc = `https://www.google.com/maps?q=${LAT},${LNG}&hl=es&z=15&output=embed`;
+// Mapa incrustado: Google con `?q=...&output=embed` no es el embed oficial y en WebViews (p. ej. Instagram)
+// suele fallar con net::ERR_BLOCKED_BY_RESPONSE. OpenStreetMap sí permite iframe de forma fiable.
+const OSM_DELTA_LNG = 0.006;
+const OSM_DELTA_LAT = 0.004;
+const osmEmbedSrc = (() => {
+  const minLng = LNG - OSM_DELTA_LNG;
+  const minLat = LAT - OSM_DELTA_LAT;
+  const maxLng = LNG + OSM_DELTA_LNG;
+  const maxLat = LAT + OSM_DELTA_LAT;
+  const bbox = `${minLng},${minLat},${maxLng},${maxLat}`;
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${LAT},${LNG}`;
+})();
 
 export default function ContactSection() {
   const t = useTranslations("contact");
@@ -126,7 +136,7 @@ export default function ContactSection() {
               {/* 16:9 ratio */}
               <iframe
                 title={t("mapTitle")}
-                src={embedSrc}
+                src={osmEmbedSrc}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 h-full w-full border-0"
