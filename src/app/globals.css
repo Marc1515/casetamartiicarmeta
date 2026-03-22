@@ -26,6 +26,17 @@
   --input: 240 5.9% 90%;
   --ring: 240 5% 64.9%;
   --radius: 0.75rem;
+
+  /*
+   * Escala de texto (todo lo que usa `rem` en Tailwind depende de esto).
+   * - --app-root-font-size: navegadores normales (p. ej. Chrome).
+   * - --app-inapp-root-font-size: solo Instagram / Facebook in-app
+   *   (el layout añade data-inapp-browser en <html> vía User-Agent).
+   * Si en Instagram sigue grande → baja un poco (p. ej. 12.5px o 13px).
+   * Si se ve demasiado pequeño → sube (p. ej. 14px o 15px).
+   */
+  --app-root-font-size: 16px;
+  --app-inapp-root-font-size: 13px;
 }
 
 @layer base {
@@ -40,15 +51,14 @@
   }
   html {
     scroll-behavior: smooth;
-    font-size: 16px;
+    font-size: var(--app-root-font-size);
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
 
-  /* Instagram / Facebook in-app (Android WebView): suele renderizar ~1 escalón más grande que Chrome */
   html[data-inapp-browser="1"] {
-    font-size: 14px;
+    font-size: var(--app-inapp-root-font-size);
   }
 
   body {
