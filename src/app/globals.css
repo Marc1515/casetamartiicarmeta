@@ -38,7 +38,7 @@
    *   se corrige en src/app/react-big-calendar-overrides.css (0.95rem = misma escala que el calendario).
    */
   --app-root-font-size: 16px;
-  --app-inapp-root-font-size: 10px;
+  --app-inapp-root-font-size: 12px;
 }
 
 @layer base {
