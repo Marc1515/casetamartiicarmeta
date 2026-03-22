@@ -36,7 +36,7 @@
    * Si se ve demasiado pequeño → sube (p. ej. 14px o 15px).
    */
   --app-root-font-size: 16px;
-  --app-inapp-root-font-size: 12px;
+  --app-inapp-root-font-size: 10px;
 }
 
 @layer base {
