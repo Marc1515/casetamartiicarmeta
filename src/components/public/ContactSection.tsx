@@ -178,9 +178,13 @@ export default function ContactSection() {
                 src={mapEmbedSrc(locale)}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                aria-describedby="map-description"
                 className="absolute inset-0 h-full w-full border-0"
               />
             </div>
+            <p id="map-description" className="px-3 py-2 text-sm text-muted-foreground">
+              {t("mapCaption")}
+            </p>
           </div>
         </ScrollReveal>
       </div>

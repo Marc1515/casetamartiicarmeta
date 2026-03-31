@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "title": "Caseta Martí i Carmeta",
-    "description": "Alquiler turístico"
+    "title": "Caseta Martí i Carmeta | Alojamiento turístico en el Delta del Ebro",
+    "description": "Caseta turística con piscina y jardín en Terres de l'Ebre. Perfecta para escapadas cerca del Delta del Ebro entre naturaleza, mar y tranquilidad.",
+    "ogTitle": "Caseta Martí i Carmeta | Escapada en el Delta del Ebro",
+    "ogDescription": "Reserva un alojamiento turístico con encanto, piscina y terraza cerca del Delta del Ebro.",
+    "ogImageAlt": "Vista exterior de Caseta Martí i Carmeta con jardín y piscina"
   },
   "nav": {
     "home": "Inicio",
@@ -14,7 +17,9 @@
   },
   "footer": {
     "title": "Caseta Martí i Carmeta",
-    "description": "Alquiler turístico. Reserva con tranquilidad y consulta la disponibilidad en el calendario.",
+    "description": "Alojamiento turístico en Terres de l'Ebre, cerca del Delta del Ebro. Consulta disponibilidad y planifica una escapada con calma.",
+    "location": "Ubicación: Terres de l'Ebre, Tarragona (Cataluña)",
+    "contact": "Contacto",
     "sections": "Secciones",
     "backToTop": "Volver arriba",
     "links": {
@@ -27,10 +32,10 @@
   },
   "home": {
     "title": "Caseta Martí i Carmeta",
-    "subtitle": "Alojamiento acogedor para escapadas cerca del mar y la naturaleza.",
+    "subtitle": "Alojamiento turístico con encanto en Terres de l'Ebre, ideal para escapadas cerca del Delta del Ebro, el mar y la naturaleza.",
     "ctaAvailability": "Ver disponibilidad",
     "ctaPhotos": "Ver fotos",
-    "imageAlt": "Caseta Martí i Carmeta"
+    "imageAlt": "Fachada principal de Caseta Martí i Carmeta rodeada de jardín mediterráneo"
   },
   "calendar": {
     "title": "Calendario de disponibilidad",
@@ -51,21 +56,56 @@
   },
   "gallery": {
     "title": "Galería",
-    "lead": "Explora la galería y conoce cada rincón de la caseta: el porche donde desayunar lento, la piscina para desconectar, las habitaciones luminosas y los detalles que la hacen especial.\n\nNavega por las fotos a tu ritmo, amplíalas en pantalla completa y descubre cómo se vive aquí, entre calma, naturaleza y buen gusto."
+    "lead": "Explora cada espacio de la caseta: el porche para desayunar al aire libre, la piscina para relajarte, las habitaciones luminosas y las zonas comunes pensadas para descansar.\n\nEs un alojamiento turístico ideal para descubrir el Delta del Ebro y disfrutar de una escapada tranquila entre naturaleza, mar y gastronomía local.",
+    "imageAlts": {
+      "house": "Fachada principal de la caseta",
+      "house2": "Vista exterior lateral del alojamiento",
+      "pool": "Piscina privada de la caseta",
+      "pool2": "Piscina y zona de descanso del jardín",
+      "terrace": "Terraza exterior para comer al aire libre",
+      "terrace2": "Porche sombreado de la caseta",
+      "terrace3": "Detalle de la terraza con zona chill out",
+      "garden": "Jardín mediterráneo de la propiedad",
+      "garden2": "Zona verde exterior del alojamiento",
+      "diningroom": "Comedor principal luminoso",
+      "diningroom2": "Comedor con mesa amplia para grupo",
+      "diningroom3": "Zona interior de comedor y paso",
+      "diningroom4": "Detalle del espacio de comedor",
+      "kitchen": "Cocina equipada de la caseta",
+      "kitchen2": "Vista general de la cocina",
+      "kitchen3": "Detalle de cocina y electrodomésticos",
+      "kitchen4": "Zona de cocina preparada para estancia vacacional",
+      "bathroom": "Baño completo del alojamiento",
+      "bathroom2": "Detalle del segundo baño",
+      "doubleroom": "Habitación doble con cama de matrimonio",
+      "doubleroom2": "Habitación doble con luz natural",
+      "doubleroom3": "Detalle decorativo de habitación doble",
+      "doubleroom4": "Zona de descanso de habitación doble",
+      "bedroom": "Dormitorio acogedor de la caseta",
+      "bedroom2": "Dormitorio con mobiliario funcional",
+      "bedroom3": "Vista lateral del dormitorio",
+      "bedroom4": "Detalle de dormitorio preparado para huéspedes"
+    }
   },
   "contact": {
     "title": "Contacto",
-    "lead": "¿Tienes dudas o quieres reservar? Escríbenos y te respondemos lo antes posible.\n\nPuedes contactarnos por WhatsApp, teléfono o correo.\n\nTambién te ayudamos con cómo llegar, recomendaciones de la zona y cualquier detalle que necesites para tu estancia.",
+    "lead": "¿Quieres reservar tu estancia en la caseta? Escríbenos y te responderemos lo antes posible.\n\nPuedes contactarnos por WhatsApp, teléfono o correo electrónico.\n\nTambién te ayudamos con indicaciones para llegar, ideas para descubrir el Delta del Ebro y recomendaciones locales para tu viaje.",
     "hint": "Indica fechas y número de personas, te responderemos pronto.",
     "emailLabel": "Escribir email",
     "whatsapp": "WhatsApp",
     "directions": "Cómo llegar",
-    "mapTitle": "Ubicación Caseta Martí i Carmeta"
+    "mapTitle": "Ubicación Caseta Martí i Carmeta",
+    "mapCaption": "Mapa orientativo de la zona de la caseta. Ubicación exacta pendiente de confirmar."
   },
   "banner1": {
     "ariaLabel": "Jardín de la caseta"
   },
   "banner2": {
     "ariaLabel": "Paisaje del delta"
+  },
+  "seo": {
+    "locationShort": "Delta del Ebro",
+    "locationFull": "Terres de l'Ebre, Tarragona, Cataluña",
+    "structuredDescription": "Alojamiento turístico de alquiler vacacional con piscina, jardín y terraza en Terres de l'Ebre, ideal para escapadas al Delta del Ebro."
   }
 }

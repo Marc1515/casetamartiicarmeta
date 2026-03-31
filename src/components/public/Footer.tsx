@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { CONTACT } from "@/lib/seo";
 
 const LINK_KEYS = [
   { href: "#home", key: "home" },
@@ -21,6 +22,19 @@ export default function Footer() {
             <div className="font-semibold text-[#EEEEEE]">{t("title")}</div>
             <p className="text-sm text-[#EEEEEE] opacity-80">
               {t("description")}
+            </p>
+            <p className="text-sm text-[#EEEEEE] opacity-80">
+              {t("location")}
+            </p>
+            <p className="text-sm text-[#EEEEEE] opacity-80">
+              {t("contact")}:{" "}
+              <a href={`tel:${CONTACT.phoneClean}`} className="hover:underline">
+                {CONTACT.phone}
+              </a>{" "}
+              -{" "}
+              <a href={`mailto:${CONTACT.email}`} className="hover:underline">
+                {CONTACT.email}
+              </a>
             </p>
           </div>
 

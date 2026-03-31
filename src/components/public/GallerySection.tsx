@@ -99,6 +99,8 @@ export default function GallerySection() {
   // Previene layout shift calculando tamaño de la imagen grande
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
   const prefersReducedMotion = useReducedMotion();
+  const getImageKey = (src: string) => src.split("/").pop()?.split(".")[0] ?? "";
+  const getImageAlt = (src: string) => t(`imageAlts.${getImageKey(src)}`);
 
   return (
     <Section
@@ -127,12 +129,12 @@ export default function GallerySection() {
           >
             <button
               onClick={() => openModalAt(main)}
-              aria-label="Ver foto"
+              aria-label={t("title")}
               className="group relative overflow-hidden rounded-lg border h-56 md:h-full w-full"
             >
               <Image
                 src={main}
-                alt="Foto del alojamiento"
+                alt={getImageAlt(main)}
                 fill
                 priority
                 sizes="(min-width: 768px) 50vw, 100vw"
@@ -151,12 +153,12 @@ export default function GallerySection() {
           >
             <button
               onClick={() => openModalAt(src)}
-              aria-label="Ver foto"
+              aria-label={t("title")}
               className="group relative overflow-hidden rounded-lg border h-40 md:h-auto w-full"
             >
               <Image
                 src={src}
-                alt="Foto del alojamiento"
+                alt={getImageAlt(src)}
                 fill
                 loading="lazy"
                 sizes="(min-width: 768px) 50vw, 100vw"
@@ -185,12 +187,12 @@ export default function GallerySection() {
             >
               <button
                 onClick={() => openModalAt(src)}
-                aria-label="Ver foto"
+                aria-label={t("title")}
                 className="group relative overflow-hidden rounded-lg border aspect-[4/3] w-full"
               >
                 <Image
                   src={src}
-                  alt="Foto del alojamiento"
+                  alt={getImageAlt(src)}
                   fill
                   loading="lazy"
                   sizes="(min-width: 768px) 25vw, 50vw"
@@ -212,7 +214,7 @@ export default function GallerySection() {
             {/* Imagen grande */}
             <Image
               src={IMAGES[index]}
-              alt={`Foto ${index + 1} de ${IMAGES.length}`}
+              alt={getImageAlt(IMAGES[index])}
               width={mainSizes.width}
               height={mainSizes.height}
               className="w-full h-auto max-h-[70vh] object-contain bg-black/5"
@@ -259,7 +261,7 @@ export default function GallerySection() {
                 >
                   <Image
                     src={src}
-                    alt={`Miniatura ${i + 1}`}
+                    alt={getImageAlt(src)}
                     fill
                     className="object-cover"
                     sizes="96px"

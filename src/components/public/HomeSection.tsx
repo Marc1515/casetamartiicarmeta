@@ -14,6 +14,7 @@ import Section from "@/components/public/Section";
 
 export default function HomeSection() {
   const t = useTranslations("home");
+  const heroImageAlt = t("imageAlt");
   const sectionRef = useRef<HTMLElement>(null!);
   const prefersReduced = useReducedMotion();
 
@@ -41,7 +42,7 @@ export default function HomeSection() {
           >
             <Image
               src="/img/housebetter.png"
-              alt={t("imageAlt")}
+              alt={heroImageAlt}
               fill
               priority
               sizes="100vw"

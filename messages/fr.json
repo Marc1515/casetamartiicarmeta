@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "title": "Caseta Martí i Carmeta",
-    "description": "Location de vacances"
+    "title": "Caseta Marti i Carmeta | Location de vacances au Delta de l'Ebre",
+    "description": "Location de vacances avec piscine et jardin dans les Terres de l'Ebre, proche du Delta de l'Ebre. Ideal pour un sejour entre nature et mer.",
+    "ogTitle": "Caseta Marti i Carmeta | Sejour proche du Delta de l'Ebre",
+    "ogDescription": "Reservez une maison de vacances chaleureuse avec piscine et terrasse dans un cadre naturel.",
+    "ogImageAlt": "Vue exterieure de la Caseta Marti i Carmeta avec jardin et piscine"
   },
   "nav": {
     "home": "Accueil",
@@ -14,7 +17,9 @@
   },
   "footer": {
     "title": "Caseta Martí i Carmeta",
-    "description": "Location de vacances. Réservez en toute tranquillité et consultez les disponibilités dans le calendrier.",
+    "description": "Location de vacances dans les Terres de l'Ebre, pres du Delta de l'Ebre. Consultez les disponibilites et preparez votre escapade.",
+    "location": "Emplacement: Terres de l'Ebre, Tarragone (Catalogne, Espagne)",
+    "contact": "Contact",
     "sections": "Sections",
     "backToTop": "Retour en haut",
     "links": {
@@ -27,10 +32,10 @@
   },
   "home": {
     "title": "Caseta Martí i Carmeta",
-    "subtitle": "Hébergement chaleureux pour des escapades près de la mer et de la nature.",
+    "subtitle": "Hebergement touristique de charme dans les Terres de l'Ebre, ideal pour une escapade proche du Delta de l'Ebre, de la mer et de la nature.",
     "ctaAvailability": "Voir les disponibilités",
     "ctaPhotos": "Voir les photos",
-    "imageAlt": "Caseta Martí i Carmeta"
+    "imageAlt": "Facade principale de la Caseta Marti i Carmeta entouree de jardin mediterraneen"
   },
   "calendar": {
     "title": "Calendrier des disponibilités",
@@ -51,22 +56,57 @@
   },
   "gallery": {
     "title": "Galerie",
-    "lead": "Parcourez la galerie et découvrez chaque recoin de la caseta : le porche pour prendre le petit-déjeuner en douceur, la piscine pour se détendre, les chambres lumineuses et tous les détails qui la rendent spéciale.\n\nFeuilletez les photos à votre rythme, affichez-les en plein écran et imaginez votre séjour ici, entre calme, nature et bon goût."
+    "lead": "Decouvrez chaque espace de la caseta: le porche pour les petits-dejeuners en plein air, la piscine pour se detendre, les chambres lumineuses et les pieces communes confortables.\n\nCette location de vacances est parfaite pour explorer le Delta de l'Ebre et profiter d'un sejour paisible entre nature, mer et gastronomie locale.",
+    "imageAlts": {
+      "house": "Facade principale de la caseta",
+      "house2": "Vue laterale exterieure de l'hebergement",
+      "pool": "Piscine privee de la maison",
+      "pool2": "Piscine avec espace detente exterieur",
+      "terrace": "Terrasse exterieure pour repas en plein air",
+      "terrace2": "Porche ombrage de la caseta",
+      "terrace3": "Detail de terrasse avec coin repos",
+      "garden": "Jardin mediterraneen de la propriete",
+      "garden2": "Espace vert exterieur",
+      "diningroom": "Salle a manger principale lumineuse",
+      "diningroom2": "Salle a manger avec grande table",
+      "diningroom3": "Zone interieure de repas",
+      "diningroom4": "Detail de la salle a manger",
+      "kitchen": "Cuisine entierement equipee",
+      "kitchen2": "Vue generale de la cuisine",
+      "kitchen3": "Detail cuisine et electromenager",
+      "kitchen4": "Cuisine preparee pour les sejours",
+      "bathroom": "Salle de bain complete",
+      "bathroom2": "Detail de la deuxieme salle de bain",
+      "doubleroom": "Chambre double avec grand lit",
+      "doubleroom2": "Chambre double lumineuse",
+      "doubleroom3": "Detail decoratif de chambre double",
+      "doubleroom4": "Espace repos de la chambre double",
+      "bedroom": "Chambre confortable de la caseta",
+      "bedroom2": "Chambre avec mobilier fonctionnel",
+      "bedroom3": "Vue laterale de la chambre",
+      "bedroom4": "Chambre preparee pour les voyageurs"
+    }
   },
   "contact": {
     "title": "Contact",
-    "lead": "Vous avez des questions ou vous souhaitez réserver ? Écrivez-nous et nous vous répondrons dès que possible.\n\nVous pouvez nous contacter par WhatsApp, téléphone ou e-mail.\n\nNous pouvons aussi vous aider pour l’itinéraire, les recommandations dans la région et tout détail nécessaire pour votre séjour.",
+    "lead": "Vous souhaitez reserver votre sejour ? Ecrivez-nous et nous vous repondrons rapidement.\n\nVous pouvez nous contacter par WhatsApp, telephone ou e-mail.\n\nNous pouvons aussi vous aider avec l'itineraire, des conseils autour du Delta de l'Ebre et les details utiles pour votre voyage.",
     "hint": "Indiquez les dates et le nombre de personnes, nous vous répondrons rapidement.",
     "emailLabel": "Envoyer un e-mail",
     "whatsapp": "WhatsApp",
     "directions": "Comment venir",
-    "mapTitle": "Emplacement de la Caseta Martí i Carmeta"
+    "mapTitle": "Emplacement de la Caseta Marti i Carmeta",
+    "mapCaption": "Carte de la zone autour de la caseta. Adresse exacte en attente de confirmation."
   },
   "banner1": {
     "ariaLabel": "Jardin de la caseta"
   },
   "banner2": {
     "ariaLabel": "Paysage du delta"
+  },
+  "seo": {
+    "locationShort": "Delta de l'Ebre",
+    "locationFull": "Terres de l'Ebre, Tarragone, Catalogne, Espagne",
+    "structuredDescription": "Location de vacances avec piscine privee, terrasse et jardin dans les Terres de l'Ebre, ideale pour des sejours proches du Delta de l'Ebre."
   }
 }
 

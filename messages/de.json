@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "title": "Caseta Martí i Carmeta",
-    "description": "Ferienunterkunft"
+    "title": "Caseta Marti i Carmeta | Ferienunterkunft nahe Ebro-Delta",
+    "description": "Ferienunterkunft mit Pool und Garten in den Terres de l'Ebre, nahe dem Ebro-Delta. Ideal fur ruhige Auszeiten zwischen Natur und Meer.",
+    "ogTitle": "Caseta Marti i Carmeta | Urlaub nahe dem Ebro-Delta",
+    "ogDescription": "Buchen Sie ein charmantes Ferienhaus mit Pool und Terrasse in naturnaher Lage.",
+    "ogImageAlt": "Aussenansicht der Caseta Marti i Carmeta mit Pool und Garten"
   },
   "nav": {
     "home": "Startseite",
@@ -14,7 +17,9 @@
   },
   "footer": {
     "title": "Caseta Martí i Carmeta",
-    "description": "Ferienunterkunft. Buchen Sie ganz entspannt und prüfen Sie die Verfügbarkeit im Kalender.",
+    "description": "Ferienunterkunft in den Terres de l'Ebre, nahe dem Ebro-Delta. Verfugbarkeit prufen und entspannten Aufenthalt planen.",
+    "location": "Lage: Terres de l'Ebre, Tarragona (Katalonien, Spanien)",
+    "contact": "Kontakt",
     "sections": "Bereiche",
     "backToTop": "Nach oben",
     "links": {
@@ -27,10 +32,10 @@
   },
   "home": {
     "title": "Caseta Martí i Carmeta",
-    "subtitle": "Gemütliche Unterkunft für Auszeiten in der Nähe von Meer und Natur.",
+    "subtitle": "Charmante Ferienunterkunft in den Terres de l'Ebre, ideal fur Auszeiten nahe Ebro-Delta, Meer und Natur.",
     "ctaAvailability": "Verfügbarkeit prüfen",
     "ctaPhotos": "Fotos ansehen",
-    "imageAlt": "Caseta Martí i Carmeta"
+    "imageAlt": "Hauptfassade der Caseta Marti i Carmeta mit mediterranem Garten"
   },
   "calendar": {
     "title": "Kalender",
@@ -51,21 +56,56 @@
   },
   "gallery": {
     "title": "Galerie",
-    "lead": "Entdecken Sie in der Galerie jeden Winkel der Caseta: die Veranda für ein entspanntes Frühstück, den Pool zum Abschalten, die hellen Zimmer und all die Details, die sie besonders machen.\n\nBlättern Sie in Ruhe durch die Fotos, zeigen Sie sie im Vollbild an und spüren Sie, wie sich ein Aufenthalt hier anfühlt – zwischen Ruhe, Natur und gutem Geschmack."
+    "lead": "Entdecken Sie alle Bereiche der Caseta: die Veranda fur das Fruhstuck im Freien, den Pool zum Entspannen, helle Zimmer und komfortable Gemeinschaftsbereiche.\n\nDiese Ferienunterkunft eignet sich ideal, um das Ebro-Delta zu erkunden und eine ruhige Auszeit zwischen Natur, Kuste und regionaler Kuche zu geniessen.",
+    "imageAlts": {
+      "house": "Hauptfassade der Caseta",
+      "house2": "Seitliche Aussenansicht der Unterkunft",
+      "pool": "Privater Pool am Haus",
+      "pool2": "Poolbereich mit Liegeflache",
+      "terrace": "Aussenterrasse fur Mahlzeiten im Freien",
+      "terrace2": "Schattige Veranda der Caseta",
+      "terrace3": "Terrassendetail mit Ruhebereich",
+      "garden": "Mediterraner Garten der Unterkunft",
+      "garden2": "Grunflache im Aussenbereich",
+      "diningroom": "Helles Hauptesszimmer",
+      "diningroom2": "Essbereich mit grossem Tisch",
+      "diningroom3": "Innenbereich mit Esszone",
+      "diningroom4": "Detail des Essbereichs",
+      "kitchen": "Voll ausgestattete Kuche",
+      "kitchen2": "Gesamtansicht der Kuche",
+      "kitchen3": "Kuchendetail mit Geraten",
+      "kitchen4": "Kuchenbereich fur Ferienaufenthalte",
+      "bathroom": "Vollstandiges Badezimmer",
+      "bathroom2": "Detail des zweiten Badezimmers",
+      "doubleroom": "Doppelzimmer mit grossem Bett",
+      "doubleroom2": "Doppelzimmer mit Tageslicht",
+      "doubleroom3": "Dekoratives Detail im Doppelzimmer",
+      "doubleroom4": "Ruhebereich im Doppelzimmer",
+      "bedroom": "Gemutliches Schlafzimmer der Caseta",
+      "bedroom2": "Schlafzimmer mit funktionalen Mobeln",
+      "bedroom3": "Seitliche Ansicht des Schlafzimmers",
+      "bedroom4": "Fur Gaste vorbereitetes Schlafzimmer"
+    }
   },
   "contact": {
     "title": "Kontakt",
-    "lead": "Sie haben Fragen oder möchten buchen? Schreiben Sie uns, wir antworten Ihnen so schnell wie möglich.\n\nSie erreichen uns per WhatsApp, Telefon oder E-Mail.\n\nGerne helfen wir auch mit Anreisehinweisen, Tipps für die Umgebung und allen weiteren Details für Ihren Aufenthalt.",
+    "lead": "Mochten Sie Ihren Aufenthalt buchen? Schreiben Sie uns, wir antworten so schnell wie moglich.\n\nSie erreichen uns per WhatsApp, Telefon oder E-Mail.\n\nWir helfen Ihnen auch mit Anreisehinweisen, Tipps rund um das Ebro-Delta und allen praktischen Details fur Ihre Reise.",
     "hint": "Bitte geben Sie Daten und Personenzahl an – wir melden uns zeitnah.",
     "emailLabel": "E-Mail senden",
     "whatsapp": "WhatsApp",
     "directions": "Anreise",
-    "mapTitle": "Lage der Caseta Martí i Carmeta"
+    "mapTitle": "Lage der Caseta Marti i Carmeta",
+    "mapCaption": "Karte der Umgebung der Caseta. Genaue Adresse noch zu bestaetigen."
   },
   "banner1": {
     "ariaLabel": "Garten der Caseta"
   },
   "banner2": {
     "ariaLabel": "Landschaft des Deltas"
+  },
+  "seo": {
+    "locationShort": "Ebro-Delta",
+    "locationFull": "Terres de l'Ebre, Tarragona, Katalonien, Spanien",
+    "structuredDescription": "Ferienunterkunft mit privatem Pool, Terrasse und Garten in den Terres de l'Ebre, ideal fur Aufenthalte nahe dem Ebro-Delta."
   }
 }
