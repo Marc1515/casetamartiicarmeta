@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: canonicalUrl,
       languages: {
         ...languageAlternates,
-        "x-default": `${SITE_URL}/${DEFAULT_LOCALE}`,
+        "x-default": `${SITE_URL}`,
       },
     },
     openGraph: {
