@@ -21,10 +21,7 @@ export const LOCATION = {
   province: "Tarragona",
   country: "Espanya",
   countryCode: "ES",
-  // PENDIENTE DE CONFIRMAR: municipio exacto de la caseta.
-  locality: "",
-  // PENDIENTE DE CONFIRMAR: direccion exacta.
-  streetAddress: "",
-  // PENDIENTE DE CONFIRMAR: codigo postal.
-  postalCode: "",
+  locality: "Deltebre",
+  streetAddress: "Sant Arcadi 24",
+  postalCode: "43580",
 } as const;
