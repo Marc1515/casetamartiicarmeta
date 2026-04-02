@@ -95,7 +95,7 @@
     "whatsapp": "WhatsApp",
     "directions": "Comment venir",
     "mapTitle": "Emplacement de la Caseta Marti i Carmeta",
-    "mapCaption": "Carte de la zone autour de la caseta. Adresse exacte en attente de confirmation."
+    "mapCaption": "Carte de la zone autour de la caseta."
   },
   "banner1": {
     "ariaLabel": "Jardin de la caseta"
@@ -109,4 +109,3 @@
     "structuredDescription": "Location de vacances avec piscine privee, terrasse et jardin dans les Terres de l'Ebre, ideale pour des sejours proches du Delta de l'Ebre."
   }
 }
-
