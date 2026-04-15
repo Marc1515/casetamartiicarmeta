@@ -2,11 +2,12 @@
 "use client";
 
 import Section from "./Section";
-import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useReducedMotion } from "framer-motion";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { useReducedMotion } from "framer-motion";
+import GalleryMosaicDesktop from "@/components/sections/gallery/GalleryMosaicDesktop";
+import GalleryMosaicMobile from "@/components/sections/gallery/GalleryMosaicMobile";
+import GalleryModal from "@/components/sections/gallery/GalleryModal";
 
 const galleryContainerVariants = {
   hidden: {},
@@ -99,7 +100,9 @@ export default function GallerySection() {
   // Previene layout shift calculando tamaño de la imagen grande
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
   const prefersReducedMotion = useReducedMotion();
-  const getImageKey = (src: string) => src.split("/").pop()?.split(".")[0] ?? "";
+  const hasReducedMotion = Boolean(prefersReducedMotion);
+  const getImageKey = (src: string) =>
+    src.split("/").pop()?.split(".")[0] ?? "";
   const getImageAlt = (src: string) => t(`imageAlts.${getImageKey(src)}`);
 
   return (
@@ -111,167 +114,40 @@ export default function GallerySection() {
       leadClassName="text-[#393E46]"
       lead={t("lead")}
     >
-      {/* Mosaico principal con stagger */}
-      <motion.div
-        className="grid gap-3 md:grid-cols-2 md:grid-rows-3 md:aspect-[16/9]"
-        variants={prefersReducedMotion ? undefined : galleryContainerVariants}
-        initial={prefersReducedMotion ? false : "hidden"}
-        whileInView={prefersReducedMotion ? undefined : "visible"}
-        viewport={
-          prefersReducedMotion ? undefined : { once: true, amount: 0.15 }
-        }
-      >
-        {/* Izquierda grande */}
-        {main && (
-          <motion.div
-            variants={prefersReducedMotion ? undefined : galleryItemVariants}
-            className="md:row-span-3"
-          >
-            <button
-              onClick={() => openModalAt(main)}
-              aria-label={t("title")}
-              className="group relative overflow-hidden rounded-lg border h-56 md:h-full w-full"
-            >
-              <Image
-                src={main}
-                alt={getImageAlt(main)}
-                fill
-                priority
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-              />
-            </button>
-          </motion.div>
-        )}
+      <GalleryMosaicDesktop
+        main={main}
+        stack={stack}
+        title={t("title")}
+        prefersReducedMotion={hasReducedMotion}
+        galleryContainerVariants={galleryContainerVariants}
+        galleryItemVariants={galleryItemVariants}
+        onOpenModalAt={openModalAt}
+        getImageAlt={getImageAlt}
+      />
 
-        {/* Derecha 3 apiladas (solo en escritorio y tablets) */}
-        {stack.map((src) => (
-          <motion.div
-            key={src}
-            variants={prefersReducedMotion ? undefined : galleryItemVariants}
-            className="hidden md:block"
-          >
-            <button
-              onClick={() => openModalAt(src)}
-              aria-label={t("title")}
-              className="group relative overflow-hidden rounded-lg border h-40 md:h-auto w-full"
-            >
-              <Image
-                src={src}
-                alt={getImageAlt(src)}
-                fill
-                loading="lazy"
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-              />
-            </button>
-          </motion.div>
-        ))}
-      </motion.div>
+      <GalleryMosaicMobile
+        restLine={restLine}
+        title={t("title")}
+        prefersReducedMotion={hasReducedMotion}
+        galleryContainerVariants={galleryContainerVariants}
+        galleryItemVariants={galleryItemVariants}
+        onOpenModalAt={openModalAt}
+        getImageAlt={getImageAlt}
+      />
 
-      {/* Línea extra de 4 imágenes */}
-      {restLine.length > 0 && (
-        <motion.div
-          className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3"
-          variants={prefersReducedMotion ? undefined : galleryContainerVariants}
-          initial={prefersReducedMotion ? false : "hidden"}
-          whileInView={prefersReducedMotion ? undefined : "visible"}
-          viewport={
-            prefersReducedMotion ? undefined : { once: true, amount: 0.15 }
-          }
-        >
-          {restLine.map((src) => (
-            <motion.div
-              key={src}
-              variants={prefersReducedMotion ? undefined : galleryItemVariants}
-            >
-              <button
-                onClick={() => openModalAt(src)}
-                aria-label={t("title")}
-                className="group relative overflow-hidden rounded-lg border aspect-[4/3] w-full"
-              >
-                <Image
-                  src={src}
-                  alt={getImageAlt(src)}
-                  fill
-                  loading="lazy"
-                  sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                />
-              </button>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-
-      {/* Modal con carrusel */}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-5xl bg-background p-0 overflow-hidden">
-          <DialogTitle className="sr-only">{`Galería - Foto ${
-            index + 1
-          } de ${IMAGES.length}`}</DialogTitle>
-          <div className="relative">
-            {/* Imagen grande */}
-            <Image
-              src={IMAGES[index]}
-              alt={getImageAlt(IMAGES[index])}
-              width={mainSizes.width}
-              height={mainSizes.height}
-              className="w-full h-auto max-h-[70vh] object-contain bg-black/5"
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              priority
-            />
-
-            {/* Flechas */}
-            <button
-              aria-label="Anterior"
-              onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white p-2 hover:bg-black/60 focus:outline-none"
-            >
-              ‹
-            </button>
-            <button
-              aria-label="Siguiente"
-              onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white p-2 hover:bg-black/60 focus:outline-none"
-            >
-              ›
-            </button>
-          </div>
-
-          {/* Tira de miniaturas (carrusel) */}
-          <div
-            ref={stripRef}
-            className="flex gap-2 overflow-x-auto p-3 border-t bg-background"
-          >
-            {IMAGES.map((src, i) => {
-              const isActive = i === index;
-              return (
-                <button
-                  key={src}
-                  ref={isActive ? activeThumbRef : null}
-                  onClick={() => setIndex(i)}
-                  aria-label={`Ver foto ${i + 1}`}
-                  className={`relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-md border transition
-                    ${
-                      isActive
-                        ? "ring-2 ring-blue-500"
-                        : "opacity-80 hover:opacity-100"
-                    }`}
-                >
-                  <Image
-                    src={src}
-                    alt={getImageAlt(src)}
-                    fill
-                    className="object-cover"
-                    sizes="96px"
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </DialogContent>
-      </Dialog>
+      <GalleryModal
+        open={open}
+        index={index}
+        images={IMAGES}
+        mainSizes={mainSizes}
+        stripRef={stripRef}
+        activeThumbRef={activeThumbRef}
+        getImageAlt={getImageAlt}
+        onOpenChange={setOpen}
+        onPrev={prev}
+        onNext={next}
+        onSelect={setIndex}
+      />
     </Section>
   );
 }
