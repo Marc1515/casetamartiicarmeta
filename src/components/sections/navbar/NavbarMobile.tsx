@@ -8,7 +8,7 @@ type Locale = "ca" | "es" | "en" | "fr" | "de";
 type LocaleOption = { locale: Locale; label: string };
 
 type NavbarMobileProps = {
-  isTouch: boolean;
+  isMobileView: boolean;
   showBrandMobile: boolean;
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -28,7 +28,7 @@ type NavbarMobileProps = {
 };
 
 const NavbarMobile = ({
-  isTouch,
+  isMobileView,
   showBrandMobile,
   open,
   setOpen,
@@ -50,14 +50,16 @@ const NavbarMobile = ({
     <>
       <button
         aria-label={t("openMenu")}
-        className={isTouch ? (showBrandMobile ? "text-[#222831]" : "text-[#EEEEEE]") : "hidden"}
+        className={
+          isMobileView ? (showBrandMobile ? "text-[#222831]" : "text-[#EEEEEE]") : "hidden"
+        }
         onClick={() => setOpen(true)}
       >
         <Menu className="h-6 w-6" />
       </button>
 
       <AnimatePresence>
-        {open && isTouch && (
+        {open && isMobileView && (
           <motion.div
             key="overlay"
             className="fixed inset-0 z-[60]"

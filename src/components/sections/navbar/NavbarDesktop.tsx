@@ -6,7 +6,7 @@ type Locale = "ca" | "es" | "en" | "fr" | "de";
 type LocaleOption = { locale: Locale; label: string };
 
 type NavbarDesktopProps = {
-  isTouch: boolean;
+  isDesktopView: boolean;
   active: string;
   t: (key: string) => string;
   tabIds: readonly Tab[];
@@ -19,7 +19,7 @@ type NavbarDesktopProps = {
 };
 
 const NavbarDesktop = ({
-  isTouch,
+  isDesktopView,
   active,
   t,
   tabIds,
@@ -32,7 +32,7 @@ const NavbarDesktop = ({
 }: NavbarDesktopProps) => {
   return (
     <div
-      className={`relative items-center gap-1 ${isTouch ? "hidden flex-none" : "flex"}`}
+      className={`relative items-center gap-1 ${isDesktopView ? "flex" : "hidden flex-none"}`}
     >
       {tabIds.map((tab) => {
         const isActive = active === tab.id;
@@ -61,7 +61,7 @@ const NavbarDesktop = ({
           </a>
         );
       })}
-      <span className="ml-2 flex items-center gap-1.5 border-l border-white/40 pl-2 text-sm text-white/90">
+      <span className="ml-2 flex items-center gap-1.5 pl-2 text-sm text-white/90">
         {locales.map(({ locale, label }, i) => (
           <span key={locale} className="flex items-center gap-1.5">
             {i > 0 && <span aria-hidden>|</span>}
@@ -71,8 +71,8 @@ const NavbarDesktop = ({
               aria-label={label}
               className={
                 currentLocale === locale
-                  ? "opacity-100 ring-2 ring-white ring-offset-2 ring-offset-transparent rounded-sm"
-                  : "opacity-80 hover:opacity-100"
+                  ? "opacity-100  rounded-sm"
+                  : "opacity-60 hover:opacity-100"
               }
               aria-current={currentLocale === locale ? "true" : undefined}
             >

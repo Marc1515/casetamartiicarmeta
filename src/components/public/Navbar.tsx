@@ -25,6 +25,7 @@ const LOCALES = [
 
 const FLAG_SIZE = 20;
 const FLAG_SIZE_MOBILE = 28;
+const CATALAN_FLAG_SCALE = 0.95;
 
 function FlagCatalan({
   size,
@@ -35,11 +36,11 @@ function FlagCatalan({
 }) {
   return (
     <span
-      className={`inline-flex overflow-hidden rounded-full bg-[#FCDD09] ${className ?? ""}`}
+      className={`inline-flex items-center justify-center overflow-hidden rounded-full bg-[#FCDD09] align-middle leading-none ${className ?? ""}`}
       style={{ width: size, height: size }}
       aria-hidden
     >
-      <svg viewBox="0 0 20 14" className="w-full h-full">
+      <svg viewBox="0 0 20 14" className="block w-full h-full">
         <rect width="20" height="14" fill="#FCDD09" />
         <rect y="2.33" width="20" height="1.56" fill="#DA121A" />
         <rect y="5.22" width="20" height="1.56" fill="#DA121A" />
@@ -60,14 +61,22 @@ function LocaleFlag({
   size?: "md" | "lg";
 }) {
   const s = size === "lg" ? FLAG_SIZE_MOBILE : FLAG_SIZE;
-  if (locale === "ca") return <FlagCatalan size={s} className={className} />;
+  if (locale === "ca") {
+    return (
+      <FlagCatalan
+        size={Math.round(s * CATALAN_FLAG_SCALE)}
+        className={className}
+      />
+    );
+  }
   if (locale === "es")
     return (
       <Icon
         icon="circle-flags:es"
         width={s}
         height={s}
-        className={className}
+        className={`align-middle leading-none ${className ?? ""}`}
+        style={{ display: "block" }}
         aria-hidden
       />
     );
@@ -77,7 +86,8 @@ function LocaleFlag({
         icon="circle-flags:fr"
         width={s}
         height={s}
-        className={className}
+        className={`align-middle leading-none ${className ?? ""}`}
+        style={{ display: "block" }}
         aria-hidden
       />
     );
@@ -87,7 +97,8 @@ function LocaleFlag({
         icon="circle-flags:de"
         width={s}
         height={s}
-        className={className}
+        className={`align-middle leading-none ${className ?? ""}`}
+        style={{ display: "block" }}
         aria-hidden
       />
     );
@@ -96,7 +107,8 @@ function LocaleFlag({
       icon="circle-flags:gb"
       width={s}
       height={s}
-      className={className}
+      className={`align-middle leading-none ${className ?? ""}`}
+      style={{ display: "block" }}
       aria-hidden
     />
   );
@@ -114,56 +126,40 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>(TAB_IDS[0].id);
   const [showBrandMobile, setShowBrandMobile] = useState(false);
-  // En móviles (pantallas táctiles) mantenemos SIEMPRE el modo burger,
-  // incluso en horizontal, para no depender del ancho del viewport.
-  const [isTouch, setIsTouch] = useState(true);
+  const [isDesktopView, setIsDesktopView] = useState(false);
 
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
-    const apply = () => setIsTouch(mq.matches);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const apply = () => setIsDesktopView(mq.matches);
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
   }, []);
 
-  // Fondo sólido al hacer scroll (desktop) + fondo/blur en móvil a partir de calendario
+  // Fondo sólido al hacer scroll en desktop/tablet.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-    const mq = window.matchMedia("(min-width: 768px)"); // md
+    window.removeEventListener("scroll", onScroll);
 
-    const apply = () => {
-      // evita duplicar listeners
-      window.removeEventListener("scroll", onScroll);
-
-      if (!isTouch && mq.matches) {
-        // desktop/tablet
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-      } else {
-        // mobile: manejamos el fondo con showBrandMobile, no por scroll
-        setScrolled(false);
-      }
-    };
-
-    apply();
-
-    // si se redimensiona, recalcula
-    const onChange = () => apply();
-    mq.addEventListener("change", onChange);
+    if (isDesktopView) {
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    } else {
+      setScrolled(false);
+    }
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      mq.removeEventListener("change", onChange);
     };
-  }, [isTouch]);
+  }, [isDesktopView]);
 
   // Mostrar/ocultar título en móvil cuando el calendario llega al top
   useEffect(() => {
-    if (!isTouch || typeof window === "undefined") {
+    if (isDesktopView || typeof window === "undefined") {
       setShowBrandMobile(false);
       return;
     }
@@ -199,7 +195,7 @@ export default function Navbar() {
       window.removeEventListener("resize", onScrollOrResize);
       if (rafId != null) cancelAnimationFrame(rafId);
     };
-  }, [isTouch, active]);
+  }, [isDesktopView, active]);
 
   // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
   const sectionElsRef = useRef<HTMLElement[]>([]);
@@ -214,8 +210,7 @@ export default function Navbar() {
       document.getElementById(tab.id),
     ).filter(Boolean) as HTMLElement[];
 
-    const NAV_H =
-      !isTouch && window.matchMedia("(min-width: 768px)").matches ? 80 : 64;
+    const NAV_H = isDesktopView ? 80 : 64;
 
     const computeActive = () => {
       if (spyLockedRef.current) return; // 🔒 no re-calcular mientras hay scroll por click
@@ -252,7 +247,7 @@ export default function Navbar() {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current);
     };
-  }, [isTouch]);
+  }, [isDesktopView]);
 
   // Bloquear scroll + accesibilidad del menú móvil
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -315,7 +310,7 @@ export default function Navbar() {
           "pointer-events-none absolute inset-0 -z-10 transition-colors",
           scrolled
             ? "bg-black/65"
-            : isTouch
+            : !isDesktopView
               ? showBrandMobile
                 ? "bg-black/5 backdrop-blur-md"
                 : "bg-transparent"
@@ -326,27 +321,29 @@ export default function Navbar() {
         <nav
           className={cx(
             "flex items-center justify-between",
-            isTouch ? "h-16" : "h-20",
+            isDesktopView ? "h-20" : "h-16",
           )}
         >
           <div className="flex-1">
             <AnimatePresence initial={false}>
-              {(!isTouch || showBrandMobile) && (
+              {(isDesktopView || showBrandMobile) && (
                 <motion.a
                   key="brand-link"
                   href="#home"
                   onClick={goto("home")}
                   className={cx(
                     "inline-block font-semibold",
-                    !isTouch
+                    isDesktopView
                       ? "text-white"
                       : showBrandMobile
                         ? "text-[#222831]"
                         : "text-[#EEEEEE]",
                   )}
-                  initial={isTouch ? { opacity: 0, y: -8 } : false}
-                  animate={isTouch ? { opacity: 1, y: 0 } : { opacity: 1 }}
-                  exit={isTouch ? { opacity: 0, y: -8 } : { opacity: 1 }}
+                  initial={!isDesktopView ? { opacity: 0, y: -8 } : false}
+                  animate={
+                    !isDesktopView ? { opacity: 1, y: 0 } : { opacity: 1 }
+                  }
+                  exit={!isDesktopView ? { opacity: 0, y: -8 } : { opacity: 1 }}
                   transition={{ duration: prefersReduced ? 0 : 0.25 }}
                 >
                   Caseta Martí i Carmeta
@@ -356,7 +353,7 @@ export default function Navbar() {
           </div>
 
           <NavbarDesktop
-            isTouch={isTouch}
+            isDesktopView={isDesktopView}
             active={active}
             t={t}
             tabIds={TAB_IDS}
@@ -369,7 +366,7 @@ export default function Navbar() {
           />
 
           <NavbarMobile
-            isTouch={isTouch}
+            isMobileView={!isDesktopView}
             showBrandMobile={showBrandMobile}
             open={open}
             setOpen={setOpen}
