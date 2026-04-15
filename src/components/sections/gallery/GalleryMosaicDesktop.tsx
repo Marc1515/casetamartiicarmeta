@@ -41,7 +41,7 @@ export default function GalleryMosaicDesktop({
           <button
             onClick={() => onOpenModalAt(main)}
             aria-label={title}
-            className="group relative overflow-hidden rounded-lg border h-56 md:h-full w-full"
+            className="group relative overflow-hidden rounded-lg border h-56 md:h-full w-full cursor-pointer"
           >
             <Image
               src={main}
@@ -64,7 +64,7 @@ export default function GalleryMosaicDesktop({
           <button
             onClick={() => onOpenModalAt(src)}
             aria-label={title}
-            className="group relative overflow-hidden rounded-lg border h-40 md:h-full w-full"
+            className="group relative overflow-hidden rounded-lg border h-40 md:h-full w-full cursor-pointer"
           >
             <Image
               src={src}

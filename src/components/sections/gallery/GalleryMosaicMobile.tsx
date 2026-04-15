@@ -41,7 +41,7 @@ export default function GalleryMosaicMobile({
           <button
             onClick={() => onOpenModalAt(src)}
             aria-label={title}
-            className="group relative overflow-hidden rounded-lg border aspect-[4/3] w-full"
+            className="group relative overflow-hidden rounded-lg border aspect-[4/3] w-full cursor-pointer"
           >
             <Image
               src={src}
