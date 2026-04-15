@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { Icon } from "@iconify/react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import NavbarDesktop from "@/components/sections/navbar/NavbarDesktop";
+import NavbarMobile from "@/components/sections/navbar/NavbarMobile";
 
 const TAB_IDS = [
   { id: "home", key: "home" },
@@ -354,189 +355,40 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          {/* DESKTOP: píldora + bubble + idioma */}
-          <div
-            className={cx(
-              "relative items-center gap-1",
-              isTouch ? "hidden flex-none" : "flex",
-            )}
-          >
-            {TAB_IDS.map((tab) => {
-              const isActive = active === tab.id;
-              return (
-                <a
-                  key={tab.id}
-                  href={`#${tab.id}`}
-                  onClick={goto(tab.id)}
-                  className={`relative rounded-full px-3 py-1.5 text-sm font-medium ${
-                    isActive ? "text-black" : "text-white/90 hover:text-white"
-                  } transition-colors`}
-                  style={{ WebkitTapHighlightColor: "transparent" }}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-bubble"
-                      className="absolute inset-0 rounded-full bg-white mix-blend-difference"
-                      transition={
-                        prefersReduced
-                          ? { duration: 0 }
-                          : { type: "spring", bounce: 0.2, duration: 0.45 }
-                      }
-                    />
-                  )}
-                  <span className="relative z-10">{t(tab.key)}</span>
-                </a>
-              );
-            })}
-            {/* Selector de idioma */}
-            <span className="ml-2 flex items-center gap-1.5 border-l border-white/40 pl-2 text-sm text-white/90">
-              {LOCALES.map(({ locale, label }, i) => (
-                <span key={locale} className="flex items-center gap-1.5">
-                  {i > 0 && <span aria-hidden>|</span>}
-                  <a
-                    href={`/${locale}${pathname === "/" ? "" : pathname}`}
-                    title={label}
-                    aria-label={label}
-                    className={
-                      currentLocale === locale
-                        ? "opacity-100 ring-2 ring-white ring-offset-2 ring-offset-transparent rounded-sm"
-                        : "opacity-80 hover:opacity-100"
-                    }
-                    aria-current={currentLocale === locale ? "true" : undefined}
-                  >
-                    <LocaleFlag locale={locale} />
-                  </a>
-                </span>
-              ))}
-            </span>
-          </div>
+          <NavbarDesktop
+            isTouch={isTouch}
+            active={active}
+            t={t}
+            tabIds={TAB_IDS}
+            goto={goto}
+            prefersReduced={prefersReduced}
+            locales={LOCALES}
+            pathname={pathname}
+            currentLocale={currentLocale}
+            LocaleFlag={LocaleFlag}
+          />
 
-          {/* BURGER (móvil) */}
-          <button
-            aria-label={t("openMenu")}
-            className={cx(
-              isTouch
-                ? showBrandMobile
-                  ? "text-[#222831]"
-                  : "text-[#EEEEEE]"
-                : "hidden",
-            )}
-            onClick={() => setOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
+          <NavbarMobile
+            isTouch={isTouch}
+            showBrandMobile={showBrandMobile}
+            open={open}
+            setOpen={setOpen}
+            t={t}
+            active={active}
+            tabIds={TAB_IDS}
+            goto={goto}
+            prefersReduced={prefersReduced}
+            itemVariants={itemVariants}
+            panelVariants={panelVariants}
+            overlayVariants={overlayVariants}
+            locales={LOCALES}
+            pathname={pathname}
+            currentLocale={currentLocale}
+            LocaleFlag={LocaleFlag}
+            closeBtnRef={closeBtnRef}
+          />
         </nav>
       </div>
-
-      {/* MENÚ MÓVIL FULL-SCREEN */}
-      <AnimatePresence>
-        {open && isTouch && (
-          <motion.div
-            key="overlay"
-            className="fixed inset-0 z-[60]"
-            role="dialog"
-            aria-modal="true"
-            aria-label={t("menuAria")}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
-            transition={{ duration: prefersReduced ? 0 : 0.2 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-black/90"
-              onClick={() => setOpen(false)}
-              aria-hidden
-            />
-            <motion.div
-              className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center"
-              variants={panelVariants}
-              transition={{ duration: prefersReduced ? 0 : 0.25 }}
-            >
-              <button
-                aria-label={t("closeMenu")}
-                className="absolute right-4 top-4 text-white"
-                onClick={() => setOpen(false)}
-                ref={closeBtnRef}
-              >
-                <X className="h-7 w-7" />
-              </button>
-
-              {TAB_IDS.map((tab, idx) => {
-                const isActive = active === tab.id;
-                return (
-                  <motion.a
-                    key={tab.id}
-                    href={`#${tab.id}`}
-                    onClick={(e) => {
-                      goto(tab.id)(e);
-                      setOpen(false);
-                    }}
-                    aria-current={isActive ? "page" : undefined}
-                    variants={itemVariants}
-                    transition={{ delay: prefersReduced ? 0 : idx * 0.05 }}
-                    className={cx(
-                      "relative text-white/90 text-2xl font-semibold px-3 py-1 transition-colors",
-                      isActive ? "text-white" : "hover:text-white",
-                      "after:absolute after:left-1/2 after:-bottom-2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:bg-white after:transition-[width] after:duration-300",
-                      isActive ? "after:w-1/2" : "hover:after:w-1/2",
-                    )}
-                  >
-                    {t(tab.key)}
-                  </motion.a>
-                );
-              })}
-              {/* Selector idioma en móvil (3 arriba + 2 abajo) */}
-              <motion.div
-                className="mt-4 flex flex-col items-center gap-3 text-white/90"
-                variants={itemVariants}
-              >
-                {[LOCALES.slice(0, 3), LOCALES.slice(3)].map(
-                  (row, rowIndex) => (
-                    <div key={rowIndex} className="flex gap-6">
-                      {row.map(({ locale, label }, idx) => (
-                        <motion.a
-                          key={locale}
-                          href={`/${locale}${
-                            pathname === "/" ? "" : pathname
-                          }`}
-                          title={label}
-                          aria-label={label}
-                          className={
-                            currentLocale === locale
-                              ? "opacity-100 rounded-sm"
-                              : "opacity-70 hover:opacity-100"
-                          }
-                          aria-current={
-                            currentLocale === locale ? "true" : undefined
-                          }
-                          initial={
-                            prefersReduced
-                              ? false
-                              : { opacity: 0, y: 8, scale: 0.9 }
-                          }
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={
-                            prefersReduced
-                              ? { duration: 0 }
-                              : {
-                                  duration: 0.35,
-                                  delay: 0.1 + (rowIndex * 3 + idx) * 0.04,
-                                  ease: [0.25, 0.1, 0.25, 1],
-                                }
-                          }
-                        >
-                          <LocaleFlag locale={locale} size="lg" />
-                        </motion.a>
-                      ))}
-                    </div>
-                  ),
-                )}
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }
