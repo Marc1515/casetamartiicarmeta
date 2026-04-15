@@ -157,10 +157,9 @@ export default function Navbar() {
     };
   }, [isDesktopView]);
 
-  // Mostrar/ocultar título en móvil cuando el calendario llega al top
+  // Mostrar/ocultar título cuando el calendario llega al top (desktop + mobile)
   useEffect(() => {
-    if (isDesktopView || typeof window === "undefined") {
-      setShowBrandMobile(false);
+    if (typeof window === "undefined") {
       return;
     }
 
@@ -195,7 +194,7 @@ export default function Navbar() {
       window.removeEventListener("resize", onScrollOrResize);
       if (rafId != null) cancelAnimationFrame(rafId);
     };
-  }, [isDesktopView, active]);
+  }, [active]);
 
   // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
   const sectionElsRef = useRef<HTMLElement[]>([]);
@@ -326,25 +325,23 @@ export default function Navbar() {
         >
           <div className="flex-1">
             <AnimatePresence initial={false}>
-              {(isDesktopView || showBrandMobile) && (
+              {showBrandMobile && (
                 <motion.a
                   key="brand-link"
                   href="#home"
                   onClick={goto("home")}
                   className={cx(
                     "inline-block font-semibold",
-                    isDesktopView
-                      ? "text-white"
-                      : showBrandMobile
-                        ? "text-[#222831]"
-                        : "text-[#EEEEEE]",
+                    isDesktopView ? "text-white" : "text-[#222831]",
                   )}
-                  initial={!isDesktopView ? { opacity: 0, y: -8 } : false}
-                  animate={
-                    !isDesktopView ? { opacity: 1, y: 0 } : { opacity: 1 }
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={
+                    prefersReduced
+                      ? { duration: 0 }
+                      : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }
                   }
-                  exit={!isDesktopView ? { opacity: 0, y: -8 } : { opacity: 1 }}
-                  transition={{ duration: prefersReduced ? 0 : 0.25 }}
                 >
                   Caseta Martí i Carmeta
                 </motion.a>
