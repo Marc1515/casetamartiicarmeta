@@ -85,15 +85,15 @@ export default function ContactSection() {
       id="contacto"
       className="whitespace-pre-line"
       title={t("title")}
-      titleClassName="text-[#393E46]"
-      leadClassName="text-[#393E46]"
+      titleClassName="text-3xl md:text-5xl text-[#393E46]"
+      leadClassName="text-sm md:text-base text-[#393E46]"
       lead={t("lead")}
       center
     >
       <div className="grid gap-6 md:grid-cols-2">
         {/* Datos de contacto */}
         <ScrollReveal>
-          <div className="space-y-1">
+          <div className="space-y-1 text-sm md:text-base">
             <p className="flex items-center gap-2">
               <Phone className="h-5 w-5 text-muted-foreground" aria-hidden />
               <a
@@ -114,9 +114,7 @@ export default function ContactSection() {
               </a>
             </p>
 
-            <p className="text-muted-foreground py-3">
-              {t("hint")}
-            </p>
+            <p className="text-muted-foreground py-3">{t("hint")}</p>
             <div className="mt-3 flex flex-wrap gap-6 pb-3">
               <Button
                 asChild
@@ -182,7 +180,10 @@ export default function ContactSection() {
                 className="absolute inset-0 h-full w-full border-0"
               />
             </div>
-            <p id="map-description" className="px-3 py-2 text-sm text-muted-foreground">
+            <p
+              id="map-description"
+              className="px-3 py-2 text-sm text-muted-foreground"
+            >
               {t("mapCaption")}
             </p>
           </div>

@@ -32,6 +32,7 @@ export default function HomeSection() {
       id="home"
       sectionRef={sectionRef}
       noPadding
+      contentClassName="max-w-7xl"
       bg={
         // 👇 El recorte del fondo va aquí (no afecta al sticky)
         <div className="absolute inset-0 -z-10 overflow-hidden">

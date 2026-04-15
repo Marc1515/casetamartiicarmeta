@@ -3,6 +3,7 @@
 
 import type { Ref } from "react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { cn } from "@/lib/utils";
 
 type Props = {
   id: string;
@@ -10,6 +11,7 @@ type Props = {
   lead?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  contentClassName?: string; // ancho/layout del contenedor interno
   titleClassName?: string; // color/estilo del título de sección (ej. Calendario, Galería, Contacto)
   leadClassName?: string; // color/estilo del párrafo descripción (lead)
   center?: boolean; // centra verticalmente el contenido
@@ -24,6 +26,7 @@ export default function Section({
   lead,
   children,
   className,
+  contentClassName,
   titleClassName,
   leadClassName,
   center = false,
@@ -42,13 +45,20 @@ export default function Section({
       {bg ? <div className="absolute inset-0 -z-10">{bg}</div> : null}
 
       <div
-        className={`mx-auto w-full max-w-7xl px-4 ${
-          center ? "flex flex-col justify-center" : ""
-        }`}
+        className={cn(
+          "mx-auto w-full max-w-5xl px-4",
+          center && "flex flex-col justify-center",
+          contentClassName,
+        )}
       >
         {title && (
           <ScrollReveal>
-            <h2 className={`text-4xl md:text-7xl font-semibold tracking-tight mb-8 ${titleClassName ?? ""}`}>
+            <h2
+              className={cn(
+                "text-4xl md:text-7xl font-semibold tracking-tight mb-8",
+                titleClassName,
+              )}
+            >
               {title}
             </h2>
           </ScrollReveal>
@@ -56,7 +66,10 @@ export default function Section({
         {lead != null && (
           <ScrollReveal delay={0.1}>
             <p
-              className={`mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose whitespace-pre-line ${leadClassName ?? "text-muted-foreground"}`}
+              className={cn(
+                "mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose whitespace-pre-line",
+                leadClassName ?? "text-muted-foreground",
+              )}
             >
               {lead}
             </p>

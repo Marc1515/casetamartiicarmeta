@@ -11,8 +11,8 @@ export default async function CalendarSection() {
       className="whitespace-pre-line pb-32"
       id="calendario"
       title={t("title")}
-      titleClassName="text-[#393E46]"
-      leadClassName="text-[#393E46]"
+      titleClassName="text-3xl md:text-5xl text-[#393E46]"
+      leadClassName="text-sm md:text-base text-[#393E46]"
       center
       lead={
         <>
