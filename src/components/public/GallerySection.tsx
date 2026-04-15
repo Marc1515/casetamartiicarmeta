@@ -61,8 +61,8 @@ export default function GallerySection() {
 
   // Mosaico principal (como lo dejamos)
   const main = IMAGES[0];
-  const stack = IMAGES.slice(1, 4);
-  const restLine = IMAGES.slice(4, 8);
+  const stack = IMAGES.slice(1, 3);
+  const restLine = IMAGES.slice(3, 7);
 
   const openModalAt = (src: string) => {
     const i = IMAGES.indexOf(src as (typeof IMAGES)[number]);
