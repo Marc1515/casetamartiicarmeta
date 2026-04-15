@@ -216,15 +216,19 @@ export default function Navbar() {
 
       const sections = sectionElsRef.current;
       if (!sections.length) return;
-      const probeY = NAV_H + Math.min(window.innerHeight * 0.25, 200);
+      const thresholdY = window.scrollY + NAV_H + 1;
+      let nextActive = sections[0]?.id;
 
-      const containing = sections.find((el) => {
-        const r = el.getBoundingClientRect();
-        return r.top <= probeY && r.bottom >= probeY;
-      });
-      if (containing?.id) {
-        setActive(containing.id);
-        return;
+      for (const el of sections) {
+        if (el.offsetTop <= thresholdY) {
+          nextActive = el.id;
+          continue;
+        }
+        break;
+      }
+
+      if (nextActive) {
+        setActive(nextActive);
       }
     };
 

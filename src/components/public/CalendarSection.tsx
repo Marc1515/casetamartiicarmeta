@@ -8,7 +8,7 @@ export default async function CalendarSection() {
 
   return (
     <Section
-      className="whitespace-pre-line"
+      className="whitespace-pre-line pb-32"
       id="calendario"
       title={t("title")}
       titleClassName="text-[#393E46]"

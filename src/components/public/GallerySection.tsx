@@ -108,7 +108,7 @@ export default function GallerySection() {
   return (
     <Section
       id="fotos"
-      className="whitespace-pre-line"
+      className="whitespace-pre-line pb-32"
       title={t("title")}
       titleClassName="text-[#393E46]"
       leadClassName="text-[#393E46]"
