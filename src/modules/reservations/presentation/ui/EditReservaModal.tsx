@@ -161,7 +161,7 @@ export default function EditReservaModal() {
   async function handleDelete() {
     if (!editingId) return;
     if (!confirm("¿Seguro que quieres eliminar esta reserva?")) return;
-    const res = await fetch(`/api/reservations/events/${editingId}`, {
+    const res = await fetch(`/api/admin/reservations/${editingId}`, {
       method: "DELETE",
     });
     if (!res.ok) {
