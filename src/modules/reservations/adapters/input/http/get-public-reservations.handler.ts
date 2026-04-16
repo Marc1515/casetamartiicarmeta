@@ -1,4 +1,3 @@
-// src/modules/reservations/adapters/input/http/get-public-reservations.handler.ts
 import { NextRequest, NextResponse } from "next/server";
 
 export async function handleGetPublicReservations(

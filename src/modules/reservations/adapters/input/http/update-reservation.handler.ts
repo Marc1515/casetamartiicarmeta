@@ -1,5 +1,5 @@
-// src/modules/reservations/adapters/input/http/update-reservation.handler.ts
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 
 type UpdateReservationHandlerContext = {
     params: Promise<{
@@ -12,14 +12,20 @@ export async function handleUpdateReservation(
     context: UpdateReservationHandlerContext,
 ): Promise<NextResponse> {
     try {
-        const { id } = await context.params;
+        const adminResult = await requireAdmin(request);
 
-        const body = await request.json();
+        if (!adminResult.ok) {
+            return adminResult.response;
+        }
+
+        const { id } = await context.params;
+        const body: unknown = await request.json();
 
         return NextResponse.json(
             {
                 message: "Reserva actualizada correctamente",
                 id,
+                body,
             },
             { status: 200 },
         );

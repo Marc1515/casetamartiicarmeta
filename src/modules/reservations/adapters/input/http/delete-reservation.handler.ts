@@ -1,5 +1,5 @@
-// src/modules/reservations/adapters/input/http/delete-reservation.handler.ts
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 
 type DeleteReservationHandlerContext = {
     params: Promise<{
@@ -8,10 +8,16 @@ type DeleteReservationHandlerContext = {
 };
 
 export async function handleDeleteReservation(
-    _request: NextRequest,
+    request: NextRequest,
     context: DeleteReservationHandlerContext,
 ): Promise<NextResponse> {
     try {
+        const adminResult = await requireAdmin(request);
+
+        if (!adminResult.ok) {
+            return adminResult.response;
+        }
+
         const { id } = await context.params;
 
         return NextResponse.json(

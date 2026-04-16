@@ -1,14 +1,22 @@
 // src/modules/reservations/adapters/input/http/create-reservation.handler.ts
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 
 export async function handleCreateReservation(
     request: NextRequest,
 ): Promise<NextResponse> {
     try {
-        // 1. auth / permisos
+        const adminResult = await requireAdmin(request);
+
+        if (!adminResult.ok) {
+            return adminResult.response;
+        }
+
+        // Si llegamos aquí, el usuario es admin
+        const adminToken = adminResult.token;
 
         // 2. parsear body
-        const body = await request.json();
+        const body: unknown = await request.json();
 
         // 3. validar body
 
@@ -16,7 +24,10 @@ export async function handleCreateReservation(
 
         // 5. devolver respuesta
         return NextResponse.json(
-            { message: "Reserva creada correctamente" },
+            {
+                message: "Reserva creada correctamente",
+                adminUserId: adminToken.sub ?? null,
+            },
             { status: 201 },
         );
     } catch (error) {

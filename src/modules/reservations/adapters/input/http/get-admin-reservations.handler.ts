@@ -1,10 +1,16 @@
-// src/modules/reservations/adapters/input/http/get-admin-reservations.handler.ts
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 
 export async function handleGetAdminReservations(
-    _request: NextRequest,
+    request: NextRequest,
 ): Promise<NextResponse> {
     try {
+        const adminResult = await requireAdmin(request);
+
+        if (!adminResult.ok) {
+            return adminResult.response;
+        }
+
         return NextResponse.json([], { status: 200 });
     } catch (error) {
         console.error("Error fetching admin reservations:", error);
