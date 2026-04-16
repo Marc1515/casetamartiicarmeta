@@ -1,43 +1,16 @@
 // src/modules/reservations/adapters/output/persistence/PrismaReservationRepository.ts
 import { prisma } from "@/shared/infrastructure/prisma/prisma";
+import type {
+    CreateReservationData,
+    ReservationRecord,
+    ReservationRepository,
+    UpdateReservationData,
+} from "@/modules/reservations/application/ports/ReservationRepository";
 
-export type ReservationRecord = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    allDay: boolean;
-    notes: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-    createdById: string | null;
-};
-
-export type CreateReservationData = {
-    title: string;
-    start: Date;
-    end: Date;
-    allDay?: boolean;
-    notes?: string | null;
-    createdById?: string | null;
-};
-
-export type UpdateReservationData = {
-    title: string;
-    start: Date;
-    end: Date;
-    allDay?: boolean;
-    notes?: string | null;
-};
-
-export class PrismaReservationRepository {
+export class PrismaReservationRepository implements ReservationRepository {
     async findAllOrdered(): Promise<ReservationRecord[]> {
         const reservations = await prisma.event.findMany({
-            orderBy: [
-                { start: "asc" },
-                { end: "asc" },
-                { createdAt: "asc" },
-            ],
+            orderBy: [{ start: "asc" }, { end: "asc" }, { createdAt: "asc" }],
         });
 
         return reservations;
@@ -72,10 +45,7 @@ export class PrismaReservationRepository {
                     gt: start,
                 },
             },
-            orderBy: [
-                { start: "asc" },
-                { end: "asc" },
-            ],
+            orderBy: [{ start: "asc" }, { end: "asc" }],
         });
 
         return reservations;

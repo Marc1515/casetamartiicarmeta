@@ -1,4 +1,4 @@
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
+import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
 export type UpdateReservationUseCaseInput = {
     id: string;
@@ -12,7 +12,7 @@ export type UpdateReservationUseCaseResult =
     | {
         ok: true;
         reservation: Awaited<
-            ReturnType<PrismaReservationRepository["update"]>
+            ReturnType<ReservationRepository["update"]>
         >;
     }
     | {
@@ -23,13 +23,13 @@ export type UpdateReservationUseCaseResult =
         ok: false;
         error: "OVERLAPPING_RESERVATION";
         overlapping: Awaited<
-            ReturnType<PrismaReservationRepository["findOverlapping"]>
+            ReturnType<ReservationRepository["findOverlapping"]>
         >[number];
     };
 
 export class UpdateReservationUseCase {
     constructor(
-        private readonly reservationRepository: PrismaReservationRepository,
+        private readonly reservationRepository: ReservationRepository,
     ) { }
 
     async execute(

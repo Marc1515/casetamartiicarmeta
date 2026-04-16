@@ -1,5 +1,5 @@
 // src/modules/reservations/application/use-cases/GetPublicReservationsUseCase.ts
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
+import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
 export type PublicReservationDto = {
     id: string;
@@ -13,7 +13,7 @@ export type GetPublicReservationsUseCaseResponse = PublicReservationDto[];
 
 export class GetPublicReservationsUseCase {
     constructor(
-        private readonly reservationRepository: PrismaReservationRepository,
+        private readonly reservationRepository: ReservationRepository,
     ) { }
 
     async execute(): Promise<GetPublicReservationsUseCaseResponse> {

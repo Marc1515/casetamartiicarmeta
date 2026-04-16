@@ -1,4 +1,4 @@
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
+import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
 export type DeleteReservationUseCaseInput = {
     id: string;
@@ -8,7 +8,7 @@ export type DeleteReservationUseCaseResult =
     | {
         ok: true;
         reservation: Awaited<
-            ReturnType<PrismaReservationRepository["delete"]>
+            ReturnType<ReservationRepository["delete"]>
         >;
     }
     | {
@@ -18,7 +18,7 @@ export type DeleteReservationUseCaseResult =
 
 export class DeleteReservationUseCase {
     constructor(
-        private readonly reservationRepository: PrismaReservationRepository,
+        private readonly reservationRepository: ReservationRepository,
     ) { }
 
     async execute(
