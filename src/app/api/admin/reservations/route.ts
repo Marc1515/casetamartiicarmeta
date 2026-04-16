@@ -1,5 +1,4 @@
-// src/app/api/admin/reservations/route.ts
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { handleCreateReservation } from "@/modules/reservations/adapters/input/http/create-reservation.handler";
 import { handleGetAdminReservations } from "@/modules/reservations/adapters/input/http/get-admin-reservations.handler";
 
