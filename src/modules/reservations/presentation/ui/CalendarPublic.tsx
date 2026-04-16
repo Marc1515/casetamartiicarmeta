@@ -43,7 +43,9 @@ export default function CalendarPublic() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("/api/public/events", { cache: "no-store" });
+      const res = await fetch("/api/public/reservations", {
+        cache: "no-store",
+      });
       const data: ApiEvent[] = await res.json();
       setEvents(
         data.map((e) => ({

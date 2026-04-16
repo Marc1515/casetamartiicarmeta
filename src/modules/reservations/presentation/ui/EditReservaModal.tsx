@@ -118,7 +118,7 @@ export default function EditReservaModal() {
 
   async function onSubmit(data: FormValues) {
     if (!editingId) return;
-    const res = await fetch(`/api/admin/events/${editingId}`, {
+    const res = await fetch(`/api/admin/reservations/${editingId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -161,7 +161,7 @@ export default function EditReservaModal() {
   async function handleDelete() {
     if (!editingId) return;
     if (!confirm("¿Seguro que quieres eliminar esta reserva?")) return;
-    const res = await fetch(`/api/admin/events/${editingId}`, {
+    const res = await fetch(`/api/reservations/events/${editingId}`, {
       method: "DELETE",
     });
     if (!res.ok) {

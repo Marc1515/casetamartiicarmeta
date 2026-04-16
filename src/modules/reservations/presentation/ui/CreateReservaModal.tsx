@@ -99,7 +99,7 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
   }, [isMobile, open]);
 
   async function onSubmit(data: FormValues) {
-    const res = await fetch("/api/admin/events", {
+    const res = await fetch("/api/admin/reservations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

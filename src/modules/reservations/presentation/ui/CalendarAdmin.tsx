@@ -117,7 +117,7 @@ export default function CalendarAdmin() {
   );
 
   async function load() {
-    const r = await fetch("/api/admin/events", { cache: "no-store" });
+    const r = await fetch("/api/admin/reservations", { cache: "no-store" });
     if (!r.ok) return;
     const data: ApiEvent[] = await r.json();
     setEvents(
