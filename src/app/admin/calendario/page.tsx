@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import CalendarAdmin from "@/components/CalendarAdmin";
-import LogoutButton from "@/components/LogoutButton";
-import EditReservaModal from "@/components/EditReservaModal";
-import CreateReservaModal from "@/components/CreateReservaModal";
-import { Button } from "@/components/ui/button";
+import CalendarAdmin from "@/modules/reservations/presentation/ui/CalendarAdmin";
+import LogoutButton from "@/modules/auth/presentation/ui/LogoutButton";
+import EditReservaModal from "@/modules/reservations/presentation/ui/EditReservaModal";
+import CreateReservaModal from "@/modules/reservations/presentation/ui/CreateReservaModal";
+import { Button } from "@/shared/presentation/ui/button";
 
 export default function Page() {
   const [createOpen, setCreateOpen] = useState(false);

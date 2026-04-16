@@ -1,12 +1,18 @@
-import HomeSection from "@/components/public/HomeSection";
-import CalendarSection from "@/components/public/CalendarSection";
-import Banner1 from "@/components/public/Banner1";
-import Banner2 from "@/components/public/Banner2";
-import GallerySection from "@/components/public/GallerySection";
-import ContactSection from "@/components/public/ContactSection";
-import JsonLd from "@/components/JsonLd";
+import HomeSection from "@/modules/public-site/presentation/ui/HomeSection";
+import CalendarSection from "@/modules/public-site/presentation/ui/CalendarSection";
+import Banner1 from "@/modules/public-site/presentation/ui/Banner1";
+import Banner2 from "@/modules/public-site/presentation/ui/Banner2";
+import GallerySection from "@/modules/public-site/presentation/ui/GallerySection";
+import ContactSection from "@/modules/public-site/presentation/ui/ContactSection";
+import JsonLd from "@/modules/seo/presentation/components/JsonLd";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { CONTACT, LOCATION, OG_IMAGE_PATH, SITE_NAME, SITE_URL } from "@/lib/seo";
+import {
+  CONTACT,
+  LOCATION,
+  OG_IMAGE_PATH,
+  SITE_NAME,
+  SITE_URL,
+} from "@/modules/seo/application/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -20,7 +26,9 @@ export default async function HomePage({ params }: Props) {
   const localizedUrl = `${SITE_URL}/${locale}`;
   const address = {
     "@type": "PostalAddress",
-    ...(LOCATION.streetAddress ? { streetAddress: LOCATION.streetAddress } : {}),
+    ...(LOCATION.streetAddress
+      ? { streetAddress: LOCATION.streetAddress }
+      : {}),
     ...(LOCATION.locality ? { addressLocality: LOCATION.locality } : {}),
     ...(LOCATION.postalCode ? { postalCode: LOCATION.postalCode } : {}),
     addressRegion: `${LOCATION.region}, ${LOCATION.province}`,

@@ -1,7 +1,7 @@
 import type { NextAuthOptions, User, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/shared/infrastructure/prisma/prisma";
 import type { JWT } from "next-auth/jwt";
 
 const admins = (process.env.ADMIN_EMAILS || "")
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
         if (userId) {
           await prisma.user
             .update({ where: { id: userId }, data: { role: "ADMIN" } })
-            .catch(() => {});
+            .catch(() => { });
         }
         return token;
       }

@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { headers } from "next/headers";
-import { inter, fraunces } from "@/lib/fonts";
-import { SITE_URL } from "@/lib/seo";
+import { inter, fraunces } from "@/shared/infrastructure/fonts/fonts";
+import { SITE_URL } from "@/modules/seo/application/seo";
 import "./globals.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./react-big-calendar-overrides.css";
