@@ -1,19 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/shared/infrastructure/prisma/prisma";
+import { NextRequest } from "next/server";
+import { handleGetPublicReservations } from "@/modules/reservations/adapters/input/http/get-public-reservations.handler";
 
-export async function GET() {
-  const events = await prisma.event.findMany({
-    orderBy: { start: "asc" },
-  });
-
-  // En público no exponemos datos sensibles: solo "Ocupado"
-  const sanitized = events.map((e) => ({
-    id: e.id,
-    title: "Ocupado",
-    start: e.start,
-    end: e.end,
-    allDay: e.allDay,
-  }));
-
-  return NextResponse.json(sanitized);
+export async function GET(request: NextRequest) {
+  return handleGetPublicReservations(request);
 }
