@@ -1,6 +1,7 @@
-// src/modules/reservations/adapters/input/http/create-reservation.handler.ts
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
+import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
+import { ZodError } from "zod";
 
 export async function handleCreateReservation(
     request: NextRequest,
@@ -12,25 +13,27 @@ export async function handleCreateReservation(
             return adminResult.response;
         }
 
-        // Si llegamos aquí, el usuario es admin
-        const adminToken = adminResult.token;
-
-        // 2. parsear body
         const body: unknown = await request.json();
+        const validatedBody = createReservationSchema.parse(body);
 
-        // 3. validar body
-
-        // 4. ejecutar caso de uso
-
-        // 5. devolver respuesta
         return NextResponse.json(
             {
                 message: "Reserva creada correctamente",
-                adminUserId: adminToken.sub ?? null,
+                data: validatedBody,
             },
             { status: 201 },
         );
     } catch (error) {
+        if (error instanceof ZodError) {
+            return NextResponse.json(
+                {
+                    error: "Datos inválidos",
+                    details: error.flatten(),
+                },
+                { status: 400 },
+            );
+        }
+
         console.error("Error creating reservation:", error);
 
         return NextResponse.json(
