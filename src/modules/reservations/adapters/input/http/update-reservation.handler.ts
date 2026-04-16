@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 import { updateReservationSchema } from "@/modules/reservations/adapters/input/validation/update-reservation.schema";
-import { ZodError } from "zod";
+import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
+import { UpdateReservationUseCase } from "@/modules/reservations/application/use-cases/UpdateReservationUseCase";
 
 type UpdateReservationHandlerContext = {
     params: Promise<{
@@ -24,14 +26,40 @@ export async function handleUpdateReservation(
         const body: unknown = await request.json();
         const validatedBody = updateReservationSchema.parse(body);
 
-        return NextResponse.json(
-            {
-                message: "Reserva actualizada correctamente",
-                id,
-                data: validatedBody,
-            },
-            { status: 200 },
+        const reservationRepository = new PrismaReservationRepository();
+        const updateReservationUseCase = new UpdateReservationUseCase(
+            reservationRepository,
         );
+
+        const result = await updateReservationUseCase.execute({
+            id,
+            title: validatedBody.title,
+            start: validatedBody.start,
+            end: validatedBody.end,
+            allDay: validatedBody.allDay,
+        });
+
+        if (!result.ok) {
+            if (result.error === "NOT_FOUND") {
+                return NextResponse.json(
+                    { error: "Reserva no encontrada" },
+                    { status: 404 },
+                );
+            }
+
+            if (result.error === "OVERLAPPING_RESERVATION") {
+                return NextResponse.json(
+                    {
+                        error:
+                            "Las fechas/horas seleccionadas solapan con una reserva existente.",
+                        overlapping: result.overlapping,
+                    },
+                    { status: 409 },
+                );
+            }
+        }
+
+        return NextResponse.json(result.reservation, { status: 200 });
     } catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(
