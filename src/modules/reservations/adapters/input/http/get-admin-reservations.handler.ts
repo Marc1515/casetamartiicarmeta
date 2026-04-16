@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
-import { GetAdminReservationsUseCase } from "@/modules/reservations/application/use-cases/GetAdminReservationsUseCase";
+import { makeGetAdminReservationsUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleGetAdminReservations(
     request: NextRequest,
@@ -13,11 +12,7 @@ export async function handleGetAdminReservations(
             return adminResult.response;
         }
 
-        const reservationRepository = new PrismaReservationRepository();
-        const getAdminReservationsUseCase = new GetAdminReservationsUseCase(
-            reservationRepository,
-        );
-
+        const getAdminReservationsUseCase = makeGetAdminReservationsUseCase();
         const reservations = await getAdminReservationsUseCase.execute();
 
         return NextResponse.json(reservations, { status: 200 });

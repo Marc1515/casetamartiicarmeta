@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
-import { DeleteReservationUseCase } from "@/modules/reservations/application/use-cases/DeleteReservationUseCase";
+import { makeDeleteReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 type DeleteReservationHandlerContext = {
     params: Promise<{
@@ -21,12 +20,7 @@ export async function handleDeleteReservation(
         }
 
         const { id } = await context.params;
-
-        const reservationRepository = new PrismaReservationRepository();
-        const deleteReservationUseCase = new DeleteReservationUseCase(
-            reservationRepository,
-        );
-
+        const deleteReservationUseCase = makeDeleteReservationUseCase();
         const result = await deleteReservationUseCase.execute({ id });
 
         if (!result.ok) {

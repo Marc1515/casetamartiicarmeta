@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 import { updateReservationSchema } from "@/modules/reservations/adapters/input/validation/update-reservation.schema";
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
-import { UpdateReservationUseCase } from "@/modules/reservations/application/use-cases/UpdateReservationUseCase";
+import { makeUpdateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 type UpdateReservationHandlerContext = {
     params: Promise<{
@@ -26,10 +25,7 @@ export async function handleUpdateReservation(
         const body: unknown = await request.json();
         const validatedBody = updateReservationSchema.parse(body);
 
-        const reservationRepository = new PrismaReservationRepository();
-        const updateReservationUseCase = new UpdateReservationUseCase(
-            reservationRepository,
-        );
+        const updateReservationUseCase = makeUpdateReservationUseCase();
 
         const result = await updateReservationUseCase.execute({
             id,
@@ -47,16 +43,14 @@ export async function handleUpdateReservation(
                 );
             }
 
-            if (result.error === "OVERLAPPING_RESERVATION") {
-                return NextResponse.json(
-                    {
-                        error:
-                            "Las fechas/horas seleccionadas solapan con una reserva existente.",
-                        overlapping: result.overlapping,
-                    },
-                    { status: 409 },
-                );
-            }
+            return NextResponse.json(
+                {
+                    error:
+                        "Las fechas/horas seleccionadas solapan con una reserva existente.",
+                    overlapping: result.overlapping,
+                },
+                { status: 409 },
+            );
         }
 
         return NextResponse.json(result.reservation, { status: 200 });

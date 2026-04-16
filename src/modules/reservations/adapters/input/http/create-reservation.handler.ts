@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
-import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
-import { CreateReservationUseCase } from "@/modules/reservations/application/use-cases/CreateReservationUseCase";
-import { ZodError } from "zod";
+import { makeCreateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleCreateReservation(
     request: NextRequest,
@@ -18,10 +17,7 @@ export async function handleCreateReservation(
         const body: unknown = await request.json();
         const validatedBody = createReservationSchema.parse(body);
 
-        const reservationRepository = new PrismaReservationRepository();
-        const createReservationUseCase = new CreateReservationUseCase(
-            reservationRepository,
-        );
+        const createReservationUseCase = makeCreateReservationUseCase();
 
         const result = await createReservationUseCase.execute({
             title: validatedBody.title,
