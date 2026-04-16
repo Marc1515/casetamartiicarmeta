@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
+import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 import { makeCreateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleCreateReservation(
@@ -40,21 +40,6 @@ export async function handleCreateReservation(
 
         return NextResponse.json(result.reservation, { status: 201 });
     } catch (error) {
-        if (error instanceof ZodError) {
-            return NextResponse.json(
-                {
-                    error: "Datos inválidos",
-                    details: error.flatten(),
-                },
-                { status: 400 },
-            );
-        }
-
-        console.error("Error creating reservation:", error);
-
-        return NextResponse.json(
-            { error: "Error interno del servidor" },
-            { status: 500 },
-        );
+        return mapReservationHttpError(error);
     }
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 import { makeGetPublicReservationsUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleGetPublicReservations(
@@ -10,11 +11,6 @@ export async function handleGetPublicReservations(
 
         return NextResponse.json(reservations, { status: 200 });
     } catch (error) {
-        console.error("Error fetching public reservations:", error);
-
-        return NextResponse.json(
-            { error: "Error interno del servidor" },
-            { status: 500 },
-        );
+        return mapReservationHttpError(error);
     }
 }
