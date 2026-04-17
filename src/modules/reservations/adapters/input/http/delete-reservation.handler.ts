@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
+import {
+    handleReservationRoute,
+    requireAdminOrResponse,
+} from "@/modules/reservations/adapters/input/http/reservation-route-handler";
 import { makeDeleteReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 type DeleteReservationHandlerContext = {
@@ -14,29 +16,27 @@ export async function handleDeleteReservation(
     request: NextRequest,
     context: DeleteReservationHandlerContext,
 ): Promise<NextResponse> {
-    try {
-        const adminResult = await requireAdmin(request);
+    const adminResult = await requireAdminOrResponse(request);
 
-        if (!adminResult.ok) {
-            return adminResult.response;
-        }
+    if (!adminResult.ok) {
+        return adminResult.response;
+    }
 
+    return handleReservationRoute(async () => {
         const { id } = await context.params;
         const deleteReservationUseCase = makeDeleteReservationUseCase();
         const result = await deleteReservationUseCase.execute({ id });
 
         if (!result.ok) {
-            return NextResponse.json(
-                { error: "Reserva no encontrada" },
-                { status: 404 },
-            );
+            return {
+                status: 404,
+                body: { error: "Reserva no encontrada" },
+            };
         }
 
-        return NextResponse.json(
-            toAdminReservationResponseDto(result.reservation),
-            { status: 200 },
-        );
-    } catch (error) {
-        return mapReservationHttpError(error);
-    }
+        return {
+            status: 200,
+            body: toAdminReservationResponseDto(result.reservation),
+        };
+    });
 }

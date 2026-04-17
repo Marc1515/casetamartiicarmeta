@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
+import {
+    handleReservationRoute,
+    requireAdminOrResponse,
+} from "@/modules/reservations/adapters/input/http/reservation-route-handler";
 import { updateReservationSchema } from "@/modules/reservations/adapters/input/validation/update-reservation.schema";
 import { makeUpdateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
@@ -15,13 +17,13 @@ export async function handleUpdateReservation(
     request: NextRequest,
     context: UpdateReservationHandlerContext,
 ): Promise<NextResponse> {
-    try {
-        const adminResult = await requireAdmin(request);
+    const adminResult = await requireAdminOrResponse(request);
 
-        if (!adminResult.ok) {
-            return adminResult.response;
-        }
+    if (!adminResult.ok) {
+        return adminResult.response;
+    }
 
+    return handleReservationRoute(async () => {
         const { id } = await context.params;
         const body: unknown = await request.json();
         const validatedBody = updateReservationSchema.parse(body);
@@ -39,27 +41,25 @@ export async function handleUpdateReservation(
 
         if (!result.ok) {
             if (result.error === "NOT_FOUND") {
-                return NextResponse.json(
-                    { error: "Reserva no encontrada" },
-                    { status: 404 },
-                );
+                return {
+                    status: 404,
+                    body: { error: "Reserva no encontrada" },
+                };
             }
 
-            return NextResponse.json(
-                {
+            return {
+                status: 409,
+                body: {
                     error:
                         "Las fechas/horas seleccionadas solapan con una reserva existente.",
                     overlapping: toAdminReservationResponseDto(result.overlapping),
                 },
-                { status: 409 },
-            );
+            };
         }
 
-        return NextResponse.json(
-            toAdminReservationResponseDto(result.reservation),
-            { status: 200 },
-        );
-    } catch (error) {
-        return mapReservationHttpError(error);
-    }
+        return {
+            status: 200,
+            body: toAdminReservationResponseDto(result.reservation),
+        };
+    });
 }

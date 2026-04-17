@@ -1,20 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
+import {
+    handleReservationRoute,
+    requireAdminOrResponse,
+} from "@/modules/reservations/adapters/input/http/reservation-route-handler";
 import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
 import { makeCreateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleCreateReservation(
     request: NextRequest,
 ): Promise<NextResponse> {
-    try {
-        const adminResult = await requireAdmin(request);
+    const adminResult = await requireAdminOrResponse(request);
 
-        if (!adminResult.ok) {
-            return adminResult.response;
-        }
+    if (!adminResult.ok) {
+        return adminResult.response;
+    }
 
+    return handleReservationRoute(async () => {
         const body: unknown = await request.json();
         const validatedBody = createReservationSchema.parse(body);
 
@@ -30,21 +32,19 @@ export async function handleCreateReservation(
         });
 
         if (!result.ok) {
-            return NextResponse.json(
-                {
+            return {
+                status: 409,
+                body: {
                     error:
                         "Las fechas/horas seleccionadas solapan con una reserva existente.",
                     overlapping: toAdminReservationResponseDto(result.overlapping),
                 },
-                { status: 409 },
-            );
+            };
         }
 
-        return NextResponse.json(
-            toAdminReservationResponseDto(result.reservation),
-            { status: 201 },
-        );
-    } catch (error) {
-        return mapReservationHttpError(error);
-    }
+        return {
+            status: 201,
+            body: toAdminReservationResponseDto(result.reservation),
+        };
+    });
 }
