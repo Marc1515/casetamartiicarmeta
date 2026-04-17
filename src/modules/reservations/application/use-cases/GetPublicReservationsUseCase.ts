@@ -1,15 +1,7 @@
-// src/modules/reservations/application/use-cases/GetPublicReservationsUseCase.ts
+import type { PublicReservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
-export type PublicReservationDto = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    allDay: boolean;
-};
-
-export type GetPublicReservationsUseCaseResponse = PublicReservationDto[];
+export type GetPublicReservationsUseCaseResponse = PublicReservation[];
 
 export class GetPublicReservationsUseCase {
     constructor(

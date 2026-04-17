@@ -1,9 +1,7 @@
-import type {
-    ReservationRecord,
-    ReservationRepository,
-} from "@/modules/reservations/application/ports/ReservationRepository";
+import type { Reservation } from "@/modules/reservations/application/models/Reservation";
+import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
-export type GetAdminReservationsUseCaseResponse = ReservationRecord[];
+export type GetAdminReservationsUseCaseResponse = Reservation[];
 
 export class GetAdminReservationsUseCase {
     constructor(

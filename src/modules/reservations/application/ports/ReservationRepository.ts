@@ -1,14 +1,4 @@
-export type ReservationRecord = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    allDay: boolean;
-    notes: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-    createdById: string | null;
-};
+import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 
 export type CreateReservationData = {
     title: string;
@@ -28,14 +18,14 @@ export type UpdateReservationData = {
 };
 
 export interface ReservationRepository {
-    findAllOrdered(): Promise<ReservationRecord[]>;
-    findById(id: string): Promise<ReservationRecord | null>;
+    findAllOrdered(): Promise<Reservation[]>;
+    findById(id: string): Promise<Reservation | null>;
     findOverlapping(
         start: Date,
         end: Date,
         excludeId?: string,
-    ): Promise<ReservationRecord[]>;
-    create(data: CreateReservationData): Promise<ReservationRecord>;
-    update(id: string, data: UpdateReservationData): Promise<ReservationRecord>;
-    delete(id: string): Promise<ReservationRecord>;
+    ): Promise<Reservation[]>;
+    create(data: CreateReservationData): Promise<Reservation>;
+    update(id: string, data: UpdateReservationData): Promise<Reservation>;
+    delete(id: string): Promise<Reservation>;
 }

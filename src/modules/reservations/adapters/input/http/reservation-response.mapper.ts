@@ -1,14 +1,14 @@
-// src/modules/reservations/adapters/input/http/reservation-response.mapper.ts
 import type {
-    ReservationRecord,
-} from "@/modules/reservations/application/ports/ReservationRepository";
+    PublicReservation,
+    Reservation,
+} from "@/modules/reservations/application/models/Reservation";
 import type {
     AdminReservationResponseDto,
     PublicReservationResponseDto,
 } from "@/modules/reservations/adapters/input/http/reservation-response.dto";
 
 export function toAdminReservationResponseDto(
-    reservation: ReservationRecord,
+    reservation: Reservation,
 ): AdminReservationResponseDto {
     return {
         id: reservation.id,
@@ -24,19 +24,13 @@ export function toAdminReservationResponseDto(
 }
 
 export function toAdminReservationResponseDtoList(
-    reservations: ReservationRecord[],
+    reservations: Reservation[],
 ): AdminReservationResponseDto[] {
     return reservations.map(toAdminReservationResponseDto);
 }
 
 export function toPublicReservationResponseDto(
-    reservation: {
-        id: string;
-        title: string;
-        start: Date;
-        end: Date;
-        allDay: boolean;
-    },
+    reservation: PublicReservation,
 ): PublicReservationResponseDto {
     return {
         id: reservation.id,
@@ -48,13 +42,7 @@ export function toPublicReservationResponseDto(
 }
 
 export function toPublicReservationResponseDtoList(
-    reservations: Array<{
-        id: string;
-        title: string;
-        start: Date;
-        end: Date;
-        allDay: boolean;
-    }>,
+    reservations: PublicReservation[],
 ): PublicReservationResponseDto[] {
     return reservations.map(toPublicReservationResponseDto);
 }

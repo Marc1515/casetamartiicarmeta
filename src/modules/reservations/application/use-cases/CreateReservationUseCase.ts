@@ -1,3 +1,4 @@
+import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
 export type CreateReservationUseCaseInput = {
@@ -12,16 +13,12 @@ export type CreateReservationUseCaseInput = {
 export type CreateReservationUseCaseResult =
     | {
         ok: true;
-        reservation: Awaited<
-            ReturnType<ReservationRepository["create"]>
-        >;
+        reservation: Reservation;
     }
     | {
         ok: false;
         error: "OVERLAPPING_RESERVATION";
-        overlapping: Awaited<
-            ReturnType<ReservationRepository["findOverlapping"]>
-        >[number];
+        overlapping: Reservation;
     };
 
 export class CreateReservationUseCase {

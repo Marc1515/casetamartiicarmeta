@@ -1,3 +1,4 @@
+import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 
 export type DeleteReservationUseCaseInput = {
@@ -7,9 +8,7 @@ export type DeleteReservationUseCaseInput = {
 export type DeleteReservationUseCaseResult =
     | {
         ok: true;
-        reservation: Awaited<
-            ReturnType<ReservationRepository["delete"]>
-        >;
+        reservation: Reservation;
     }
     | {
         ok: false;
