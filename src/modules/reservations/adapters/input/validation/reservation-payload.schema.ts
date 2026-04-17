@@ -1,0 +1,55 @@
+import { z } from "zod";
+
+export const reservationPayloadSchema = z
+    .object({
+        title: z
+            .string({
+                error: (issue) =>
+                    issue.input === undefined
+                        ? "El título es obligatorio"
+                        : "El título debe ser un texto",
+            })
+            .trim()
+            .min(1, { error: "El título es obligatorio" })
+            .max(120, { error: "El título no puede superar los 120 caracteres" }),
+
+        start: z.coerce.date({
+            error: (issue) =>
+                issue.input === undefined
+                    ? "La fecha de inicio es obligatoria"
+                    : "La fecha de inicio no es válida",
+        }),
+
+        end: z.coerce.date({
+            error: (issue) =>
+                issue.input === undefined
+                    ? "La fecha de fin es obligatoria"
+                    : "La fecha de fin no es válida",
+        }),
+
+        allDay: z.boolean().optional().default(true),
+
+        notes: z
+            .string({
+                error: "Las notas deben ser un texto",
+            })
+            .trim()
+            .max(1000, { error: "Las notas no pueden superar los 1000 caracteres" })
+            .nullable()
+            .optional()
+            .transform((value) => {
+                if (value === undefined || value === null || value === "") {
+                    return null;
+                }
+
+                return value;
+            }),
+    })
+    .refine((data) => data.end > data.start, {
+        message: "La fecha de fin debe ser posterior a la de inicio",
+        path: ["end"],
+    });
+
+export type ReservationPayloadSchema = z.infer<
+    typeof reservationPayloadSchema
+>;
