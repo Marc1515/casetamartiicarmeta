@@ -5,6 +5,10 @@ import type {
     UpdateReservationData,
 } from "@/modules/reservations/application/ports/ReservationRepository";
 import type { Reservation } from "@/modules/reservations/application/models/Reservation";
+import {
+    toReservationPersistenceModel,
+    toReservationPersistenceModelList,
+} from "@/modules/reservations/adapters/output/persistence/reservation-persistence.mapper";
 
 export class PrismaReservationRepository implements ReservationRepository {
     async findAllOrdered(): Promise<Reservation[]> {
@@ -12,7 +16,7 @@ export class PrismaReservationRepository implements ReservationRepository {
             orderBy: [{ start: "asc" }, { end: "asc" }, { createdAt: "asc" }],
         });
 
-        return reservations;
+        return toReservationPersistenceModelList(reservations);
     }
 
     async findById(id: string): Promise<Reservation | null> {
@@ -20,7 +24,11 @@ export class PrismaReservationRepository implements ReservationRepository {
             where: { id },
         });
 
-        return reservation;
+        if (!reservation) {
+            return null;
+        }
+
+        return toReservationPersistenceModel(reservation);
     }
 
     async findOverlapping(
@@ -47,7 +55,7 @@ export class PrismaReservationRepository implements ReservationRepository {
             orderBy: [{ start: "asc" }, { end: "asc" }],
         });
 
-        return reservations;
+        return toReservationPersistenceModelList(reservations);
     }
 
     async create(data: CreateReservationData): Promise<Reservation> {
@@ -62,7 +70,7 @@ export class PrismaReservationRepository implements ReservationRepository {
             },
         });
 
-        return reservation;
+        return toReservationPersistenceModel(reservation);
     }
 
     async update(
@@ -80,7 +88,7 @@ export class PrismaReservationRepository implements ReservationRepository {
             },
         });
 
-        return reservation;
+        return toReservationPersistenceModel(reservation);
     }
 
     async delete(id: string): Promise<Reservation> {
@@ -88,6 +96,6 @@ export class PrismaReservationRepository implements ReservationRepository {
             where: { id },
         });
 
-        return reservation;
+        return toReservationPersistenceModel(reservation);
     }
 }
