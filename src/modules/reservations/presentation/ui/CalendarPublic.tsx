@@ -1,24 +1,19 @@
 "use client";
+
 import { useEffect, useMemo, useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import {
+  eachDayOfInterval,
   format,
+  getDay,
   parse,
   startOfWeek,
-  getDay,
-  eachDayOfInterval,
 } from "date-fns";
-import { ca, es, enUS, fr, de } from "date-fns/locale";
+import { ca, de, enUS, es, fr } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 import { getPublicReservations } from "@/modules/reservations/presentation/api/reservations.client";
-
-type Evt = {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-  allDay?: boolean;
-};
+import { toPublicReservationCalendarEventList } from "@/modules/reservations/presentation/mappers/reservation-calendar.mapper";
+import type { ReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
 
 const localizer = dateFnsLocalizer({
   format,
@@ -32,7 +27,7 @@ export default function CalendarPublic() {
   const locale = useLocale() as "ca" | "es" | "en" | "fr" | "de";
   const t = useTranslations("calendarMessages");
   const tCal = useTranslations("calendar");
-  const [events, setEvents] = useState<Evt[]>([]);
+  const [events, setEvents] = useState<ReservationCalendarEvent[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -42,15 +37,7 @@ export default function CalendarPublic() {
         return;
       }
 
-      setEvents(
-        result.data.map((reservation) => ({
-          id: reservation.id,
-          title: reservation.title,
-          start: new Date(reservation.start),
-          end: new Date(reservation.end),
-          allDay: reservation.allDay ?? true,
-        })),
-      );
+      setEvents(toPublicReservationCalendarEventList(result.data));
     })();
   }, []);
 
@@ -88,7 +75,7 @@ export default function CalendarPublic() {
 
   return (
     <div className="public-calendar h-[320px] sm:h-[520px] lg:h-[600px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
-      <Calendar<Evt>
+      <Calendar<ReservationCalendarEvent>
         culture={locale}
         localizer={localizer}
         events={events}

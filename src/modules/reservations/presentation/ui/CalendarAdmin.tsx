@@ -1,10 +1,11 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import {
   Calendar,
   dateFnsLocalizer,
-  ToolbarProps,
-  View,
+  type ToolbarProps,
+  type View,
 } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
@@ -15,6 +16,8 @@ import {
   onAdminReservationHighlight,
   onAdminReservationsChanged,
 } from "@/modules/reservations/presentation/events/reservation-admin.events";
+import { toAdminReservationCalendarEventList } from "@/modules/reservations/presentation/mappers/reservation-calendar.mapper";
+import type { AdminReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
 
 // 6 azules con texto adecuado (buen contraste)
 const PALETTE: Array<{ bg: string; text: string }> = [
@@ -26,23 +29,16 @@ const PALETTE: Array<{ bg: string; text: string }> = [
   { bg: "#90e0ef", text: "#ffffff" },
 ];
 
-function hashString(s: string) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) {
-    h = (h << 5) - h + s.charCodeAt(i);
-    h |= 0;
-  }
-  return Math.abs(h);
-}
+function hashString(value: string): number {
+  let hash = 0;
 
-export type Evt = {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-  allDay?: boolean;
-  notes?: string | null;
-};
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(index);
+    hash |= 0;
+  }
+
+  return Math.abs(hash);
+}
 
 const localizer = dateFnsLocalizer({
   format,
@@ -52,17 +48,20 @@ const localizer = dateFnsLocalizer({
   locales: { es },
 });
 
-const ToolbarComp = (props: ToolbarProps<Evt>) => {
+const ToolbarComp = (props: ToolbarProps<AdminReservationCalendarEvent>) => {
   const { label, onNavigate, onView, view, views } = props;
 
   let viewList: View[];
+
   if (Array.isArray(views)) {
     viewList = views as View[];
   } else {
-    const obj = views as Partial<
-      Record<View, boolean | React.ComponentType<unknown>>
+    const viewsMap = views as Partial<
+      Record<View, boolean | React.ComponentType<object>>
     >;
-    viewList = (Object.keys(obj) as View[]).filter((v) => Boolean(obj[v]));
+    viewList = (Object.keys(viewsMap) as View[]).filter((currentView) =>
+      Boolean(viewsMap[currentView]),
+    );
   }
 
   return (
@@ -82,20 +81,20 @@ const ToolbarComp = (props: ToolbarProps<Evt>) => {
       <div className="text-sm font-semibold">{label}</div>
 
       <div className="inline-flex items-center gap-2">
-        {viewList.map((v) => (
+        {viewList.map((currentView) => (
           <Button
-            key={v}
+            key={currentView}
             size="sm"
-            variant={view === v ? "default" : "outline"}
-            onClick={() => onView(v)}
+            variant={view === currentView ? "default" : "outline"}
+            onClick={() => onView(currentView)}
           >
-            {v === "month"
+            {currentView === "month"
               ? "Mes"
-              : v === "week"
+              : currentView === "week"
                 ? "Semana"
-                : v === "day"
+                : currentView === "day"
                   ? "Día"
-                  : v}
+                  : currentView}
           </Button>
         ))}
       </div>
@@ -104,29 +103,21 @@ const ToolbarComp = (props: ToolbarProps<Evt>) => {
 };
 
 export default function CalendarAdmin() {
-  const [events, setEvents] = useState<Evt[]>([]);
+  const [events, setEvents] = useState<AdminReservationCalendarEvent[]>([]);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
+
   const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
 
-  async function load() {
+  async function load(): Promise<void> {
     const result = await getAdminReservations();
 
     if (!result.ok) {
       return;
     }
 
-    setEvents(
-      result.data.map((reservation) => ({
-        id: reservation.id,
-        title: reservation.title,
-        start: new Date(reservation.start),
-        end: new Date(reservation.end),
-        allDay: reservation.allDay ?? false,
-        notes: reservation.notes ?? null,
-      })),
-    );
+    setEvents(toAdminReservationCalendarEventList(result.data));
   }
 
   useEffect(() => {
@@ -160,12 +151,12 @@ export default function CalendarAdmin() {
     };
   }, []);
 
-  function openEdit(event: Evt) {
+  function openEdit(event: AdminReservationCalendarEvent): void {
     emitAdminReservationEdit(event);
   }
 
   function eventPropGetter(
-    event: Evt,
+    event: AdminReservationCalendarEvent,
     _start?: Date,
     _end?: Date,
     isSelected?: boolean,
@@ -191,6 +182,7 @@ export default function CalendarAdmin() {
     };
 
     const duration = event.end.getTime() - event.start.getTime();
+
     if (duration >= 2 * 24 * 60 * 60 * 1000) {
       style.filter = "brightness(0.95)";
     }
@@ -209,7 +201,7 @@ export default function CalendarAdmin() {
 
   return (
     <div className="admin-calendar h-[320px] sm:h-[600px] lg:h-[650px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
-      <Calendar<Evt>
+      <Calendar<AdminReservationCalendarEvent>
         culture="es"
         localizer={localizer}
         events={events}

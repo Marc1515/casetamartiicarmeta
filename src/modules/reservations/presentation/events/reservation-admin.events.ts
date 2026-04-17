@@ -1,10 +1,6 @@
-export type AdminReservationEditDetail = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    notes?: string | null;
-};
+import type { AdminReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
+
+export type AdminReservationEditDetail = AdminReservationCalendarEvent;
 
 export type AdminReservationHighlightDetail = {
     id: string;
@@ -32,12 +28,9 @@ export function emitAdminReservationEdit(
     detail: AdminReservationEditDetail,
 ): void {
     window.dispatchEvent(
-        new CustomEvent<AdminReservationEditDetail>(
-            ADMIN_RESERVATION_EDIT_EVENT,
-            {
-                detail,
-            },
-        ),
+        new CustomEvent<AdminReservationEditDetail>(ADMIN_RESERVATION_EDIT_EVENT, {
+            detail,
+        }),
     );
 }
 
