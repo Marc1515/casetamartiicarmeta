@@ -1,29 +1,17 @@
 "use client";
 
 import { useMemo } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import {
-  eachDayOfInterval,
-  format,
-  getDay,
-  parse,
-  startOfWeek,
-} from "date-fns";
-import { ca, de, enUS, es, fr } from "date-fns/locale";
+import { Calendar } from "react-big-calendar";
+import { eachDayOfInterval, format } from "date-fns";
 import { useLocale, useTranslations } from "next-intl";
 import { usePublicReservationCalendar } from "@/modules/reservations/presentation/hooks/usePublicReservationCalendar";
 import type { ReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
+import { reservationCalendarLocalizer } from "@/modules/reservations/presentation/calendar/reservation-calendar.localizer";
 
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek: (date: Date) => startOfWeek(date, { weekStartsOn: 1 }),
-  getDay: (date: Date) => getDay(date),
-  locales: { ca, es, en: enUS, fr, de },
-});
+type SupportedLocale = "ca" | "es" | "en" | "fr" | "de";
 
 export default function CalendarPublic() {
-  const locale = useLocale() as "ca" | "es" | "en" | "fr" | "de";
+  const locale = useLocale() as SupportedLocale;
   const t = useTranslations("calendarMessages");
   const tCal = useTranslations("calendar");
   const { events } = usePublicReservationCalendar();
@@ -64,7 +52,7 @@ export default function CalendarPublic() {
     <div className="public-calendar h-[320px] sm:h-[520px] lg:h-[600px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
       <Calendar<ReservationCalendarEvent>
         culture={locale}
-        localizer={localizer}
+        localizer={reservationCalendarLocalizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
