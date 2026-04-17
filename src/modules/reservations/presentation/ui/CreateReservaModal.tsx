@@ -19,6 +19,10 @@ import {
   type ReservationFormValues,
 } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { useReservationDialogMobile } from "@/modules/reservations/presentation/ui/useReservationDialogMobile";
+import {
+  emitAdminReservationHighlight,
+  emitAdminReservationsChanged,
+} from "@/modules/reservations/presentation/events/reservation-admin.events";
 
 type Props = {
   open: boolean;
@@ -56,11 +60,9 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     if (!result.ok) {
       if (result.status === 409) {
         if (result.error.overlapping?.id) {
-          window.dispatchEvent(
-            new CustomEvent("admin:event:highlight", {
-              detail: { id: result.error.overlapping.id },
-            }),
-          );
+          emitAdminReservationHighlight({
+            id: result.error.overlapping.id,
+          });
         }
 
         setError("end", {
@@ -74,7 +76,7 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
       return;
     }
 
-    window.dispatchEvent(new Event("admin:events:changed"));
+    emitAdminReservationsChanged();
     reset(buildCreateReservationDefaultValues());
     setEndAuto(true);
     onOpenChange(false);

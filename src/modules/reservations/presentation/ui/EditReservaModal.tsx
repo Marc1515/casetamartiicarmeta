@@ -23,14 +23,11 @@ import {
   type ReservationFormValues,
 } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { useReservationDialogMobile } from "@/modules/reservations/presentation/ui/useReservationDialogMobile";
-
-type EditEventDetail = {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-  notes?: string | null;
-};
+import {
+  onAdminReservationEdit,
+  emitAdminReservationHighlight,
+  emitAdminReservationsChanged,
+} from "@/modules/reservations/presentation/events/reservation-admin.events";
 
 export default function EditReservaModal() {
   const [open, setOpen] = useState(false);
@@ -53,35 +50,26 @@ export default function EditReservaModal() {
     useReservationDialogMobile({ open });
 
   useEffect(() => {
-    const onEdit = (event: Event) => {
-      const customEvent = event as CustomEvent<EditEventDetail>;
+    const unsubscribe = onAdminReservationEdit((detail) => {
+      const safeStart = detail.start < new Date() ? new Date() : detail.start;
 
-      const safeStart =
-        customEvent.detail.start < new Date()
-          ? new Date()
-          : customEvent.detail.start;
-
-      const safeEnd = isAfter(customEvent.detail.end, safeStart)
-        ? customEvent.detail.end
+      const safeEnd = isAfter(detail.end, safeStart)
+        ? detail.end
         : addMinutes(safeStart, 30);
 
-      setEditingId(customEvent.detail.id);
+      setEditingId(detail.id);
 
       reset({
-        title: customEvent.detail.title,
+        title: detail.title,
         start: safeStart,
         end: safeEnd,
-        notes: customEvent.detail.notes ?? "",
+        notes: detail.notes ?? "",
       });
 
       setOpen(true);
-    };
+    });
 
-    window.addEventListener("admin:event:edit", onEdit);
-
-    return () => {
-      window.removeEventListener("admin:event:edit", onEdit);
-    };
+    return unsubscribe;
   }, [reset]);
 
   async function onSubmit(data: ReservationFormValues) {
@@ -100,11 +88,9 @@ export default function EditReservaModal() {
     if (!result.ok) {
       if (result.status === 409) {
         if (result.error.overlapping?.id) {
-          window.dispatchEvent(
-            new CustomEvent("admin:event:highlight", {
-              detail: { id: result.error.overlapping.id },
-            }),
-          );
+          emitAdminReservationHighlight({
+            id: result.error.overlapping.id,
+          });
         }
 
         setError("end", {
@@ -119,7 +105,7 @@ export default function EditReservaModal() {
       return;
     }
 
-    window.dispatchEvent(new Event("admin:events:changed"));
+    emitAdminReservationsChanged();
     setOpen(false);
     setEditingId(null);
   }
@@ -140,7 +126,7 @@ export default function EditReservaModal() {
       return;
     }
 
-    window.dispatchEvent(new Event("admin:events:changed"));
+    emitAdminReservationsChanged();
     setOpen(false);
     setEditingId(null);
   }

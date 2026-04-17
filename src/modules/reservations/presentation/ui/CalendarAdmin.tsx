@@ -10,6 +10,11 @@ import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Button } from "@/shared/presentation/ui/button";
 import { getAdminReservations } from "@/modules/reservations/presentation/api/reservations.client";
+import {
+  emitAdminReservationEdit,
+  onAdminReservationHighlight,
+  onAdminReservationsChanged,
+} from "@/modules/reservations/presentation/events/reservation-admin.events";
 
 // 6 azules con texto adecuado (buen contraste)
 const PALETTE: Array<{ bg: string; text: string }> = [
@@ -126,13 +131,12 @@ export default function CalendarAdmin() {
 
   useEffect(() => {
     void load();
-    const reload = () => void load();
-    window.addEventListener("admin:events:changed", reload);
 
-    const onHighlight = (event: Event) => {
-      const customEvent = event as CustomEvent<{ id: string }>;
-      const { id } = customEvent.detail;
+    const unsubscribeReload = onAdminReservationsChanged(() => {
+      void load();
+    });
 
+    const unsubscribeHighlight = onAdminReservationHighlight(({ id }) => {
       setHighlightedId(id);
 
       if (highlightTimeoutRef.current) {
@@ -143,13 +147,11 @@ export default function CalendarAdmin() {
         setHighlightedId((currentId) => (currentId === id ? null : currentId));
         highlightTimeoutRef.current = null;
       }, 4000);
-    };
-
-    window.addEventListener("admin:event:highlight", onHighlight);
+    });
 
     return () => {
-      window.removeEventListener("admin:events:changed", reload);
-      window.removeEventListener("admin:event:highlight", onHighlight);
+      unsubscribeReload();
+      unsubscribeHighlight();
 
       if (highlightTimeoutRef.current) {
         clearTimeout(highlightTimeoutRef.current);
@@ -159,9 +161,7 @@ export default function CalendarAdmin() {
   }, []);
 
   function openEdit(event: Evt) {
-    window.dispatchEvent(
-      new CustomEvent("admin:event:edit", { detail: event }),
-    );
+    emitAdminReservationEdit(event);
   }
 
   function eventPropGetter(
