@@ -34,6 +34,7 @@ export async function handleUpdateReservation(
             start: validatedBody.start,
             end: validatedBody.end,
             allDay: validatedBody.allDay,
+            notes: validatedBody.notes,
         });
 
         if (!result.ok) {

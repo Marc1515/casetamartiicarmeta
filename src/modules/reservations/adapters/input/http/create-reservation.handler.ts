@@ -25,6 +25,7 @@ export async function handleCreateReservation(
             start: validatedBody.start,
             end: validatedBody.end,
             allDay: validatedBody.allDay,
+            notes: validatedBody.notes,
             createdById: adminResult.token.sub ?? null,
         });
 

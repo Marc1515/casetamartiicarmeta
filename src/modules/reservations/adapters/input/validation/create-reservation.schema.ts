@@ -27,6 +27,22 @@ const reservationBaseSchema = z.object({
     }),
 
     allDay: z.boolean().optional().default(true),
+
+    notes: z
+        .string({
+            error: "Las notas deben ser un texto",
+        })
+        .trim()
+        .max(1000, { error: "Las notas no pueden superar los 1000 caracteres" })
+        .nullable()
+        .optional()
+        .transform((value) => {
+            if (value === undefined || value === null || value === "") {
+                return null;
+            }
+
+            return value;
+        }),
 });
 
 export const createReservationSchema = reservationBaseSchema.refine(

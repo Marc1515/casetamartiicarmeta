@@ -5,6 +5,7 @@ export type CreateReservationUseCaseInput = {
     start: Date;
     end: Date;
     allDay?: boolean;
+    notes?: string | null;
     createdById?: string | null;
 };
 
@@ -52,6 +53,7 @@ export class CreateReservationUseCase {
             start: input.start,
             end: input.end,
             allDay: input.allDay ?? true,
+            notes: input.notes ?? null,
             createdById: input.createdById ?? null,
         });
 

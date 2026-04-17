@@ -6,6 +6,7 @@ export type UpdateReservationUseCaseInput = {
     start: Date;
     end: Date;
     allDay?: boolean;
+    notes?: string | null;
 };
 
 export type UpdateReservationUseCaseResult =
@@ -68,6 +69,7 @@ export class UpdateReservationUseCase {
             start: input.start,
             end: input.end,
             allDay: input.allDay ?? true,
+            notes: input.notes ?? null,
         });
 
         return {
