@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
 import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
+import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
 import { makeDeleteReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 type DeleteReservationHandlerContext = {
@@ -31,7 +32,10 @@ export async function handleDeleteReservation(
             );
         }
 
-        return NextResponse.json(result.reservation, { status: 200 });
+        return NextResponse.json(
+            toAdminReservationResponseDto(result.reservation),
+            { status: 200 },
+        );
     } catch (error) {
         return mapReservationHttpError(error);
     }

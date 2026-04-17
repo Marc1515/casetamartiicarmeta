@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
+import { toPublicReservationResponseDtoList } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
 import { makeGetPublicReservationsUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleGetPublicReservations(
@@ -9,7 +10,10 @@ export async function handleGetPublicReservations(
         const getPublicReservationsUseCase = makeGetPublicReservationsUseCase();
         const reservations = await getPublicReservationsUseCase.execute();
 
-        return NextResponse.json(reservations, { status: 200 });
+        return NextResponse.json(
+            toPublicReservationResponseDtoList(reservations),
+            { status: 200 },
+        );
     } catch (error) {
         return mapReservationHttpError(error);
     }

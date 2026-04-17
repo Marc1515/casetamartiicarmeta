@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/modules/auth/application/services/require-admin";
-import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
 import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
+import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
+import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
 import { makeCreateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
 
 export async function handleCreateReservation(
@@ -32,13 +33,16 @@ export async function handleCreateReservation(
                 {
                     error:
                         "Las fechas/horas seleccionadas solapan con una reserva existente.",
-                    overlapping: result.overlapping,
+                    overlapping: toAdminReservationResponseDto(result.overlapping),
                 },
                 { status: 409 },
             );
         }
 
-        return NextResponse.json(result.reservation, { status: 201 });
+        return NextResponse.json(
+            toAdminReservationResponseDto(result.reservation),
+            { status: 201 },
+        );
     } catch (error) {
         return mapReservationHttpError(error);
     }
