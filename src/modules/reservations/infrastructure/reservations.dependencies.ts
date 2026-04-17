@@ -1,37 +1,31 @@
-// src/modules/reservations/infrastructure/reservations.dependencies.ts
 import { PrismaReservationRepository } from "@/modules/reservations/adapters/output/persistence/PrismaReservationRepository";
+import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
 import { CreateReservationUseCase } from "@/modules/reservations/application/use-cases/CreateReservationUseCase";
 import { DeleteReservationUseCase } from "@/modules/reservations/application/use-cases/DeleteReservationUseCase";
 import { GetAdminReservationsUseCase } from "@/modules/reservations/application/use-cases/GetAdminReservationsUseCase";
 import { GetPublicReservationsUseCase } from "@/modules/reservations/application/use-cases/GetPublicReservationsUseCase";
 import { UpdateReservationUseCase } from "@/modules/reservations/application/use-cases/UpdateReservationUseCase";
 
-export function makeGetAdminReservationsUseCase(): GetAdminReservationsUseCase {
-    const reservationRepository = new PrismaReservationRepository();
+function makeReservationRepository(): ReservationRepository {
+    return new PrismaReservationRepository();
+}
 
-    return new GetAdminReservationsUseCase(reservationRepository);
+export function makeGetAdminReservationsUseCase(): GetAdminReservationsUseCase {
+    return new GetAdminReservationsUseCase(makeReservationRepository());
 }
 
 export function makeGetPublicReservationsUseCase(): GetPublicReservationsUseCase {
-    const reservationRepository = new PrismaReservationRepository();
-
-    return new GetPublicReservationsUseCase(reservationRepository);
+    return new GetPublicReservationsUseCase(makeReservationRepository());
 }
 
 export function makeCreateReservationUseCase(): CreateReservationUseCase {
-    const reservationRepository = new PrismaReservationRepository();
-
-    return new CreateReservationUseCase(reservationRepository);
+    return new CreateReservationUseCase(makeReservationRepository());
 }
 
 export function makeUpdateReservationUseCase(): UpdateReservationUseCase {
-    const reservationRepository = new PrismaReservationRepository();
-
-    return new UpdateReservationUseCase(reservationRepository);
+    return new UpdateReservationUseCase(makeReservationRepository());
 }
 
 export function makeDeleteReservationUseCase(): DeleteReservationUseCase {
-    const reservationRepository = new PrismaReservationRepository();
-
-    return new DeleteReservationUseCase(reservationRepository);
+    return new DeleteReservationUseCase(makeReservationRepository());
 }

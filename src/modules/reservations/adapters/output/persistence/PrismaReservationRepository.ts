@@ -1,14 +1,13 @@
-// src/modules/reservations/adapters/output/persistence/PrismaReservationRepository.ts
 import { prisma } from "@/shared/infrastructure/prisma/prisma";
 import type {
     CreateReservationData,
-    ReservationRecord,
     ReservationRepository,
     UpdateReservationData,
 } from "@/modules/reservations/application/ports/ReservationRepository";
+import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 
 export class PrismaReservationRepository implements ReservationRepository {
-    async findAllOrdered(): Promise<ReservationRecord[]> {
+    async findAllOrdered(): Promise<Reservation[]> {
         const reservations = await prisma.event.findMany({
             orderBy: [{ start: "asc" }, { end: "asc" }, { createdAt: "asc" }],
         });
@@ -16,7 +15,7 @@ export class PrismaReservationRepository implements ReservationRepository {
         return reservations;
     }
 
-    async findById(id: string): Promise<ReservationRecord | null> {
+    async findById(id: string): Promise<Reservation | null> {
         const reservation = await prisma.event.findUnique({
             where: { id },
         });
@@ -28,7 +27,7 @@ export class PrismaReservationRepository implements ReservationRepository {
         start: Date,
         end: Date,
         excludeId?: string,
-    ): Promise<ReservationRecord[]> {
+    ): Promise<Reservation[]> {
         const reservations = await prisma.event.findMany({
             where: {
                 ...(excludeId
@@ -51,7 +50,7 @@ export class PrismaReservationRepository implements ReservationRepository {
         return reservations;
     }
 
-    async create(data: CreateReservationData): Promise<ReservationRecord> {
+    async create(data: CreateReservationData): Promise<Reservation> {
         const reservation = await prisma.event.create({
             data: {
                 title: data.title,
@@ -69,7 +68,7 @@ export class PrismaReservationRepository implements ReservationRepository {
     async update(
         id: string,
         data: UpdateReservationData,
-    ): Promise<ReservationRecord> {
+    ): Promise<Reservation> {
         const reservation = await prisma.event.update({
             where: { id },
             data: {
@@ -84,7 +83,7 @@ export class PrismaReservationRepository implements ReservationRepository {
         return reservation;
     }
 
-    async delete(id: string): Promise<ReservationRecord> {
+    async delete(id: string): Promise<Reservation> {
         const reservation = await prisma.event.delete({
             where: { id },
         });
