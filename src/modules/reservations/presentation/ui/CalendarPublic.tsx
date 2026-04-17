@@ -1,4 +1,3 @@
-// src/components/CalendarPublic.tsx
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -11,14 +10,8 @@ import {
 } from "date-fns";
 import { ca, es, enUS, fr, de } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
+import type { PublicReservationApiResponse } from "@/modules/reservations/contracts/reservation.api";
 
-type ApiEvent = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-  allDay?: boolean;
-};
 type Evt = {
   id: string;
   title: string;
@@ -43,48 +36,57 @@ export default function CalendarPublic() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("/api/public/reservations", {
+      const response = await fetch("/api/public/reservations", {
         cache: "no-store",
       });
-      const data: ApiEvent[] = await res.json();
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data: PublicReservationApiResponse[] = await response.json();
+
       setEvents(
-        data.map((e) => ({
-          id: e.id,
-          title: e.title,
-          start: new Date(e.start),
-          end: new Date(e.end),
-          allDay: e.allDay ?? true,
+        data.map((reservation) => ({
+          id: reservation.id,
+          title: reservation.title,
+          start: new Date(reservation.start),
+          end: new Date(reservation.end),
+          allDay: reservation.allDay ?? true,
         })),
       );
     })();
   }, []);
 
-  // Precalcula un Set con todos los días ocupados (yyyy-MM-dd)
   const busyDays = useMemo(() => {
-    const s = new Set<string>();
-    for (const ev of events) {
-      // evitamos incluir el día "end" si termina justo a medianoche del día siguiente
-      const endMinus = new Date(ev.end.getTime() - 1);
-      for (const d of eachDayOfInterval({ start: ev.start, end: endMinus })) {
-        s.add(format(d, "yyyy-MM-dd"));
+    const busyDaySet = new Set<string>();
+
+    for (const event of events) {
+      const endMinus = new Date(event.end.getTime() - 1);
+
+      for (const day of eachDayOfInterval({
+        start: event.start,
+        end: endMinus,
+      })) {
+        busyDaySet.add(format(day, "yyyy-MM-dd"));
       }
     }
-    return s;
+
+    return busyDaySet;
   }, [events]);
 
-  // Marca las celdas del mes que están ocupadas
   function dayPropGetter(date: Date) {
     const key = format(date, "yyyy-MM-dd");
+
     if (busyDays.has(key)) {
       return {
         className: "is-busy-day",
         style: {
-          // CSS custom property usada en globals.css
-          // Las comillas son necesarias para que content reciba un string
           "--reserved-label": `"${tCal("reserved")}"`,
         } as React.CSSProperties,
       };
     }
+
     return {};
   }
 

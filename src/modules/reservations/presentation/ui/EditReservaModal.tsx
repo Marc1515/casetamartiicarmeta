@@ -15,6 +15,7 @@ import {
   DialogFooter,
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
+import type { ReservationApiError } from "@/modules/reservations/contracts/reservation.api";
 
 registerLocale("es", esLocale);
 
@@ -51,13 +52,6 @@ type EditEventDetail = {
   start: Date;
   end: Date;
   notes?: string | null;
-};
-
-type ReservationApiError = {
-  error?: string;
-  overlapping?: {
-    id?: string;
-  };
 };
 
 export default function EditReservaModal() {

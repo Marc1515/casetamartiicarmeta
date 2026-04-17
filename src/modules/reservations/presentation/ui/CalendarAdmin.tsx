@@ -9,18 +9,18 @@ import {
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Button } from "@/shared/presentation/ui/button";
+import type { AdminReservationApiResponse } from "@/modules/reservations/contracts/reservation.api";
 
 // 6 azules con texto adecuado (buen contraste)
 const PALETTE: Array<{ bg: string; text: string }> = [
-  { bg: "#023e8a", text: "#ffffff" }, // blue-900
-  { bg: "#0077b6", text: "#ffffff" }, // blue-700
-  { bg: "#0096c7", text: "#ffffff" }, // blue-600
-  { bg: "#00b4d8", text: "#ffffff" }, // blue-500 -> texto oscuro
-  { bg: "#48cae4", text: "#ffffff" }, // blue-400 -> texto oscuro
-  { bg: "#90e0ef", text: "#ffffff" }, // blue-800
+  { bg: "#023e8a", text: "#ffffff" },
+  { bg: "#0077b6", text: "#ffffff" },
+  { bg: "#0096c7", text: "#ffffff" },
+  { bg: "#00b4d8", text: "#ffffff" },
+  { bg: "#48cae4", text: "#ffffff" },
+  { bg: "#90e0ef", text: "#ffffff" },
 ];
 
-// hash simple y estable por id/título (para repartir colores)
 function hashString(s: string) {
   let h = 0;
   for (let i = 0; i < s.length; i++) {
@@ -29,15 +29,6 @@ function hashString(s: string) {
   }
   return Math.abs(h);
 }
-
-type ApiEvent = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-  allDay?: boolean;
-  notes?: string | null;
-};
 
 export type Evt = {
   id: string;
@@ -56,11 +47,9 @@ const localizer = dateFnsLocalizer({
   locales: { es },
 });
 
-// ✅ Toolbar tipada (sin generics raros) y normalización de views sin `any`
 const ToolbarComp = (props: ToolbarProps<Evt>) => {
   const { label, onNavigate, onView, view, views } = props;
 
-  // Normaliza `views` a array de View
   let viewList: View[];
   if (Array.isArray(views)) {
     viewList = views as View[];
@@ -117,17 +106,24 @@ export default function CalendarAdmin() {
   );
 
   async function load() {
-    const r = await fetch("/api/admin/reservations", { cache: "no-store" });
-    if (!r.ok) return;
-    const data: ApiEvent[] = await r.json();
+    const response = await fetch("/api/admin/reservations", {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data: AdminReservationApiResponse[] = await response.json();
+
     setEvents(
-      data.map((e) => ({
-        id: e.id,
-        title: e.title,
-        start: new Date(e.start),
-        end: new Date(e.end),
-        allDay: e.allDay ?? false,
-        notes: e.notes ?? null,
+      data.map((reservation) => ({
+        id: reservation.id,
+        title: reservation.title,
+        start: new Date(reservation.start),
+        end: new Date(reservation.end),
+        allDay: reservation.allDay ?? false,
+        notes: reservation.notes ?? null,
       })),
     );
   }
@@ -137,15 +133,18 @@ export default function CalendarAdmin() {
     const reload = () => void load();
     window.addEventListener("admin:events:changed", reload);
 
-    // ✅ Handler correcto: toma Event, castea dentro y NO devuelve nada
-    const onHighlight = (ev: CustomEvent<{ id: string }>) => {
-      const { id } = ev.detail;
+    const onHighlight = (event: Event) => {
+      const customEvent = event as CustomEvent<{ id: string }>;
+      const { id } = customEvent.detail;
+
       setHighlightedId(id);
 
-      if (highlightTimeoutRef.current)
+      if (highlightTimeoutRef.current) {
         clearTimeout(highlightTimeoutRef.current);
+      }
+
       highlightTimeoutRef.current = setTimeout(() => {
-        setHighlightedId((curr) => (curr === id ? null : curr));
+        setHighlightedId((currentId) => (currentId === id ? null : currentId));
         highlightTimeoutRef.current = null;
       }, 4000);
     };
@@ -153,7 +152,9 @@ export default function CalendarAdmin() {
     window.addEventListener("admin:event:highlight", onHighlight);
 
     return () => {
+      window.removeEventListener("admin:events:changed", reload);
       window.removeEventListener("admin:event:highlight", onHighlight);
+
       if (highlightTimeoutRef.current) {
         clearTimeout(highlightTimeoutRef.current);
         highlightTimeoutRef.current = null;
@@ -161,9 +162,10 @@ export default function CalendarAdmin() {
     };
   }, []);
 
-  // ✅ Faltaba esta función
-  function openEdit(ev: Evt) {
-    window.dispatchEvent(new CustomEvent("admin:event:edit", { detail: ev }));
+  function openEdit(event: Evt) {
+    window.dispatchEvent(
+      new CustomEvent("admin:event:edit", { detail: event }),
+    );
   }
 
   function eventPropGetter(
@@ -172,35 +174,31 @@ export default function CalendarAdmin() {
     _end?: Date,
     isSelected?: boolean,
   ) {
-    // 🎯 override de highlight (tuyo)
     if (event.id === highlightedId) {
       return {
         style: {
           outline: "3px solid #f59e0b",
           backgroundColor: "#fff7ed",
-          color: "#7c2d12", // texto ambar oscuro para contraste
+          color: "#7c2d12",
           boxShadow: "0 0 0 2px rgba(245,158,11,.25) inset",
         },
       };
     }
 
-    // color consistente por evento (id + título)
     const idx = hashString(`${event.id}|${event.title}`) % PALETTE.length;
-    const c = PALETTE[idx];
+    const color = PALETTE[idx];
 
     const style: React.CSSProperties = {
-      backgroundColor: c.bg,
-      borderColor: c.bg,
-      color: c.text,
+      backgroundColor: color.bg,
+      borderColor: color.bg,
+      color: color.text,
     };
 
-    // si es un evento largo (+2 días), baja un poco el brillo
-    const dur = event.end.getTime() - event.start.getTime();
-    if (dur >= 2 * 24 * 60 * 60 * 1000) {
+    const duration = event.end.getTime() - event.start.getTime();
+    if (duration >= 2 * 24 * 60 * 60 * 1000) {
       style.filter = "brightness(0.95)";
     }
 
-    // seleccionado por RBC → sutil énfasis
     if (isSelected) {
       style.boxShadow = "0 0 0 2px rgba(255,255,255,0.25) inset";
     }
@@ -209,7 +207,7 @@ export default function CalendarAdmin() {
   }
 
   function dayPropGetter(date: Date) {
-    const isWeekend = [0, 6].includes(getDay(date)); // dom/sáb
+    const isWeekend = [0, 6].includes(getDay(date));
     return isWeekend ? { className: "rbc-weekend" } : {};
   }
 
@@ -227,10 +225,10 @@ export default function CalendarAdmin() {
         eventPropGetter={eventPropGetter}
         dayPropGetter={dayPropGetter}
         components={{ toolbar: ToolbarComp }}
-        step={30} // 30 min por “paso”
-        timeslots={2} // 2 slots por hora (2 x 30 = 60)
-        showMultiDayTimes // muestra horas en eventos que cruzan días
-        longPressThreshold={300} // touch: mantener 300ms
+        step={30}
+        timeslots={2}
+        showMultiDayTimes
+        longPressThreshold={300}
         popup
         popupOffset={{ x: 10, y: 10 }}
         messages={{
@@ -240,12 +238,9 @@ export default function CalendarAdmin() {
           today: "Hoy",
           previous: "Atrás",
           next: "Siguiente",
-          showMore: (total) => `+${total} más`,
+          showMore: (total) => `+ Ver ${total} más`,
         }}
       />
-      <p className="mt-2 text-sm text-gray-600 [@media(max-height:500px)]:hidden">
-        Haz clic en un evento para editarlo.
-      </p>
     </div>
   );
 }
