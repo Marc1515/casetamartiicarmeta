@@ -1,5 +1,12 @@
-import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
+import {
+    reservationNotFound,
+    reservationOverlapping,
+    reservationSuccess,
+    type ReservationNotFoundResult,
+    type ReservationOverlappingResult,
+    type ReservationSuccessResult,
+} from "@/modules/reservations/application/results/reservation-use-case.results";
 
 export type UpdateReservationUseCaseInput = {
     id: string;
@@ -11,19 +18,9 @@ export type UpdateReservationUseCaseInput = {
 };
 
 export type UpdateReservationUseCaseResult =
-    | {
-        ok: true;
-        reservation: Reservation;
-    }
-    | {
-        ok: false;
-        error: "NOT_FOUND";
-    }
-    | {
-        ok: false;
-        error: "OVERLAPPING_RESERVATION";
-        overlapping: Reservation;
-    };
+    | ReservationSuccessResult
+    | ReservationNotFoundResult
+    | ReservationOverlappingResult;
 
 export class UpdateReservationUseCase {
     constructor(
@@ -38,10 +35,7 @@ export class UpdateReservationUseCase {
         );
 
         if (!existingReservation) {
-            return {
-                ok: false,
-                error: "NOT_FOUND",
-            };
+            return reservationNotFound();
         }
 
         const overlappingReservations =
@@ -54,11 +48,7 @@ export class UpdateReservationUseCase {
         const firstOverlappingReservation = overlappingReservations[0];
 
         if (firstOverlappingReservation) {
-            return {
-                ok: false,
-                error: "OVERLAPPING_RESERVATION",
-                overlapping: firstOverlappingReservation,
-            };
+            return reservationOverlapping(firstOverlappingReservation);
         }
 
         const reservation = await this.reservationRepository.update(input.id, {
@@ -69,9 +59,6 @@ export class UpdateReservationUseCase {
             notes: input.notes ?? null,
         });
 
-        return {
-            ok: true,
-            reservation,
-        };
+        return reservationSuccess(reservation);
     }
 }

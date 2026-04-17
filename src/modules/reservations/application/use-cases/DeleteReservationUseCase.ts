@@ -1,19 +1,18 @@
-import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
+import {
+    reservationNotFound,
+    reservationSuccess,
+    type ReservationNotFoundResult,
+    type ReservationSuccessResult,
+} from "@/modules/reservations/application/results/reservation-use-case.results";
 
 export type DeleteReservationUseCaseInput = {
     id: string;
 };
 
 export type DeleteReservationUseCaseResult =
-    | {
-        ok: true;
-        reservation: Reservation;
-    }
-    | {
-        ok: false;
-        error: "NOT_FOUND";
-    };
+    | ReservationSuccessResult
+    | ReservationNotFoundResult;
 
 export class DeleteReservationUseCase {
     constructor(
@@ -28,17 +27,11 @@ export class DeleteReservationUseCase {
         );
 
         if (!existingReservation) {
-            return {
-                ok: false,
-                error: "NOT_FOUND",
-            };
+            return reservationNotFound();
         }
 
         const reservation = await this.reservationRepository.delete(input.id);
 
-        return {
-            ok: true,
-            reservation,
-        };
+        return reservationSuccess(reservation);
     }
 }

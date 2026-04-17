@@ -1,5 +1,10 @@
-import type { Reservation } from "@/modules/reservations/application/models/Reservation";
 import type { ReservationRepository } from "@/modules/reservations/application/ports/ReservationRepository";
+import {
+    reservationOverlapping,
+    reservationSuccess,
+    type ReservationOverlappingResult,
+    type ReservationSuccessResult,
+} from "@/modules/reservations/application/results/reservation-use-case.results";
 
 export type CreateReservationUseCaseInput = {
     title: string;
@@ -11,15 +16,8 @@ export type CreateReservationUseCaseInput = {
 };
 
 export type CreateReservationUseCaseResult =
-    | {
-        ok: true;
-        reservation: Reservation;
-    }
-    | {
-        ok: false;
-        error: "OVERLAPPING_RESERVATION";
-        overlapping: Reservation;
-    };
+    | ReservationSuccessResult
+    | ReservationOverlappingResult;
 
 export class CreateReservationUseCase {
     constructor(
@@ -38,11 +36,7 @@ export class CreateReservationUseCase {
         const firstOverlappingReservation = overlappingReservations[0];
 
         if (firstOverlappingReservation) {
-            return {
-                ok: false,
-                error: "OVERLAPPING_RESERVATION",
-                overlapping: firstOverlappingReservation,
-            };
+            return reservationOverlapping(firstOverlappingReservation);
         }
 
         const reservation = await this.reservationRepository.create({
@@ -54,9 +48,6 @@ export class CreateReservationUseCase {
             createdById: input.createdById ?? null,
         });
 
-        return {
-            ok: true,
-            reservation,
-        };
+        return reservationSuccess(reservation);
     }
 }
