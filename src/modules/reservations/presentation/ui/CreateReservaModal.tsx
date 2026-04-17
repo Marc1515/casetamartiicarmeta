@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { addDays, addMinutes, isAfter } from "date-fns";
-import { es as esLocale } from "date-fns/locale";
 import {
   Dialog,
   DialogContent,
@@ -17,34 +12,13 @@ import {
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
 import { createReservation } from "@/modules/reservations/presentation/api/reservations.client";
-
-registerLocale("es", esLocale);
-
-const schema = z
-  .object({
-    title: z.string().trim().min(1, "El título es obligatorio"),
-    start: z.date(),
-    end: z.date(),
-    notes: z.string().trim(),
-  })
-  .superRefine((v, ctx) => {
-    if (!isAfter(v.end, v.start)) {
-      ctx.addIssue({
-        code: "custom",
-        message: "Fin debe ser posterior a inicio",
-        path: ["end"],
-      });
-    }
-    if (v.start < new Date()) {
-      ctx.addIssue({
-        code: "custom",
-        message: "No se permiten fechas pasadas",
-        path: ["start"],
-      });
-    }
-  });
-
-type FormValues = z.infer<typeof schema>;
+import ReservationFormFields from "@/modules/reservations/presentation/ui/ReservationFormFields";
+import { buildCreateReservationDefaultValues } from "@/modules/reservations/presentation/ui/reservation-form.defaults";
+import {
+  reservationFormSchema,
+  type ReservationFormValues,
+} from "@/modules/reservations/presentation/ui/reservation-form.schema";
+import { useReservationDialogMobile } from "@/modules/reservations/presentation/ui/useReservationDialogMobile";
 
 type Props = {
   open: boolean;
@@ -52,53 +26,25 @@ type Props = {
 };
 
 export default function CreateReservaModal({ open, onOpenChange }: Props) {
-  const [isMobile, setIsMobile] = useState(false);
-  const now = new Date();
-  const defaultStart = addMinutes(now, 30 - (now.getMinutes() % 30 || 30));
-  const defaultEnd = addDays(defaultStart, 1);
+  const [endAuto, setEndAuto] = useState(true);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: "Reserva",
-      start: defaultStart,
-      end: defaultEnd,
-      notes: "",
-    },
+  const form = useForm<ReservationFormValues>({
+    resolver: zodResolver(reservationFormSchema),
+    defaultValues: buildCreateReservationDefaultValues(),
     mode: "onBlur",
   });
 
-  const start = watch("start");
-  const end = watch("end");
+  const {
+    handleSubmit,
+    reset,
+    setError,
+    formState: { isSubmitting },
+  } = form;
 
-  const [endAuto, setEndAuto] = useState(true);
+  const { isMobile, preventDialogAutoFocus, blurInputOnMobile } =
+    useReservationDialogMobile({ open });
 
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 640px)");
-    const update = () => setIsMobile(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile || !open) return;
-    const id = window.setTimeout(() => {
-      const el = document.activeElement as HTMLElement | null;
-      if (el && typeof el.blur === "function") el.blur();
-    }, 50);
-    return () => window.clearTimeout(id);
-  }, [isMobile, open]);
-
-  async function onSubmit(data: FormValues) {
+  async function onSubmit(data: ReservationFormValues) {
     const result = await createReservation({
       title: data.title,
       start: data.start.toISOString(),
@@ -124,13 +70,12 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
       } else {
         alert(result.error.error ?? `Error ${result.status} al guardar.`);
       }
+
       return;
     }
 
     window.dispatchEvent(new Event("admin:events:changed"));
-
-    const ns = addMinutes(new Date(), 30);
-    reset({ title: "Reserva", start: ns, end: addDays(ns, 1), notes: "" });
+    reset(buildCreateReservationDefaultValues());
     setEndAuto(true);
     onOpenChange(false);
   }
@@ -139,121 +84,27 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="sm:max-w-[680px]"
-        onOpenAutoFocus={(event) => {
-          if (isMobile) event.preventDefault();
-        }}
+        onOpenAutoFocus={preventDialogAutoFocus}
       >
         <DialogHeader>
           <DialogTitle>Nueva reserva</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Título</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("title")}
-              placeholder="Reserva"
-            />
-            {errors.title && (
-              <p className="text-red-600 text-sm">{errors.title.message}</p>
-            )}
-          </div>
+          <ReservationFormFields
+            form={form}
+            isMobile={isMobile}
+            onDateInputFocus={blurInputOnMobile}
+            endAuto={endAuto}
+            setEndAuto={setEndAuto}
+            showEndAutoHint
+          />
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium mb-1">Inicio</label>
-              <DatePicker
-                selected={start}
-                onChange={(d) => {
-                  if (!d) return;
-                  setValue("start", d, { shouldValidate: true });
-                  if (endAuto)
-                    setValue("end", addDays(d, 1), { shouldValidate: true });
-                }}
-                showTimeSelect
-                timeIntervals={30}
-                dateFormat="Pp"
-                locale="es"
-                minDate={new Date()}
-                className="w-full border rounded p-2"
-                placeholderText="Selecciona fecha y hora"
-                onFocus={(e) => {
-                  if (isMobile) (e.target as HTMLInputElement).blur();
-                }}
-                popperClassName="admin-datepicker-popper"
-                popperPlacement={isMobile ? "top-start" : "bottom-start"}
-                showPopperArrow={!isMobile}
-                popperProps={{ strategy: "fixed" }}
-              />
-              {errors.start && (
-                <p className="text-red-600 text-sm">{errors.start.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Fin</label>
-              <DatePicker
-                selected={end}
-                onChange={(d) => {
-                  if (!d) return;
-                  setEndAuto(false);
-                  setValue("end", d, { shouldValidate: true });
-                }}
-                onFocus={(e) => {
-                  setEndAuto(false);
-                  if (isMobile) (e.target as HTMLInputElement).blur();
-                }}
-                onCalendarOpen={() => setEndAuto(false)}
-                showTimeSelect
-                timeIntervals={30}
-                dateFormat="Pp"
-                locale="es"
-                minDate={start ?? new Date()}
-                className="w-full border rounded p-2"
-                placeholderText="Selecciona fecha y hora"
-                popperClassName="admin-datepicker-popper"
-                popperPlacement={isMobile ? "top-start" : "bottom-start"}
-                showPopperArrow={!isMobile}
-                popperProps={{ strategy: "fixed" }}
-              />
-              {errors.end && (
-                <p className="text-red-600 text-sm">{errors.end.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Notas (solo admin)
-            </label>
-            <textarea
-              className="w-full border rounded p-2"
-              rows={3}
-              {...register("notes")}
-            />
-          </div>
-
-          <DialogFooter className="gap-2 sm:gap-3">
+          <DialogFooter>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Guardando..." : "Crear reserva"}
             </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              Cancelar
-            </Button>
           </DialogFooter>
-
-          {endAuto && (
-            <p className="text-xs text-gray-500">
-              Mientras no edites “Fin”, se ajustará automáticamente a{" "}
-              <b>+1 día</b> cuando cambies “Inicio”.
-            </p>
-          )}
         </form>
       </DialogContent>
     </Dialog>
