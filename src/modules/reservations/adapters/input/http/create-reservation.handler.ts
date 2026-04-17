@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
 import {
     handleReservationRoute,
     requireAdminOrResponse,
 } from "@/modules/reservations/adapters/input/http/reservation-route-handler";
 import { createReservationSchema } from "@/modules/reservations/adapters/input/validation/create-reservation.schema";
 import { makeCreateReservationUseCase } from "@/modules/reservations/infrastructure/reservations.dependencies";
+import { mapReservationUseCaseResultToHttp } from "@/modules/reservations/adapters/input/http/reservation-use-case-to-http.mapper";
 
 export async function handleCreateReservation(
     request: NextRequest,
@@ -31,20 +31,8 @@ export async function handleCreateReservation(
             createdById: adminResult.token.sub ?? null,
         });
 
-        if (!result.ok) {
-            return {
-                status: 409,
-                body: {
-                    error:
-                        "Las fechas/horas seleccionadas solapan con una reserva existente.",
-                    overlapping: toAdminReservationResponseDto(result.overlapping),
-                },
-            };
-        }
-
-        return {
-            status: 201,
-            body: toAdminReservationResponseDto(result.reservation),
-        };
+        return mapReservationUseCaseResultToHttp(result, {
+            successStatus: 201,
+        });
     });
 }

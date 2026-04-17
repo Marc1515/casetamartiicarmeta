@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { toAdminReservationResponseDto } from "@/modules/reservations/adapters/input/http/reservation-response.mapper";
+import { mapReservationUseCaseResultToHttp } from "@/modules/reservations/adapters/input/http/reservation-use-case-to-http.mapper";
 import {
     handleReservationRoute,
     requireAdminOrResponse,
@@ -27,16 +27,6 @@ export async function handleDeleteReservation(
         const deleteReservationUseCase = makeDeleteReservationUseCase();
         const result = await deleteReservationUseCase.execute({ id });
 
-        if (!result.ok) {
-            return {
-                status: 404,
-                body: { error: "Reserva no encontrada" },
-            };
-        }
-
-        return {
-            status: 200,
-            body: toAdminReservationResponseDto(result.reservation),
-        };
+        return mapReservationUseCaseResultToHttp(result);
     });
 }
