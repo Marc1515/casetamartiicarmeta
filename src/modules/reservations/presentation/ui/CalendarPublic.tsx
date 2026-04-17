@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import {
   eachDayOfInterval,
@@ -11,8 +11,7 @@ import {
 } from "date-fns";
 import { ca, de, enUS, es, fr } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
-import { getPublicReservations } from "@/modules/reservations/presentation/api/reservations.client";
-import { toPublicReservationCalendarEventList } from "@/modules/reservations/presentation/mappers/reservation-calendar.mapper";
+import { usePublicReservationCalendar } from "@/modules/reservations/presentation/hooks/usePublicReservationCalendar";
 import type { ReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
 
 const localizer = dateFnsLocalizer({
@@ -27,19 +26,7 @@ export default function CalendarPublic() {
   const locale = useLocale() as "ca" | "es" | "en" | "fr" | "de";
   const t = useTranslations("calendarMessages");
   const tCal = useTranslations("calendar");
-  const [events, setEvents] = useState<ReservationCalendarEvent[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const result = await getPublicReservations();
-
-      if (!result.ok) {
-        return;
-      }
-
-      setEvents(toPublicReservationCalendarEventList(result.data));
-    })();
-  }, []);
+  const { events } = usePublicReservationCalendar();
 
   const busyDays = useMemo(() => {
     const busyDaySet = new Set<string>();

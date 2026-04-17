@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
   Calendar,
   dateFnsLocalizer,
@@ -10,13 +9,7 @@ import {
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Button } from "@/shared/presentation/ui/button";
-import { getAdminReservations } from "@/modules/reservations/presentation/api/reservations.client";
-import {
-  emitAdminReservationEdit,
-  onAdminReservationHighlight,
-  onAdminReservationsChanged,
-} from "@/modules/reservations/presentation/events/reservation-admin.events";
-import { toAdminReservationCalendarEventList } from "@/modules/reservations/presentation/mappers/reservation-calendar.mapper";
+import { useAdminReservationCalendar } from "@/modules/reservations/presentation/hooks/useAdminReservationCalendar";
 import type { AdminReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
 
 // 6 azules con texto adecuado (buen contraste)
@@ -103,57 +96,7 @@ const ToolbarComp = (props: ToolbarProps<AdminReservationCalendarEvent>) => {
 };
 
 export default function CalendarAdmin() {
-  const [events, setEvents] = useState<AdminReservationCalendarEvent[]>([]);
-  const [highlightedId, setHighlightedId] = useState<string | null>(null);
-
-  const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
-
-  async function load(): Promise<void> {
-    const result = await getAdminReservations();
-
-    if (!result.ok) {
-      return;
-    }
-
-    setEvents(toAdminReservationCalendarEventList(result.data));
-  }
-
-  useEffect(() => {
-    void load();
-
-    const unsubscribeReload = onAdminReservationsChanged(() => {
-      void load();
-    });
-
-    const unsubscribeHighlight = onAdminReservationHighlight(({ id }) => {
-      setHighlightedId(id);
-
-      if (highlightTimeoutRef.current) {
-        clearTimeout(highlightTimeoutRef.current);
-      }
-
-      highlightTimeoutRef.current = setTimeout(() => {
-        setHighlightedId((currentId) => (currentId === id ? null : currentId));
-        highlightTimeoutRef.current = null;
-      }, 4000);
-    });
-
-    return () => {
-      unsubscribeReload();
-      unsubscribeHighlight();
-
-      if (highlightTimeoutRef.current) {
-        clearTimeout(highlightTimeoutRef.current);
-        highlightTimeoutRef.current = null;
-      }
-    };
-  }, []);
-
-  function openEdit(event: AdminReservationCalendarEvent): void {
-    emitAdminReservationEdit(event);
-  }
+  const { events, highlightedId, openEdit } = useAdminReservationCalendar();
 
   function eventPropGetter(
     event: AdminReservationCalendarEvent,
