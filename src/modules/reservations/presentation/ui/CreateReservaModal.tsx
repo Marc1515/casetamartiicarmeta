@@ -16,6 +16,7 @@ import {
   DialogFooter,
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
+import { createReservation } from "@/modules/reservations/presentation/api/reservations.client";
 
 registerLocale("es", esLocale);
 
@@ -88,7 +89,6 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  // En móvil: al abrir el modal, no enfocar ningún input automáticamente
   useEffect(() => {
     if (!isMobile || !open) return;
     const id = window.setTimeout(() => {
@@ -99,37 +99,30 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
   }, [isMobile, open]);
 
   async function onSubmit(data: FormValues) {
-    const res = await fetch("/api/admin/reservations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: data.title,
-        start: data.start.toISOString(),
-        end: data.end.toISOString(),
-        allDay: false,
-        notes: data.notes || null,
-      }),
+    const result = await createReservation({
+      title: data.title,
+      start: data.start.toISOString(),
+      end: data.end.toISOString(),
+      allDay: false,
+      notes: data.notes || null,
     });
 
-    if (!res.ok) {
-      const j = (await res.json().catch(() => ({}))) as {
-        error?: string;
-        overlapping?: { id?: string };
-      };
-      if (res.status === 409) {
-        if (j.overlapping?.id) {
+    if (!result.ok) {
+      if (result.status === 409) {
+        if (result.error.overlapping?.id) {
           window.dispatchEvent(
             new CustomEvent("admin:event:highlight", {
-              detail: { id: j.overlapping.id! },
+              detail: { id: result.error.overlapping.id },
             }),
           );
         }
+
         setError("end", {
           type: "overlap",
-          message: j.error ?? "Las fechas solapan con otra reserva.",
+          message: result.error.error ?? "Las fechas solapan con otra reserva.",
         });
       } else {
-        alert(j?.error ?? `Error ${res.status} al guardar.`);
+        alert(result.error.error ?? `Error ${result.status} al guardar.`);
       }
       return;
     }

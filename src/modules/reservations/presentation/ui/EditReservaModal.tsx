@@ -15,7 +15,10 @@ import {
   DialogFooter,
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
-import type { ReservationApiError } from "@/modules/reservations/contracts/reservation.api";
+import {
+  deleteReservation,
+  updateReservation,
+} from "@/modules/reservations/presentation/api/reservations.client";
 
 registerLocale("es", esLocale);
 
@@ -139,43 +142,33 @@ export default function EditReservaModal() {
       return;
     }
 
-    const response = await fetch(`/api/admin/reservations/${editingId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.title,
-        start: data.start.toISOString(),
-        end: data.end.toISOString(),
-        allDay: false,
-        notes: data.notes || null,
-      }),
+    const result = await updateReservation(editingId, {
+      title: data.title,
+      start: data.start.toISOString(),
+      end: data.end.toISOString(),
+      allDay: false,
+      notes: data.notes || null,
     });
 
-    if (!response.ok) {
-      const errorBody = (await response
-        .json()
-        .catch(() => ({}))) as ReservationApiError;
-
-      if (response.status === 409) {
-        if (errorBody.overlapping?.id) {
+    if (!result.ok) {
+      if (result.status === 409) {
+        if (result.error.overlapping?.id) {
           window.dispatchEvent(
             new CustomEvent("admin:event:highlight", {
-              detail: { id: errorBody.overlapping.id },
+              detail: { id: result.error.overlapping.id },
             }),
           );
         }
 
         setError("end", {
           type: "overlap",
-          message: errorBody.error ?? "Hay solape con otra reserva.",
+          message: result.error.error ?? "Hay solape con otra reserva.",
         });
 
         return;
       }
 
-      alert(errorBody.error ?? "No se pudo guardar.");
+      alert(result.error.error ?? "No se pudo guardar.");
       return;
     }
 
@@ -193,12 +186,10 @@ export default function EditReservaModal() {
       return;
     }
 
-    const response = await fetch(`/api/admin/reservations/${editingId}`, {
-      method: "DELETE",
-    });
+    const result = await deleteReservation(editingId);
 
-    if (!response.ok) {
-      alert("Error al eliminar.");
+    if (!result.ok) {
+      alert(result.error.error ?? "Error al eliminar.");
       return;
     }
 

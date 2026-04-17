@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import { ca, es, enUS, fr, de } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
-import type { PublicReservationApiResponse } from "@/modules/reservations/contracts/reservation.api";
+import { getPublicReservations } from "@/modules/reservations/presentation/api/reservations.client";
 
 type Evt = {
   id: string;
@@ -36,18 +36,14 @@ export default function CalendarPublic() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/api/public/reservations", {
-        cache: "no-store",
-      });
+      const result = await getPublicReservations();
 
-      if (!response.ok) {
+      if (!result.ok) {
         return;
       }
 
-      const data: PublicReservationApiResponse[] = await response.json();
-
       setEvents(
-        data.map((reservation) => ({
+        result.data.map((reservation) => ({
           id: reservation.id,
           title: reservation.title,
           start: new Date(reservation.start),

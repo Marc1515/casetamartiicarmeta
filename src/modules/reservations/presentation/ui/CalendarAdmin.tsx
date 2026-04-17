@@ -9,7 +9,7 @@ import {
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Button } from "@/shared/presentation/ui/button";
-import type { AdminReservationApiResponse } from "@/modules/reservations/contracts/reservation.api";
+import { getAdminReservations } from "@/modules/reservations/presentation/api/reservations.client";
 
 // 6 azules con texto adecuado (buen contraste)
 const PALETTE: Array<{ bg: string; text: string }> = [
@@ -106,18 +106,14 @@ export default function CalendarAdmin() {
   );
 
   async function load() {
-    const response = await fetch("/api/admin/reservations", {
-      cache: "no-store",
-    });
+    const result = await getAdminReservations();
 
-    if (!response.ok) {
+    if (!result.ok) {
       return;
     }
 
-    const data: AdminReservationApiResponse[] = await response.json();
-
     setEvents(
-      data.map((reservation) => ({
+      result.data.map((reservation) => ({
         id: reservation.id,
         title: reservation.title,
         start: new Date(reservation.start),
