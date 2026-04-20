@@ -1,9 +1,8 @@
-// src/modules/auth/adapters/output/next-auth/auth.callbacks.ts
 import type { NextAuthOptions, Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
-import { prisma } from "@/shared/infrastructure/prisma/prisma";
-import { isAdminEmail } from "@/modules/auth/application/services/admin-emails.service";
 import type { AuthRole } from "@/modules/auth/domain/types/AuthRole";
+import { isAdminEmail } from "@/modules/auth/application/services/admin-emails.service";
+import { makeResolveAuthUserRoleUseCase } from "@/modules/auth/infrastructure/auth.dependencies";
 
 type AppToken = JWT & {
     role?: AuthRole;
@@ -17,34 +16,17 @@ export const authCallbacks: NextAuthOptions["callbacks"] = {
     async jwt({ token, user }): Promise<AppToken> {
         const appToken = token as AppToken;
         const email = (user?.email || appToken.email)?.toLowerCase();
+        const userId = user?.id ?? appToken.sub ?? undefined;
 
-        if (email && isAdminEmail(email)) {
-            appToken.role = "ADMIN";
+        const resolveAuthUserRoleUseCase = makeResolveAuthUserRoleUseCase();
 
-            const userId = user?.id ?? appToken.sub;
-            if (userId) {
-                await prisma.user
-                    .update({
-                        where: { id: userId },
-                        data: { role: "ADMIN" },
-                    })
-                    .catch(() => undefined);
-            }
+        const result = await resolveAuthUserRoleUseCase.execute({
+            email,
+            userId,
+        });
 
-            return appToken;
-        }
-
-        if (email) {
-            const dbUser = await prisma.user.findUnique({
-                where: { email },
-                select: { id: true, role: true },
-            });
-
-            if (dbUser) {
-                appToken.sub = dbUser.id;
-                appToken.role = dbUser.role as AuthRole;
-            }
-        }
+        appToken.sub = result.userId ?? appToken.sub;
+        appToken.role = result.role;
 
         return appToken;
     },
