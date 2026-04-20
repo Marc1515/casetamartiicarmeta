@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-    requireAdmin,
-    type RequireAdminResult,
-} from "@/modules/auth/application/services/require-admin";
+    requireAdminFromRequest,
+    type RequireAdminHttpResult,
+} from "@/modules/auth/adapters/input/http/require-admin";
 import { mapReservationHttpError } from "@/modules/reservations/adapters/input/http/map-reservation-http-error";
 
 export type ReservationHttpHandlerResult = {
@@ -26,6 +26,6 @@ export async function handleReservationRoute(
 
 export async function requireAdminOrResponse(
     request: NextRequest,
-): Promise<RequireAdminResult> {
-    return requireAdmin(request);
+): Promise<RequireAdminHttpResult> {
+    return requireAdminFromRequest(request);
 }
