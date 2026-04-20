@@ -71,10 +71,7 @@ describe("handleGetAdminReservations", () => {
             token: { sub: "admin-1", role: "ADMIN" },
         });
 
-        executeMock.mockResolvedValue({
-            ok: true,
-            reservations,
-        });
+        executeMock.mockResolvedValue(reservations);
 
         const response = await handleGetAdminReservations({} as never);
         const body = await response.json();
