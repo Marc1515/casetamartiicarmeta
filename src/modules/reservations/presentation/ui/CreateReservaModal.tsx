@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
 import { createReservation } from "@/modules/reservations/presentation/api/reservations.client";
@@ -19,18 +19,16 @@ import {
   type ReservationFormValues,
 } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { useReservationDialogMobile } from "@/modules/reservations/presentation/ui/useReservationDialogMobile";
-import {
-  emitAdminReservationHighlight,
-  emitAdminReservationsChanged,
-} from "@/modules/reservations/presentation/events/reservation-admin.events";
+import { useReservationAdminCoordinator } from "@/modules/reservations/presentation/state/ReservationAdminCoordinator";
 
-type Props = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-};
-
-export default function CreateReservaModal({ open, onOpenChange }: Props) {
+export default function CreateReservaModal() {
   const [endAuto, setEndAuto] = useState(true);
+  const {
+    createOpen,
+    closeCreate,
+    highlightReservation,
+    notifyReservationsChanged,
+  } = useReservationAdminCoordinator();
 
   const form = useForm<ReservationFormValues>({
     resolver: zodResolver(reservationFormSchema),
@@ -46,9 +44,9 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
   } = form;
 
   const { isMobile, preventDialogAutoFocus, blurInputOnMobile } =
-    useReservationDialogMobile({ open });
+    useReservationDialogMobile({ open: createOpen });
 
-  async function onSubmit(data: ReservationFormValues) {
+  async function onSubmit(data: ReservationFormValues): Promise<void> {
     const result = await createReservation({
       title: data.title,
       start: data.start.toISOString(),
@@ -60,9 +58,7 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
     if (!result.ok) {
       if (result.status === 409) {
         if (result.error.overlapping?.id) {
-          emitAdminReservationHighlight({
-            id: result.error.overlapping.id,
-          });
+          highlightReservation(result.error.overlapping.id);
         }
 
         setError("end", {
@@ -76,14 +72,25 @@ export default function CreateReservaModal({ open, onOpenChange }: Props) {
       return;
     }
 
-    emitAdminReservationsChanged();
+    await notifyReservationsChanged({
+      highlightId: result.data.id,
+    });
+
     reset(buildCreateReservationDefaultValues());
     setEndAuto(true);
-    onOpenChange(false);
+    closeCreate();
+  }
+
+  function handleOpenChange(open: boolean): void {
+    if (!open) {
+      closeCreate();
+      reset(buildCreateReservationDefaultValues());
+      setEndAuto(true);
+    }
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={createOpen} onOpenChange={handleOpenChange}>
       <DialogContent
         className="sm:max-w-[680px]"
         onOpenAutoFocus={preventDialogAutoFocus}

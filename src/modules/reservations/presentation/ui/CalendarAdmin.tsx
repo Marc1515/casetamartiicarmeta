@@ -1,7 +1,6 @@
 "use client";
 
 import { Calendar } from "react-big-calendar";
-import { useAdminReservationCalendar } from "@/modules/reservations/presentation/hooks/useAdminReservationCalendar";
 import type { AdminReservationCalendarEvent } from "@/modules/reservations/presentation/models/reservation-calendar.model";
 import { reservationCalendarLocalizer } from "@/modules/reservations/presentation/calendar/reservation-calendar.localizer";
 import { ADMIN_RESERVATION_CALENDAR_MESSAGES } from "@/modules/reservations/presentation/calendar/reservation-admin-calendar.constants";
@@ -10,9 +9,10 @@ import {
   getAdminReservationEventStyle,
 } from "@/modules/reservations/presentation/calendar/reservation-admin-calendar.utils";
 import AdminReservationCalendarToolbar from "@/modules/reservations/presentation/calendar/AdminReservationCalendarToolbar";
+import { useReservationAdminCoordinator } from "@/modules/reservations/presentation/state/ReservationAdminCoordinator";
 
 export default function CalendarAdmin() {
-  const { events, highlightedId, openEdit } = useAdminReservationCalendar();
+  const { events, highlightedId, openEdit } = useReservationAdminCoordinator();
 
   function eventPropGetter(
     event: AdminReservationCalendarEvent,
@@ -24,7 +24,7 @@ export default function CalendarAdmin() {
   }
 
   return (
-    <div className="admin-calendar h-[320px] sm:h-[600px] lg:h-[650px] [@media(max-height:500px)]:h-[340px] [@media(max-height:420px)]:h-[280px]">
+    <div className="admin-calendar h-[320px] [@media(max-height:420px)]:h-[280px] [@media(max-height:500px)]:h-[340px] sm:h-[600px] lg:h-[650px]">
       <Calendar<AdminReservationCalendarEvent>
         culture="es"
         localizer={reservationCalendarLocalizer}

@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { addMinutes, isAfter } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/shared/presentation/ui/dialog";
 import { Button } from "@/shared/presentation/ui/button";
 import {
@@ -23,15 +23,17 @@ import {
   type ReservationFormValues,
 } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { useReservationDialogMobile } from "@/modules/reservations/presentation/ui/useReservationDialogMobile";
-import {
-  onAdminReservationEdit,
-  emitAdminReservationHighlight,
-  emitAdminReservationsChanged,
-} from "@/modules/reservations/presentation/events/reservation-admin.events";
+import { useReservationAdminCoordinator } from "@/modules/reservations/presentation/state/ReservationAdminCoordinator";
 
 export default function EditReservaModal() {
-  const [open, setOpen] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const {
+    editingReservation,
+    closeEdit,
+    highlightReservation,
+    notifyReservationsChanged,
+  } = useReservationAdminCoordinator();
+
+  const open = editingReservation !== null;
 
   const form = useForm<ReservationFormValues>({
     resolver: zodResolver(reservationFormSchema),
@@ -50,34 +52,34 @@ export default function EditReservaModal() {
     useReservationDialogMobile({ open });
 
   useEffect(() => {
-    const unsubscribe = onAdminReservationEdit((detail) => {
-      const safeStart = detail.start < new Date() ? new Date() : detail.start;
-
-      const safeEnd = isAfter(detail.end, safeStart)
-        ? detail.end
-        : addMinutes(safeStart, 30);
-
-      setEditingId(detail.id);
-
-      reset({
-        title: detail.title,
-        start: safeStart,
-        end: safeEnd,
-        notes: detail.notes ?? "",
-      });
-
-      setOpen(true);
-    });
-
-    return unsubscribe;
-  }, [reset]);
-
-  async function onSubmit(data: ReservationFormValues) {
-    if (!editingId) {
+    if (!editingReservation) {
+      reset(buildEditReservationDefaultValues());
       return;
     }
 
-    const result = await updateReservation(editingId, {
+    const safeStart =
+      editingReservation.start < new Date()
+        ? new Date()
+        : editingReservation.start;
+
+    const safeEnd = isAfter(editingReservation.end, safeStart)
+      ? editingReservation.end
+      : addMinutes(safeStart, 30);
+
+    reset({
+      title: editingReservation.title,
+      start: safeStart,
+      end: safeEnd,
+      notes: editingReservation.notes ?? "",
+    });
+  }, [editingReservation, reset]);
+
+  async function onSubmit(data: ReservationFormValues): Promise<void> {
+    if (!editingReservation) {
+      return;
+    }
+
+    const result = await updateReservation(editingReservation.id, {
       title: data.title,
       start: data.start.toISOString(),
       end: data.end.toISOString(),
@@ -88,9 +90,7 @@ export default function EditReservaModal() {
     if (!result.ok) {
       if (result.status === 409) {
         if (result.error.overlapping?.id) {
-          emitAdminReservationHighlight({
-            id: result.error.overlapping.id,
-          });
+          highlightReservation(result.error.overlapping.id);
         }
 
         setError("end", {
@@ -105,13 +105,15 @@ export default function EditReservaModal() {
       return;
     }
 
-    emitAdminReservationsChanged();
-    setOpen(false);
-    setEditingId(null);
+    await notifyReservationsChanged({
+      highlightId: result.data.id,
+    });
+
+    closeEdit();
   }
 
-  async function handleDelete() {
-    if (!editingId) {
+  async function handleDelete(): Promise<void> {
+    if (!editingReservation) {
       return;
     }
 
@@ -119,20 +121,25 @@ export default function EditReservaModal() {
       return;
     }
 
-    const result = await deleteReservation(editingId);
+    const result = await deleteReservation(editingReservation.id);
 
     if (!result.ok) {
       alert(result.error.error ?? "Error al eliminar.");
       return;
     }
 
-    emitAdminReservationsChanged();
-    setOpen(false);
-    setEditingId(null);
+    await notifyReservationsChanged();
+    closeEdit();
+  }
+
+  function handleOpenChange(nextOpen: boolean): void {
+    if (!nextOpen) {
+      closeEdit();
+    }
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         className="sm:max-w-[680px]"
         onOpenAutoFocus={preventDialogAutoFocus}
@@ -153,7 +160,7 @@ export default function EditReservaModal() {
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={!editingId || isSubmitting}
+              disabled={!editingReservation || isSubmitting}
             >
               Eliminar
             </Button>
