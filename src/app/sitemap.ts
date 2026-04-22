@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, SITE_URL } from "@/lib/seo";
+import { LOCALES, SITE_URL } from "@/modules/seo/application/seo";
 
 const PUBLIC_ROUTES = ["/"] as const;
 

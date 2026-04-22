@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/modules/auth/adapters/output/next-auth/auth.config";
 
 export default async function AdminLanding({
   searchParams,

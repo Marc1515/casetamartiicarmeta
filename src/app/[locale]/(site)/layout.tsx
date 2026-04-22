@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Navbar from "@/components/public/Navbar";
-import Footer from "@/components/public/Footer";
-import AppShell from "@/components/public/AppShell";
+import Navbar from "@/modules/public-site/presentation/ui/Navbar";
+import Footer from "@/modules/public-site/presentation/ui/Footer";
+import AppShell from "@/modules/public-site/presentation/ui/AppShell";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import {
-  DEFAULT_LOCALE,
   LOCALES,
   OG_IMAGE_PATH,
   SITE_NAME,
   SITE_URL,
-} from "@/lib/seo";
+} from "@/modules/seo/application/seo";
 
 type Props = {
   children: React.ReactNode;
