@@ -1,9 +1,12 @@
-export const NAVBAR_TAB_IDS = [
-    { id: "home", key: "home" },
-    { id: "calendario", key: "calendario" },
-    { id: "fotos", key: "fotos" },
-    { id: "contacto", key: "contacto" },
-] as const;
+import { PUBLIC_SITE_SECTION_LINKS } from "@/modules/public-site/application/site-navigation";
+
+export const NAVBAR_TAB_IDS = PUBLIC_SITE_SECTION_LINKS.map((link) => ({
+    id: link.id,
+    key: link.translationKey,
+})) as readonly {
+    id: (typeof PUBLIC_SITE_SECTION_LINKS)[number]["id"];
+    key: (typeof PUBLIC_SITE_SECTION_LINKS)[number]["translationKey"];
+}[];
 
 export const NAVBAR_LOCALES = [
     { locale: "ca", label: "Català" },

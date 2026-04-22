@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
@@ -11,6 +11,9 @@ import {
   NAVBAR_LOCALES,
   NAVBAR_TAB_IDS,
 } from "@/modules/public-site/presentation/navbar/navbar.config";
+import { useNavbarViewport } from "@/modules/public-site/presentation/navbar/useNavbarViewport";
+import { useNavbarMenu } from "@/modules/public-site/presentation/navbar/useNavbarMenu";
+import { useNavbarScrollState } from "@/modules/public-site/presentation/navbar/useNavbarScrollState";
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -20,143 +23,18 @@ export default function Navbar() {
   const t = useTranslations("nav");
   const currentLocale = useLocale();
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+
   const [active, setActive] = useState<string>(NAVBAR_TAB_IDS[0].id);
-  const [showBrandMobile, setShowBrandMobile] = useState(false);
-  const [isDesktopView, setIsDesktopView] = useState(false);
 
-  const prefersReduced =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const apply = () => setIsDesktopView(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.removeEventListener("scroll", onScroll);
-
-    if (isDesktopView) {
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-    } else {
-      setScrolled(false);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [isDesktopView]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const calendarEl = document.getElementById("calendario");
-    if (!calendarEl) {
-      setShowBrandMobile(active !== "home");
-      return;
-    }
-
-    const NAV_H = 0;
-    let rafId: number | null = null;
-
-    const update = () => {
-      rafId = null;
-      const rect = calendarEl.getBoundingClientRect();
-      const shouldShow = rect.top <= NAV_H + 1;
-      setShowBrandMobile(shouldShow);
-    };
-
-    const onScrollOrResize = () => {
-      if (rafId != null) return;
-      rafId = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-
-    return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
-      if (rafId != null) cancelAnimationFrame(rafId);
-    };
-  }, [active]);
-
-  const sectionElsRef = useRef<HTMLElement[]>([]);
-  const rafRef = useRef<number | null>(null);
-
-  const spyLockedRef = useRef(false);
-  const unlockTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    sectionElsRef.current = NAVBAR_TAB_IDS.map((tab) =>
-      document.getElementById(tab.id),
-    ).filter(Boolean) as HTMLElement[];
-
-    const NAV_H = isDesktopView ? 80 : 64;
-
-    const computeActive = () => {
-      if (spyLockedRef.current) return;
-
-      const sections = sectionElsRef.current;
-      if (!sections.length) return;
-      const thresholdY = window.scrollY + NAV_H + 1;
-      let nextActive = sections[0]?.id;
-
-      for (const el of sections) {
-        if (el.offsetTop <= thresholdY) {
-          nextActive = el.id;
-          continue;
-        }
-        break;
-      }
-
-      if (nextActive) {
-        setActive(nextActive);
-      }
-    };
-
-    const onScrollOrResize = () => {
-      if (rafRef.current != null) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        computeActive();
-      });
-    };
-
-    computeActive();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-
-    return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-      if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current);
-    };
-  }, [isDesktopView]);
-
-  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    if (open) setTimeout(() => closeBtnRef.current?.focus(), 0);
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    if (open) addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+  const { isDesktopView } = useNavbarViewport();
+  const { open, setOpen, closeBtnRef } = useNavbarMenu();
+  const { scrolled, showBrandMobile, prefersReduced, goto } =
+    useNavbarScrollState({
+      isDesktopView,
+      active,
+      tabs: NAVBAR_TAB_IDS,
+      setActive,
+    });
 
   const overlayVariants = {
     hidden: { opacity: 0 },
@@ -178,24 +56,6 @@ export default function Navbar() {
   const itemVariants = {
     hidden: { opacity: 0, y: 8 },
     visible: { opacity: 1, y: 0 },
-  };
-
-  const goto = (id: string) => (e?: React.MouseEvent) => {
-    e?.preventDefault();
-    const el = document.getElementById(id);
-    if (!el) return;
-    setActive(id);
-
-    spyLockedRef.current = true;
-    if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current);
-    unlockTimerRef.current = window.setTimeout(() => {
-      spyLockedRef.current = false;
-      unlockTimerRef.current = null;
-    }, 1200);
-
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-
-    if (history.replaceState) history.replaceState(null, "", `#${id}`);
   };
 
   return (
