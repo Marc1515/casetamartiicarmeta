@@ -1,21 +1,25 @@
 import { motion } from "framer-motion";
 import type { JSX, MouseEvent } from "react";
-
-type Tab = { id: string; key: string };
-type Locale = "ca" | "es" | "en" | "fr" | "de";
-type LocaleOption = { locale: Locale; label: string };
+import type {
+  NavbarLocale,
+  NavbarLocaleOption,
+  NavbarTab,
+} from "@/modules/public-site/presentation/navbar/navbar.config";
 
 type NavbarDesktopProps = {
   isDesktopView: boolean;
   active: string;
   t: (key: string) => string;
-  tabIds: readonly Tab[];
+  tabIds: readonly NavbarTab[];
   goto: (id: string) => (e?: MouseEvent) => void;
   prefersReduced: boolean;
-  locales: readonly LocaleOption[];
+  locales: readonly NavbarLocaleOption[];
   pathname: string;
-  currentLocale: Locale | string;
-  LocaleFlag: (props: { locale: Locale; size?: "md" | "lg" }) => JSX.Element;
+  currentLocale: NavbarLocale | string;
+  LocaleFlag: (props: {
+    locale: NavbarLocale;
+    size?: "md" | "lg";
+  }) => JSX.Element;
 };
 
 const NavbarDesktop = ({

@@ -2,120 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Icon } from "@iconify/react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import NavbarDesktop from "@/modules/public-site/presentation/ui/navbar/NavbarDesktop";
 import NavbarMobile from "@/modules/public-site/presentation/ui/navbar/NavbarMobile";
+import LocaleFlag from "@/modules/public-site/presentation/navbar/LocaleFlag";
+import {
+  NAVBAR_LOCALES,
+  NAVBAR_TAB_IDS,
+} from "@/modules/public-site/presentation/navbar/navbar.config";
 
-const TAB_IDS = [
-  { id: "home", key: "home" },
-  { id: "calendario", key: "calendario" },
-  { id: "fotos", key: "fotos" },
-  { id: "contacto", key: "contacto" },
-] as const;
-
-const LOCALES = [
-  { locale: "ca" as const, label: "Català" },
-  { locale: "es" as const, label: "Castellano" },
-  { locale: "en" as const, label: "English" },
-  { locale: "fr" as const, label: "Français" },
-  { locale: "de" as const, label: "Deutsch" },
-] as const;
-
-const FLAG_SIZE = 20;
-const FLAG_SIZE_MOBILE = 28;
-const CATALAN_FLAG_SCALE = 0.95;
-
-function FlagCatalan({
-  size,
-  className,
-}: {
-  size: number;
-  className?: string;
-}) {
-  return (
-    <span
-      className={`inline-flex items-center justify-center overflow-hidden rounded-full bg-[#FCDD09] align-middle leading-none ${className ?? ""}`}
-      style={{ width: size, height: size }}
-      aria-hidden
-    >
-      <svg viewBox="0 0 20 14" className="block w-full h-full">
-        <rect width="20" height="14" fill="#FCDD09" />
-        <rect y="2.33" width="20" height="1.56" fill="#DA121A" />
-        <rect y="5.22" width="20" height="1.56" fill="#DA121A" />
-        <rect y="8.11" width="20" height="1.56" fill="#DA121A" />
-        <rect y="11" width="20" height="1.56" fill="#DA121A" />
-      </svg>
-    </span>
-  );
-}
-
-function LocaleFlag({
-  locale,
-  className,
-  size = "md",
-}: {
-  locale: (typeof LOCALES)[number]["locale"];
-  className?: string;
-  size?: "md" | "lg";
-}) {
-  const s = size === "lg" ? FLAG_SIZE_MOBILE : FLAG_SIZE;
-  if (locale === "ca") {
-    return (
-      <FlagCatalan
-        size={Math.round(s * CATALAN_FLAG_SCALE)}
-        className={className}
-      />
-    );
-  }
-  if (locale === "es")
-    return (
-      <Icon
-        icon="circle-flags:es"
-        width={s}
-        height={s}
-        className={`align-middle leading-none ${className ?? ""}`}
-        style={{ display: "block" }}
-        aria-hidden
-      />
-    );
-  if (locale === "fr")
-    return (
-      <Icon
-        icon="circle-flags:fr"
-        width={s}
-        height={s}
-        className={`align-middle leading-none ${className ?? ""}`}
-        style={{ display: "block" }}
-        aria-hidden
-      />
-    );
-  if (locale === "de")
-    return (
-      <Icon
-        icon="circle-flags:de"
-        width={s}
-        height={s}
-        className={`align-middle leading-none ${className ?? ""}`}
-        style={{ display: "block" }}
-        aria-hidden
-      />
-    );
-  return (
-    <Icon
-      icon="circle-flags:gb"
-      width={s}
-      height={s}
-      className={`align-middle leading-none ${className ?? ""}`}
-      style={{ display: "block" }}
-      aria-hidden
-    />
-  );
-}
-
-function cx(...c: Array<string | false | null | undefined>) {
-  return c.filter(Boolean).join(" ");
+function cx(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
@@ -124,7 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>(TAB_IDS[0].id);
+  const [active, setActive] = useState<string>(NAVBAR_TAB_IDS[0].id);
   const [showBrandMobile, setShowBrandMobile] = useState(false);
   const [isDesktopView, setIsDesktopView] = useState(false);
 
@@ -140,7 +38,6 @@ export default function Navbar() {
     return () => mq.removeEventListener("change", apply);
   }, []);
 
-  // Fondo sólido al hacer scroll en desktop/tablet.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.removeEventListener("scroll", onScroll);
@@ -157,7 +54,6 @@ export default function Navbar() {
     };
   }, [isDesktopView]);
 
-  // Mostrar/ocultar título cuando el calendario llega al top (desktop + mobile)
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -165,7 +61,6 @@ export default function Navbar() {
 
     const calendarEl = document.getElementById("calendario");
     if (!calendarEl) {
-      // fallback: usa la sección activa si por algún motivo no existe el id
       setShowBrandMobile(active !== "home");
       return;
     }
@@ -196,23 +91,21 @@ export default function Navbar() {
     };
   }, [active]);
 
-  // ------- SCROLL-SPY con RAF + "bloqueo" cuando el click inicia un scroll suave
   const sectionElsRef = useRef<HTMLElement[]>([]);
   const rafRef = useRef<number | null>(null);
 
-  // 🔒 bloqueo del spy durante scroll programado
   const spyLockedRef = useRef(false);
   const unlockTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    sectionElsRef.current = TAB_IDS.map((tab) =>
+    sectionElsRef.current = NAVBAR_TAB_IDS.map((tab) =>
       document.getElementById(tab.id),
     ).filter(Boolean) as HTMLElement[];
 
     const NAV_H = isDesktopView ? 80 : 64;
 
     const computeActive = () => {
-      if (spyLockedRef.current) return; // 🔒 no re-calcular mientras hay scroll por click
+      if (spyLockedRef.current) return;
 
       const sections = sectionElsRef.current;
       if (!sections.length) return;
@@ -240,10 +133,10 @@ export default function Navbar() {
       });
     };
 
-    // inicial + listeners
     computeActive();
     window.addEventListener("scroll", onScrollOrResize, { passive: true });
     window.addEventListener("resize", onScrollOrResize);
+
     return () => {
       window.removeEventListener("scroll", onScrollOrResize);
       window.removeEventListener("resize", onScrollOrResize);
@@ -252,8 +145,8 @@ export default function Navbar() {
     };
   }, [isDesktopView]);
 
-  // Bloquear scroll + accesibilidad del menú móvil
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     if (open) setTimeout(() => closeBtnRef.current?.focus(), 0);
@@ -265,12 +158,12 @@ export default function Navbar() {
     };
   }, [open]);
 
-  // Variants móvil
   const overlayVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
     exit: { opacity: 0 },
   };
+
   const panelVariants = {
     hidden: { opacity: 0, scale: 0.98, y: 10 },
     visible: {
@@ -281,25 +174,24 @@ export default function Navbar() {
     },
     exit: { opacity: 0, scale: 0.98, y: 10 },
   };
+
   const itemVariants = {
     hidden: { opacity: 0, y: 8 },
     visible: { opacity: 1, y: 0 },
   };
 
-  // Click: mueve bubble al instante + bloquea spy + scroll suave + desbloqueo al llegar o por timeout
   const goto = (id: string) => (e?: React.MouseEvent) => {
     e?.preventDefault();
     const el = document.getElementById(id);
     if (!el) return;
     setActive(id);
 
-    // 🔒 bloquea el spy
     spyLockedRef.current = true;
     if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current);
     unlockTimerRef.current = window.setTimeout(() => {
       spyLockedRef.current = false;
       unlockTimerRef.current = null;
-    }, 1200); // “paraguas” si el scroll es largo
+    }, 1200);
 
     el.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -357,10 +249,10 @@ export default function Navbar() {
             isDesktopView={isDesktopView}
             active={active}
             t={t}
-            tabIds={TAB_IDS}
+            tabIds={NAVBAR_TAB_IDS}
             goto={goto}
             prefersReduced={prefersReduced}
-            locales={LOCALES}
+            locales={NAVBAR_LOCALES}
             pathname={pathname}
             currentLocale={currentLocale}
             LocaleFlag={LocaleFlag}
@@ -373,13 +265,13 @@ export default function Navbar() {
             setOpen={setOpen}
             t={t}
             active={active}
-            tabIds={TAB_IDS}
+            tabIds={NAVBAR_TAB_IDS}
             goto={goto}
             prefersReduced={prefersReduced}
             itemVariants={itemVariants}
             panelVariants={panelVariants}
             overlayVariants={overlayVariants}
-            locales={LOCALES}
+            locales={NAVBAR_LOCALES}
             pathname={pathname}
             currentLocale={currentLocale}
             LocaleFlag={LocaleFlag}
