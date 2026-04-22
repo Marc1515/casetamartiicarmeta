@@ -6,7 +6,6 @@ import AppShell from "@/modules/public-site/presentation/ui/AppShell";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import {
-  DEFAULT_LOCALE,
   LOCALES,
   OG_IMAGE_PATH,
   SITE_NAME,
