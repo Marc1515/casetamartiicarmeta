@@ -2,13 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { CONTACT } from "@/modules/seo/application/seo";
-
-const LINK_KEYS = [
-  { href: "#home", key: "home" },
-  { href: "#calendario", key: "calendario" },
-  { href: "#fotos", key: "fotos" },
-  { href: "#contacto", key: "contacto" },
-] as const;
+import { PUBLIC_SITE_SECTION_LINKS } from "@/modules/public-site/application/site-navigation";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -41,13 +35,13 @@ export default function Footer() {
               {t("sections")}
             </div>
             <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-              {LINK_KEYS.map((l) => (
+              {PUBLIC_SITE_SECTION_LINKS.map((link) => (
                 <a
-                  key={l.href}
-                  href={l.href}
+                  key={link.id}
+                  href={link.href}
                   className="text-[#EEEEEE] opacity-80 hover:opacity-100 transition-colors"
                 >
-                  {t(`links.${l.key}`)}
+                  {t(`links.${link.translationKey}`)}
                 </a>
               ))}
             </nav>
