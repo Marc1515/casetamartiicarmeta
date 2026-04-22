@@ -2,14 +2,14 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
 RUN npx prisma generate
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
 
-CMD ["sh", "-lc", "npx prisma migrate deploy && npm run start"]
+CMD ["sh", "-lc", "npx prisma migrate deploy && yarn start"]
