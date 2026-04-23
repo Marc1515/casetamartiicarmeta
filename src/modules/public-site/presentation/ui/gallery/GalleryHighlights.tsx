@@ -20,7 +20,7 @@ import type {
   GalleryHighlightId,
 } from "@/modules/public-site/domain/gallery-highlight";
 
-const iconClassName = "h-5 w-5 shrink-0 text-[#393E46]";
+const iconClassName = "h-4 w-4 shrink-0 text-[#393E46]";
 
 function getHighlightIcon(id: GalleryHighlightId): ReactNode {
   switch (id) {
@@ -99,12 +99,12 @@ function HighlightCard({
         isCompressed ? "grow-[0.55]" : "",
       ].join(" ")}
     >
-      <div className="flex min-h-[76px] min-w-0 items-center gap-3 px-4 py-3">
+      <div className="flex min-h-[58px] min-w-0 items-center gap-2 px-3 py-2">
         {getHighlightIcon(highlight.id)}
 
         <span
           className={[
-            "min-w-0 text-sm font-medium text-[#393E46]",
+            "min-w-0 text-[13px] font-medium leading-tight text-[#393E46]",
             isExpanded
               ? "block overflow-hidden whitespace-normal break-words"
               : "block overflow-hidden text-ellipsis whitespace-nowrap",

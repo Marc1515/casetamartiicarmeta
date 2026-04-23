@@ -116,7 +116,7 @@ export default function GallerySection() {
       leadClassName="text-sm md:text-base text-[#393E46]"
       lead={t("lead")}
     >
-      <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-start">
+      <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
         <div className="min-w-0 space-y-3 xl:col-span-2">
           <GalleryMosaicDesktop
             main={main}
@@ -140,7 +140,7 @@ export default function GallerySection() {
           />
         </div>
 
-        <div className="min-w-0 xl:col-span-1">
+        <div className="min-w-0 xl:col-span-1 xl:h-full">
           <GalleryHighlights />
         </div>
       </div>
