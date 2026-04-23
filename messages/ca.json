@@ -85,6 +85,39 @@
       "bedroom2": "Dormitori amb mobiliari funcional",
       "bedroom3": "Vista lateral del dormitori",
       "bedroom4": "Detall de dormitori preparat per a hostes"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Característiques principals de l’allotjament",
+      "entireHome": {
+        "label": "Tot l’allotjament és per a tu"
+      },
+      "area": {
+        "label": "79 m² de superfície"
+      },
+      "freeParking": {
+        "label": "Aparcament gratuït a l’allotjament"
+      },
+      "outdoorPool": {
+        "label": "Piscina exterior"
+      },
+      "privateBathroom": {
+        "label": "Bany privat"
+      },
+      "airConditioning": {
+        "label": "Aire condicionat"
+      },
+      "privatePool": {
+        "label": "Piscina privada"
+      },
+      "freeWifi": {
+        "label": "Wifi gratuït"
+      },
+      "kitchen": {
+        "label": "Cuina"
+      },
+      "shower": {
+        "label": "Dutxa"
+      }
     }
   },
   "contact": {

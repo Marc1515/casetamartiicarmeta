@@ -8,6 +8,7 @@ import { useReducedMotion } from "framer-motion";
 import GalleryMosaicDesktop from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicDesktop";
 import GalleryMosaicMobile from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicMobile";
 import GalleryModal from "@/modules/public-site/presentation/ui/gallery/GalleryModal";
+import GalleryHighlights from "@/modules/public-site/presentation/ui/gallery/GalleryHighlights";
 
 const galleryContainerVariants = {
   hidden: {},
@@ -57,9 +58,8 @@ const IMAGES = [
 export default function GallerySection() {
   const t = useTranslations("gallery");
   const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState<number>(0); // índice de la imagen activa en el modal
+  const [index, setIndex] = useState<number>(0);
 
-  // Mosaico principal (como lo dejamos)
   const main = IMAGES[0];
   const stack = IMAGES.slice(1, 3);
   const restLine = IMAGES.slice(3, 7);
@@ -70,15 +70,15 @@ export default function GallerySection() {
     setOpen(true);
   };
 
-  // Helpers carrusel
   const prev = () => setIndex((i) => (i - 1 + IMAGES.length) % IMAGES.length);
   const next = () => setIndex((i) => (i + 1) % IMAGES.length);
 
-  // Hacer que la miniatura activa quede visible centrada
   const stripRef = useRef<HTMLDivElement | null>(null);
   const activeThumbRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     if (!open) return;
+
     activeThumbRef.current?.scrollIntoView({
       inline: "center",
       block: "nearest",
@@ -86,21 +86,23 @@ export default function GallerySection() {
     });
   }, [index, open]);
 
-  // Accesos rápidos con teclado
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") prev();
+      if (event.key === "ArrowRight") next();
     };
+
     window.addEventListener("keydown", onKey);
+
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Previene layout shift calculando tamaño de la imagen grande
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
   const prefersReducedMotion = useReducedMotion();
   const hasReducedMotion = Boolean(prefersReducedMotion);
+
   const getImageKey = (src: string) =>
     src.split("/").pop()?.split(".")[0] ?? "";
   const getImageAlt = (src: string) => t(`imageAlts.${getImageKey(src)}`);
@@ -114,26 +116,32 @@ export default function GallerySection() {
       leadClassName="text-sm md:text-base text-[#393E46]"
       lead={t("lead")}
     >
-      <GalleryMosaicDesktop
-        main={main}
-        stack={stack}
-        title={t("title")}
-        prefersReducedMotion={hasReducedMotion}
-        galleryContainerVariants={galleryContainerVariants}
-        galleryItemVariants={galleryItemVariants}
-        onOpenModalAt={openModalAt}
-        getImageAlt={getImageAlt}
-      />
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px] xl:items-start">
+        <div className="space-y-3">
+          <GalleryMosaicDesktop
+            main={main}
+            stack={stack}
+            title={t("title")}
+            prefersReducedMotion={hasReducedMotion}
+            galleryContainerVariants={galleryContainerVariants}
+            galleryItemVariants={galleryItemVariants}
+            onOpenModalAt={openModalAt}
+            getImageAlt={getImageAlt}
+          />
 
-      <GalleryMosaicMobile
-        restLine={restLine}
-        title={t("title")}
-        prefersReducedMotion={hasReducedMotion}
-        galleryContainerVariants={galleryContainerVariants}
-        galleryItemVariants={galleryItemVariants}
-        onOpenModalAt={openModalAt}
-        getImageAlt={getImageAlt}
-      />
+          <GalleryMosaicMobile
+            restLine={restLine}
+            title={t("title")}
+            prefersReducedMotion={hasReducedMotion}
+            galleryContainerVariants={galleryContainerVariants}
+            galleryItemVariants={galleryItemVariants}
+            onOpenModalAt={openModalAt}
+            getImageAlt={getImageAlt}
+          />
+        </div>
+
+        <GalleryHighlights />
+      </div>
 
       <GalleryModal
         open={open}

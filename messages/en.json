@@ -85,6 +85,39 @@
       "bedroom2": "Bedroom with practical furniture",
       "bedroom3": "Side view of the bedroom",
       "bedroom4": "Bedroom prepared for guests"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Main accommodation features",
+      "entireHome": {
+        "label": "Entire home for you"
+      },
+      "area": {
+        "label": "79 m² size"
+      },
+      "freeParking": {
+        "label": "Free parking on site"
+      },
+      "outdoorPool": {
+        "label": "Outdoor swimming pool"
+      },
+      "privateBathroom": {
+        "label": "Private bathroom"
+      },
+      "airConditioning": {
+        "label": "Air conditioning"
+      },
+      "privatePool": {
+        "label": "Private pool"
+      },
+      "freeWifi": {
+        "label": "Free WiFi"
+      },
+      "kitchen": {
+        "label": "Kitchen"
+      },
+      "shower": {
+        "label": "Shower"
+      }
     }
   },
   "contact": {

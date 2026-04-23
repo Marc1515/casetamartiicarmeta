@@ -85,6 +85,39 @@
       "bedroom2": "Schlafzimmer mit funktionalen Mobeln",
       "bedroom3": "Seitliche Ansicht des Schlafzimmers",
       "bedroom4": "Fur Gaste vorbereitetes Schlafzimmer"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Wichtigste Ausstattungsmerkmale der Unterkunft",
+      "entireHome": {
+        "label": "Die gesamte Unterkunft gehört Ihnen"
+      },
+      "area": {
+        "label": "79 m² groß"
+      },
+      "freeParking": {
+        "label": "Kostenlose Parkplätze an der Unterkunft"
+      },
+      "outdoorPool": {
+        "label": "Außenpool"
+      },
+      "privateBathroom": {
+        "label": "Privates Badezimmer"
+      },
+      "airConditioning": {
+        "label": "Klimaanlage"
+      },
+      "privatePool": {
+        "label": "Privater Pool"
+      },
+      "freeWifi": {
+        "label": "Kostenloses WLAN"
+      },
+      "kitchen": {
+        "label": "Küche"
+      },
+      "shower": {
+        "label": "Dusche"
+      }
     }
   },
   "contact": {

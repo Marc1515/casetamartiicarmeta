@@ -85,6 +85,39 @@
       "bedroom2": "Dormitorio con mobiliario funcional",
       "bedroom3": "Vista lateral del dormitorio",
       "bedroom4": "Detalle de dormitorio preparado para huéspedes"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Características principales del alojamiento",
+      "entireHome": {
+        "label": "Todo el alojamiento es para ti"
+      },
+      "area": {
+        "label": "79 m² de tamaño"
+      },
+      "freeParking": {
+        "label": "Parking gratis en el alojamiento"
+      },
+      "outdoorPool": {
+        "label": "Piscina al aire libre"
+      },
+      "privateBathroom": {
+        "label": "Baño privado"
+      },
+      "airConditioning": {
+        "label": "Aire acondicionado"
+      },
+      "privatePool": {
+        "label": "Piscina privada"
+      },
+      "freeWifi": {
+        "label": "Wifi gratis"
+      },
+      "kitchen": {
+        "label": "Cocina"
+      },
+      "shower": {
+        "label": "Ducha"
+      }
     }
   },
   "contact": {

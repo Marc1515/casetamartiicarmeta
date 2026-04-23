@@ -85,6 +85,39 @@
       "bedroom2": "Chambre avec mobilier fonctionnel",
       "bedroom3": "Vue laterale de la chambre",
       "bedroom4": "Chambre preparee pour les voyageurs"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Principales caractéristiques de l’hébergement",
+      "entireHome": {
+        "label": "Logement entier pour vous"
+      },
+      "area": {
+        "label": "79 m² de superficie"
+      },
+      "freeParking": {
+        "label": "Parking gratuit sur place"
+      },
+      "outdoorPool": {
+        "label": "Piscine extérieure"
+      },
+      "privateBathroom": {
+        "label": "Salle de bain privée"
+      },
+      "airConditioning": {
+        "label": "Climatisation"
+      },
+      "privatePool": {
+        "label": "Piscine privée"
+      },
+      "freeWifi": {
+        "label": "Wi-Fi gratuit"
+      },
+      "kitchen": {
+        "label": "Cuisine"
+      },
+      "shower": {
+        "label": "Douche"
+      }
     }
   },
   "contact": {
