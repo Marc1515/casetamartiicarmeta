@@ -92,19 +92,19 @@ function HighlightCard({
       onFocus={() => onActivate(highlight.id)}
       onBlur={onDeactivate}
       className={[
-        "min-w-0 overflow-hidden rounded-xl border bg-white shadow-sm outline-none",
+        "min-w-0 max-w-full overflow-hidden rounded-xl border bg-white shadow-sm outline-none",
         "transition-all duration-300 ease-out",
         "focus-visible:ring-2 focus-visible:ring-[#393E46]/30",
         isExpanded ? "flex-[1.45_1_0%]" : "flex-[1_1_0%]",
         isCompressed ? "flex-[0.55_1_0%]" : "",
       ].join(" ")}
     >
-      <div className="flex min-h-[76px] items-center gap-3 px-4 py-3">
+      <div className="flex min-h-[76px] min-w-0 items-center gap-3 px-4 py-3">
         {getHighlightIcon(highlight.id)}
 
         <span
           className={[
-            "min-w-0 text-sm font-medium text-[#393E46] transition-all duration-300 ease-out",
+            "min-w-0 max-w-full text-sm font-medium text-[#393E46] transition-all duration-300 ease-out",
             isExpanded
               ? "whitespace-normal break-words"
               : "block overflow-hidden text-ellipsis whitespace-nowrap",
@@ -126,14 +126,20 @@ export default function GalleryHighlights() {
     useState<GalleryHighlightId | null>(null);
 
   return (
-    <aside aria-label={t("sectionAriaLabel")} className="grid gap-3">
+    <aside
+      aria-label={t("sectionAriaLabel")}
+      className="grid min-w-0 max-w-full gap-3 overflow-hidden"
+    >
       {rows.map((row) => {
         const leftIsActive = activeHighlightId === row.left.id;
         const rightIsActive =
           row.right !== null && activeHighlightId === row.right.id;
 
         return (
-          <div key={row.left.id} className="flex gap-3">
+          <div
+            key={row.left.id}
+            className="flex min-w-0 max-w-full gap-3 overflow-hidden"
+          >
             <HighlightCard
               highlight={row.left}
               isExpanded={leftIsActive}

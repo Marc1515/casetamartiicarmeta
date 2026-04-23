@@ -117,7 +117,7 @@ export default function GallerySection() {
       lead={t("lead")}
     >
       <div className="grid gap-6 xl:grid-cols-3 xl:items-start">
-        <div className="space-y-3 xl:col-span-2">
+        <div className="min-w-0 space-y-3 xl:col-span-2">
           <GalleryMosaicDesktop
             main={main}
             stack={stack}
@@ -140,7 +140,7 @@ export default function GallerySection() {
           />
         </div>
 
-        <div className="xl:col-span-1">
+        <div className="min-w-0 max-w-full xl:col-span-1">
           <GalleryHighlights />
         </div>
       </div>
