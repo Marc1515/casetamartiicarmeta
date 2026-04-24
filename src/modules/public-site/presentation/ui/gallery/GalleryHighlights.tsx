@@ -137,7 +137,11 @@ function HighlightCard({
 
         onActivate(highlight.id);
       }}
-      onFocus={() => onActivate(highlight.id)}
+      onFocus={(event) => {
+        if (event.currentTarget.matches(":focus-visible")) {
+          onActivate(highlight.id);
+        }
+      }}
       onBlur={onDeactivate}
       className={[
         "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-[#EEEEEE] shadow-sm outline-none",
