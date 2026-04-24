@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Bath,
@@ -97,15 +97,17 @@ function HighlightCard({
 }: HighlightCardProps) {
   const t = useTranslations("gallery.highlights");
 
-  const textRef = useRef<HTMLSpanElement | null>(null);
-
   const [showExpandedText, setShowExpandedText] = useState(false);
+  const [showIcon, setShowIcon] = useState(true);
 
   useEffect(() => {
     if (!isExpanded) {
       setShowExpandedText(false);
+      setShowIcon(true);
       return;
     }
+
+    setShowIcon(false);
 
     const timeoutId = window.setTimeout(() => {
       setShowExpandedText(true);
@@ -114,26 +116,12 @@ function HighlightCard({
     return () => window.clearTimeout(timeoutId);
   }, [isExpanded]);
 
-  const activateIfTextIsTruncated = () => {
-    const textElement = textRef.current;
-
-    if (!textElement) {
-      return;
-    }
-
-    const isTextTruncated = textElement.scrollWidth > textElement.clientWidth;
-
-    if (isTextTruncated) {
-      onActivate(highlight.id);
-    }
-  };
-
   return (
     <div
       tabIndex={0}
-      onMouseEnter={activateIfTextIsTruncated}
+      onMouseEnter={() => onActivate(highlight.id)}
       onMouseLeave={onDeactivate}
-      onFocus={activateIfTextIsTruncated}
+      onFocus={() => onActivate(highlight.id)}
       onBlur={onDeactivate}
       className={[
         "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-[#EEEEEE] shadow-sm outline-none",
@@ -143,18 +131,25 @@ function HighlightCard({
         isCompressed ? "grow-[0.55]" : "",
       ].join(" ")}
     >
-      <div className="flex h-[68px] min-w-0 items-center gap-2 px-3 py-2">
-        {getHighlightIcon(highlight.id)}
+      <div className="relative flex h-[68px] min-w-0 items-center justify-center px-3 py-2">
+        <div
+          className={[
+            "absolute inset-0 flex items-center justify-center",
+            "transition-opacity duration-150 ease-out",
+            showIcon ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+        >
+          {getHighlightIcon(highlight.id)}
+        </div>
 
         <span
-          ref={textRef}
           className={[
-            "min-w-0 text-[13px] font-medium leading-tight text-[#393E46]",
+            "min-w-0 px-2 text-center text-[13px] font-medium leading-tight text-[#393E46]",
             "transition-opacity duration-150 ease-out",
-            isExpanded && !showExpandedText ? "opacity-0" : "opacity-100",
-            isExpanded && showExpandedText
+            showExpandedText ? "opacity-100" : "opacity-0",
+            showExpandedText
               ? "block overflow-hidden whitespace-normal break-words"
-              : "block overflow-hidden text-ellipsis whitespace-nowrap",
+              : "block overflow-hidden whitespace-nowrap",
           ].join(" ")}
         >
           {t(`${highlight.id}.label`)}
