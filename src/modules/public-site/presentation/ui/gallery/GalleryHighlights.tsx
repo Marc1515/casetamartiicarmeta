@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Bath,
@@ -86,6 +86,21 @@ function HighlightCard({
 
   const textRef = useRef<HTMLSpanElement | null>(null);
 
+  const [showExpandedText, setShowExpandedText] = useState(false);
+
+  useEffect(() => {
+    if (!isExpanded) {
+      setShowExpandedText(false);
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setShowExpandedText(true);
+    }, 220);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [isExpanded]);
+
   const activateIfTextIsTruncated = () => {
     const textElement = textRef.current;
 
@@ -108,7 +123,7 @@ function HighlightCard({
       onFocus={activateIfTextIsTruncated}
       onBlur={onDeactivate}
       className={[
-        "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-(#EEEEEE) shadow-sm outline-none",
+        "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-[#EEEEEE] shadow-sm outline-none",
         "transition-[flex-grow] duration-300 ease-out",
         "focus-visible:ring-2 focus-visible:ring-[#393E46]/30",
         isExpanded ? "grow-[1.45]" : "grow",
@@ -122,8 +137,10 @@ function HighlightCard({
           ref={textRef}
           className={[
             "min-w-0 text-[13px] font-medium leading-tight text-[#393E46]",
-            isExpanded
-              ? "block overflow-hidden whitespace-normal warp-break-words"
+            "transition-opacity duration-150 ease-out",
+            isExpanded && !showExpandedText ? "opacity-0" : "opacity-100",
+            isExpanded && showExpandedText
+              ? "block overflow-hidden whitespace-normal break-words"
               : "block overflow-hidden text-ellipsis whitespace-nowrap",
           ].join(" ")}
         >
