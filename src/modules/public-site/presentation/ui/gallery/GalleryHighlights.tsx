@@ -99,7 +99,7 @@ function HighlightCard({
         isCompressed ? "grow-[0.55]" : "",
       ].join(" ")}
     >
-      <div className="flex min-h-[58px] min-w-0 items-center gap-2 px-3 py-2">
+      <div className="flex h-[68px] min-w-0 items-center gap-2 px-3 py-2">
         {getHighlightIcon(highlight.id)}
 
         <span
@@ -139,7 +139,7 @@ export default function GalleryHighlights() {
           return (
             <div
               key={row.left.id}
-              className="flex min-w-0 max-w-full gap-3 overflow-hidden"
+              className="flex h-[68px] min-w-0 max-w-full gap-3 overflow-hidden"
             >
               <HighlightCard
                 highlight={row.left}
