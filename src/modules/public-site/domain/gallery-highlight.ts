@@ -8,7 +8,12 @@ export type GalleryHighlightId =
     | "privatePool"
     | "freeWifi"
     | "kitchen"
-    | "shower";
+    | "shower"
+    | "garden"
+    | "terrace"
+    | "barbecue"
+    | "familyFriendly"
+    | "natureViews";
 
 export type GalleryHighlight = {
     id: GalleryHighlightId;

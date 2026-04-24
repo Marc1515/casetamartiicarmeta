@@ -11,6 +11,11 @@ const GALLERY_HIGHLIGHTS: readonly GalleryHighlight[] = [
     { id: "freeWifi" },
     { id: "kitchen" },
     { id: "shower" },
+    { id: "garden" },
+    { id: "terrace" },
+    { id: "barbecue" },
+    { id: "familyFriendly" },
+    { id: "natureViews" },
 ] as const;
 
 export function getGalleryHighlights(): readonly GalleryHighlight[] {

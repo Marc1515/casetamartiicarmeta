@@ -13,6 +13,11 @@ import {
   UtensilsCrossed,
   Waves,
   Wifi,
+  Baby,
+  Flower2,
+  TreePine,
+  Utensils,
+  Mountain,
 } from "lucide-react";
 import { getGalleryHighlights } from "@/modules/public-site/application/gallery-highlights";
 import type {
@@ -44,12 +49,21 @@ function getHighlightIcon(id: GalleryHighlightId): ReactNode {
       return <UtensilsCrossed className={iconClassName} aria-hidden />;
     case "shower":
       return <ShowerHead className={iconClassName} aria-hidden />;
+    case "garden":
+      return <TreePine className={iconClassName} aria-hidden />;
+    case "terrace":
+      return <Flower2 className={iconClassName} aria-hidden />;
+    case "barbecue":
+      return <Utensils className={iconClassName} aria-hidden />;
+    case "familyFriendly":
+      return <Baby className={iconClassName} aria-hidden />;
+    case "natureViews":
+      return <Mountain className={iconClassName} aria-hidden />;
   }
 }
 
 type HighlightRow = {
-  left: GalleryHighlight;
-  right: GalleryHighlight | null;
+  items: readonly GalleryHighlight[];
 };
 
 function buildHighlightRows(
@@ -57,10 +71,9 @@ function buildHighlightRows(
 ): HighlightRow[] {
   const rows: HighlightRow[] = [];
 
-  for (let index = 0; index < highlights.length; index += 2) {
+  for (let index = 0; index < highlights.length; index += 3) {
     rows.push({
-      left: highlights[index],
-      right: highlights[index + 1] ?? null,
+      items: highlights.slice(index, index + 3),
     });
   }
 
@@ -165,38 +178,32 @@ export default function GalleryHighlights() {
       className="min-w-0 max-w-full overflow-hidden"
     >
       <div className="grid gap-3">
-        {rows.map((row) => {
-          const leftIsActive = activeHighlightId === row.left.id;
-          const rightIsActive =
-            row.right !== null && activeHighlightId === row.right.id;
+        {rows.map((row) => (
+          <div
+            key={row.items.map((item) => item.id).join("-")}
+            className="flex h-[68px] min-w-0 max-w-full gap-3 overflow-hidden"
+          >
+            {row.items.map((highlight) => {
+              const isExpanded = activeHighlightId === highlight.id;
 
-          return (
-            <div
-              key={row.left.id}
-              className="flex h-[68px] min-w-0 max-w-full gap-3 overflow-hidden"
-            >
-              <HighlightCard
-                highlight={row.left}
-                isExpanded={leftIsActive}
-                isCompressed={Boolean(rightIsActive)}
-                onActivate={setActiveHighlightId}
-                onDeactivate={() => setActiveHighlightId(null)}
-              />
+              const isCompressed =
+                activeHighlightId !== null &&
+                row.items.some((item) => item.id === activeHighlightId) &&
+                !isExpanded;
 
-              {row.right ? (
+              return (
                 <HighlightCard
-                  highlight={row.right}
-                  isExpanded={Boolean(rightIsActive)}
-                  isCompressed={leftIsActive}
+                  key={highlight.id}
+                  highlight={highlight}
+                  isExpanded={isExpanded}
+                  isCompressed={isCompressed}
                   onActivate={setActiveHighlightId}
                   onDeactivate={() => setActiveHighlightId(null)}
                 />
-              ) : (
-                <div className="min-w-0 basis-0 grow" aria-hidden />
-              )}
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        ))}
       </div>
     </aside>
   );
