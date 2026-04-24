@@ -119,8 +119,24 @@ function HighlightCard({
   return (
     <div
       tabIndex={0}
-      onMouseEnter={() => onActivate(highlight.id)}
-      onMouseLeave={onDeactivate}
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") {
+          onActivate(highlight.id);
+        }
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType === "mouse") {
+          onDeactivate();
+        }
+      }}
+      onClick={() => {
+        if (isExpanded) {
+          onDeactivate();
+          return;
+        }
+
+        onActivate(highlight.id);
+      }}
       onFocus={() => onActivate(highlight.id)}
       onBlur={onDeactivate}
       className={[
