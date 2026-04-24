@@ -25,7 +25,7 @@ import type {
   GalleryHighlightId,
 } from "@/modules/public-site/domain/gallery-highlight";
 
-const iconClassName = "h-5 w-5 shrink-0 text-[#393E46]";
+const iconClassName = "h-6 w-6 shrink-0 text-[#393E46]";
 
 function getHighlightIcon(id: GalleryHighlightId): ReactNode {
   switch (id) {
