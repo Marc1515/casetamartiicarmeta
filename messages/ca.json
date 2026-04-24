@@ -117,6 +117,21 @@
       },
       "shower": {
         "label": "Dutxa"
+      },
+      "garden": {
+        "label": "Jardí"
+      },
+      "terrace": {
+        "label": "Terrassa"
+      },
+      "barbecue": {
+        "label": "Barbacoa"
+      },
+      "familyFriendly": {
+        "label": "Ideal per a famílies"
+      },
+      "natureViews": {
+        "label": "Vistes a la natura"
       }
     }
   },

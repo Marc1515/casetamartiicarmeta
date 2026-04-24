@@ -117,6 +117,21 @@
       },
       "shower": {
         "label": "Dusche"
+      },
+      "garden": {
+        "label": "Garten"
+      },
+      "terrace": {
+        "label": "Terrasse"
+      },
+      "barbecue": {
+        "label": "Grill"
+      },
+      "familyFriendly": {
+        "label": "Familienfreundlich"
+      },
+      "natureViews": {
+        "label": "Naturblick"
       }
     }
   },
