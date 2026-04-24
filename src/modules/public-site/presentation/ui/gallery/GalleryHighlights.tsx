@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Bath,
@@ -84,15 +84,31 @@ function HighlightCard({
 }: HighlightCardProps) {
   const t = useTranslations("gallery.highlights");
 
+  const textRef = useRef<HTMLSpanElement | null>(null);
+
+  const activateIfTextIsTruncated = () => {
+    const textElement = textRef.current;
+
+    if (!textElement) {
+      return;
+    }
+
+    const isTextTruncated = textElement.scrollWidth > textElement.clientWidth;
+
+    if (isTextTruncated) {
+      onActivate(highlight.id);
+    }
+  };
+
   return (
     <div
       tabIndex={0}
-      onMouseEnter={() => onActivate(highlight.id)}
+      onMouseEnter={activateIfTextIsTruncated}
       onMouseLeave={onDeactivate}
-      onFocus={() => onActivate(highlight.id)}
+      onFocus={activateIfTextIsTruncated}
       onBlur={onDeactivate}
       className={[
-        "min-w-0 basis-0 overflow-hidden rounded-xl border bg-white shadow-sm outline-none",
+        "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-(#EEEEEE) shadow-sm outline-none",
         "transition-[flex-grow] duration-300 ease-out",
         "focus-visible:ring-2 focus-visible:ring-[#393E46]/30",
         isExpanded ? "grow-[1.45]" : "grow",
@@ -103,10 +119,11 @@ function HighlightCard({
         {getHighlightIcon(highlight.id)}
 
         <span
+          ref={textRef}
           className={[
             "min-w-0 text-[13px] font-medium leading-tight text-[#393E46]",
             isExpanded
-              ? "block overflow-hidden whitespace-normal break-words"
+              ? "block overflow-hidden whitespace-normal warp-break-words"
               : "block overflow-hidden text-ellipsis whitespace-nowrap",
           ].join(" ")}
         >
