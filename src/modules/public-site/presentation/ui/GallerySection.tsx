@@ -9,6 +9,7 @@ import GalleryMosaicDesktop from "@/modules/public-site/presentation/ui/gallery/
 import GalleryMosaicMobile from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicMobile";
 import GalleryModal from "@/modules/public-site/presentation/ui/gallery/GalleryModal";
 import GalleryHighlights from "@/modules/public-site/presentation/ui/gallery/GalleryHighlights";
+import GalleryDescription from "@/modules/public-site/presentation/ui/gallery/GalleryDescription";
 import { MapPin } from "lucide-react";
 import { getContactSectionDirectionsHref } from "@/modules/public-site/application/contact-section";
 import { LOCATION } from "@/modules/seo/application/seo";
@@ -167,6 +168,8 @@ export default function GallerySection() {
           <GalleryHighlights />
         </div>
       </div>
+
+      <GalleryDescription />
 
       <GalleryModal
         open={open}
