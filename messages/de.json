@@ -57,6 +57,9 @@
   "gallery": {
     "title": "Galerie",
     "lead": "Entdecken Sie alle Bereiche der Caseta: die Veranda fur das Fruhstuck im Freien, den Pool zum Entspannen, helle Zimmer und komfortable Gemeinschaftsbereiche.",
+    "location": {
+      "viewMap": "Karte anzeigen"
+    },
     "imageAlts": {
       "house": "Hauptfassade der Caseta",
       "house2": "Seitliche Aussenansicht der Unterkunft",

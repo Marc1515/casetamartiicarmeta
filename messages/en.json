@@ -57,6 +57,9 @@
   "gallery": {
     "title": "Gallery",
     "lead": "Discover every area of the caseta: the porch for outdoor breakfasts, the pool for slow afternoons, bright bedrooms and comfortable shared spaces.",
+    "location": {
+      "viewMap": "View map"
+    },
     "imageAlts": {
       "house": "Main front facade of the caseta",
       "house2": "Side exterior view of the holiday rental",

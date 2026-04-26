@@ -9,6 +9,9 @@ import GalleryMosaicDesktop from "@/modules/public-site/presentation/ui/gallery/
 import GalleryMosaicMobile from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicMobile";
 import GalleryModal from "@/modules/public-site/presentation/ui/gallery/GalleryModal";
 import GalleryHighlights from "@/modules/public-site/presentation/ui/gallery/GalleryHighlights";
+import { MapPin } from "lucide-react";
+import { getContactSectionDirectionsHref } from "@/modules/public-site/application/contact-section";
+import { LOCATION } from "@/modules/seo/application/seo";
 
 const galleryContainerVariants = {
   hidden: {},
@@ -57,6 +60,10 @@ const IMAGES = [
 
 export default function GallerySection() {
   const t = useTranslations("gallery");
+
+  const directionsHref = getContactSectionDirectionsHref();
+  const address = `${LOCATION.streetAddress}, ${LOCATION.postalCode} ${LOCATION.locality}, ${LOCATION.country}`;
+
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
 
@@ -116,6 +123,22 @@ export default function GallerySection() {
       leadClassName="text-sm md:text-base text-[#393E46]"
       lead={t("lead")}
     >
+      <div className="mb-6 flex items-end gap-2 text-sm leading-snug text-[#393E46]">
+        <MapPin className="h-5 w-5 shrink-0 text-red-500" aria-hidden />
+
+        <span className="min-w-0">{address}</span>
+
+        <span aria-hidden>—</span>
+
+        <a
+          href={directionsHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-blue-600 underline-offset-2 hover:underline"
+        >
+          {t("location.viewMap")}
+        </a>
+      </div>
       <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
         <div className="min-w-0 space-y-3 xl:col-span-2">
           <GalleryMosaicDesktop

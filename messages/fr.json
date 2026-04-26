@@ -57,6 +57,9 @@
   "gallery": {
     "title": "Galerie",
     "lead": "Decouvrez chaque espace de la caseta: le porche pour les petits-dejeuners en plein air, la piscine pour se detendre, les chambres lumineuses et les pieces communes confortables.",
+    "location": {
+      "viewMap": "Voir la carte"
+    },
     "imageAlts": {
       "house": "Facade principale de la caseta",
       "house2": "Vue laterale exterieure de l'hebergement",

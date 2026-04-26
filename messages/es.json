@@ -57,6 +57,9 @@
   "gallery": {
     "title": "Galería",
     "lead": "Explora cada espacio de la caseta: el porche para desayunar al aire libre, la piscina para relajarte, las habitaciones luminosas y las zonas comunes pensadas para descansar.",
+    "location": {
+      "viewMap": "Ver mapa"
+    },
     "imageAlts": {
       "house": "Fachada principal de la caseta",
       "house2": "Vista exterior lateral del alojamiento",
