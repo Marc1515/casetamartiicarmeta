@@ -45,8 +45,7 @@
     "reservedDayTitle": "Booked day",
     "lead": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit.",
     "info": {
-      "intro": "In the following calendar you can easily check the availability of the house month by month.",
-      "intro2": "Once you have your dates, you can contact us to confirm your reservation.",
+      "intro": "Once you have your dates, contact us to confirm your reservation.",
       "highSeasonTitle": "High season",
       "highSeasonText": "July and August, as well as special periods such as Christmas and Easter.",
       "additionalInfoTitle": "Additional information",

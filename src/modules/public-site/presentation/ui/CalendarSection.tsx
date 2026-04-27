@@ -2,6 +2,7 @@ import Section from "./Section";
 import CalendarPublic from "@/modules/reservations/presentation/ui/CalendarPublic";
 import { getTranslations } from "next-intl/server";
 import CalendarInfo from "./calendar/CalendarInfo";
+import CalendarInfoSyncedAside from "./calendar/CalendarInfoSyncedAside";
 
 export default async function CalendarSection() {
   const t = await getTranslations("calendar");
@@ -29,14 +30,14 @@ export default async function CalendarSection() {
         </>
       }
     >
-      <div className="grid gap-10 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
+      <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
         <div className="min-w-0 xl:col-span-2">
           <CalendarPublic />
         </div>
 
-        <aside>
+        <CalendarInfoSyncedAside>
           <CalendarInfo />
-        </aside>
+        </CalendarInfoSyncedAside>
       </div>
     </Section>
   );
