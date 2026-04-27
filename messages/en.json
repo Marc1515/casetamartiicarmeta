@@ -62,7 +62,10 @@
   },
   "gallery": {
     "title": "Gallery",
-    "lead": "Discover every area of the caseta: the porch for outdoor breakfasts, the pool for slow afternoons, bright bedrooms and comfortable shared spaces.\n\nThis holiday home is a great base to explore the Ebro Delta and enjoy a calm stay between nature, coastline and local food.",
+    "lead": "Discover every area of the caseta: the porch for outdoor breakfasts, the pool for slow afternoons, bright bedrooms and comfortable shared spaces.",
+    "location": {
+      "viewMap": "View map"
+    },
     "imageAlts": {
       "house": "Main front facade of the caseta",
       "house2": "Side exterior view of the holiday rental",
@@ -91,6 +94,59 @@
       "bedroom2": "Bedroom with practical furniture",
       "bedroom3": "Side view of the bedroom",
       "bedroom4": "Bedroom prepared for guests"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Main accommodation features",
+      "entireHome": {
+        "label": "Entire home for you"
+      },
+      "area": {
+        "label": "79 m² size"
+      },
+      "freeParking": {
+        "label": "Free parking on site"
+      },
+      "outdoorPool": {
+        "label": "Outdoor swimming pool"
+      },
+      "privateBathroom": {
+        "label": "Private bathroom"
+      },
+      "airConditioning": {
+        "label": "Air conditioning"
+      },
+      "privatePool": {
+        "label": "Private pool"
+      },
+      "freeWifi": {
+        "label": "Free WiFi"
+      },
+      "kitchen": {
+        "label": "Kitchen"
+      },
+      "shower": {
+        "label": "Shower"
+      },
+      "garden": {
+        "label": "Garden"
+      },
+      "terrace": {
+        "label": "Terrace"
+      },
+      "barbecue": {
+        "label": "Barbecue"
+      },
+      "familyFriendly": {
+        "label": "Family friendly"
+      },
+      "natureViews": {
+        "label": "Nature views"
+      }
+    },
+    "description": {
+      "paragraph1": "Casa Martí i Carmeta has a terrace and offers accommodation in Deltebre with free WiFi and pool views. The property is near the Ebro Delta and features a seasonal outdoor swimming pool and free private parking.",
+      "paragraph2": "This air-conditioned house has 2 bedrooms, a living room, a fully equipped kitchen with a fridge and coffee machine, and 1 bathroom with a shower. Towels and bed linen are also provided.",
+      "paragraph3": "Cycling is possible in the surroundings, and you can enjoy the natural setting of the Ebro Delta. Tortosa Cathedral is 26 km away and Reus Airport is 72 km away."
     }
   },
   "contact": {

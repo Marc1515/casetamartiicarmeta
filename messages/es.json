@@ -61,7 +61,10 @@
   },
   "gallery": {
     "title": "Galería",
-    "lead": "Explora cada espacio de la caseta: el porche para desayunar al aire libre, la piscina para relajarte, las habitaciones luminosas y las zonas comunes pensadas para descansar.\n\nEs un alojamiento turístico ideal para descubrir el Delta del Ebro y disfrutar de una escapada tranquila entre naturaleza, mar y gastronomía local.",
+    "lead": "Explora cada espacio de la caseta: el porche para desayunar al aire libre, la piscina para relajarte, las habitaciones luminosas y las zonas comunes pensadas para descansar.",
+    "location": {
+      "viewMap": "Ver mapa"
+    },
     "imageAlts": {
       "house": "Fachada principal de la caseta",
       "house2": "Vista exterior lateral del alojamiento",
@@ -90,6 +93,59 @@
       "bedroom2": "Dormitorio con mobiliario funcional",
       "bedroom3": "Vista lateral del dormitorio",
       "bedroom4": "Detalle de dormitorio preparado para huéspedes"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Características principales del alojamiento",
+      "entireHome": {
+        "label": "Todo el alojamiento es para ti"
+      },
+      "area": {
+        "label": "79 m² de tamaño"
+      },
+      "freeParking": {
+        "label": "Parking gratis en el alojamiento"
+      },
+      "outdoorPool": {
+        "label": "Piscina al aire libre"
+      },
+      "privateBathroom": {
+        "label": "Baño privado"
+      },
+      "airConditioning": {
+        "label": "Aire acondicionado"
+      },
+      "privatePool": {
+        "label": "Piscina privada"
+      },
+      "freeWifi": {
+        "label": "Wifi gratis"
+      },
+      "kitchen": {
+        "label": "Cocina"
+      },
+      "shower": {
+        "label": "Ducha"
+      },
+      "garden": {
+        "label": "Jardín"
+      },
+      "terrace": {
+        "label": "Terraza"
+      },
+      "barbecue": {
+        "label": "Barbacoa"
+      },
+      "familyFriendly": {
+        "label": "Ideal para familias"
+      },
+      "natureViews": {
+        "label": "Vistas a la naturaleza"
+      }
+    },
+    "description": {
+      "paragraph1": "Casa Martí i Carmeta dispone de terraza y ofrece alojamiento en Deltebre con wifi gratis y vistas a la piscina. El alojamiento está cerca del Delta del Ebro y cuenta con piscina de temporada al aire libre y parking privado gratuito.",
+      "paragraph2": "Esta casa o chalet con aire acondicionado consta de 2 dormitorios, una sala de estar, una cocina totalmente equipada con nevera y cafetera, y 1 baño con ducha. También se incluyen toallas y ropa de cama.",
+      "paragraph3": "En los alrededores se puede practicar ciclismo y disfrutar del entorno natural del Delta del Ebro. La Catedral de Tortosa está a 26 km y el aeropuerto de Reus se encuentra a 72 km."
     }
   },
   "contact": {

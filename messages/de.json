@@ -61,7 +61,10 @@
   },
   "gallery": {
     "title": "Galerie",
-    "lead": "Entdecken Sie alle Bereiche der Caseta: die Veranda fur das Fruhstuck im Freien, den Pool zum Entspannen, helle Zimmer und komfortable Gemeinschaftsbereiche.\n\nDiese Ferienunterkunft eignet sich ideal, um das Ebro-Delta zu erkunden und eine ruhige Auszeit zwischen Natur, Kuste und regionaler Kuche zu geniessen.",
+    "lead": "Entdecken Sie alle Bereiche der Caseta: die Veranda fur das Fruhstuck im Freien, den Pool zum Entspannen, helle Zimmer und komfortable Gemeinschaftsbereiche.",
+    "location": {
+      "viewMap": "Karte anzeigen"
+    },
     "imageAlts": {
       "house": "Hauptfassade der Caseta",
       "house2": "Seitliche Aussenansicht der Unterkunft",
@@ -90,6 +93,59 @@
       "bedroom2": "Schlafzimmer mit funktionalen Mobeln",
       "bedroom3": "Seitliche Ansicht des Schlafzimmers",
       "bedroom4": "Fur Gaste vorbereitetes Schlafzimmer"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Wichtigste Ausstattungsmerkmale der Unterkunft",
+      "entireHome": {
+        "label": "Die gesamte Unterkunft gehört Ihnen"
+      },
+      "area": {
+        "label": "79 m² groß"
+      },
+      "freeParking": {
+        "label": "Kostenlose Parkplätze an der Unterkunft"
+      },
+      "outdoorPool": {
+        "label": "Außenpool"
+      },
+      "privateBathroom": {
+        "label": "Privates Badezimmer"
+      },
+      "airConditioning": {
+        "label": "Klimaanlage"
+      },
+      "privatePool": {
+        "label": "Privater Pool"
+      },
+      "freeWifi": {
+        "label": "Kostenloses WLAN"
+      },
+      "kitchen": {
+        "label": "Küche"
+      },
+      "shower": {
+        "label": "Dusche"
+      },
+      "garden": {
+        "label": "Garten"
+      },
+      "terrace": {
+        "label": "Terrasse"
+      },
+      "barbecue": {
+        "label": "Grill"
+      },
+      "familyFriendly": {
+        "label": "Familienfreundlich"
+      },
+      "natureViews": {
+        "label": "Naturblick"
+      }
+    },
+    "description": {
+      "paragraph1": "Casa Martí i Carmeta verfügt über eine Terrasse und bietet Unterkunft in Deltebre mit kostenlosem WLAN und Blick auf den Pool. Die Unterkunft liegt nahe dem Ebro-Delta und hat einen saisonalen Außenpool sowie kostenlose private Parkplätze.",
+      "paragraph2": "Dieses klimatisierte Haus umfasst 2 Schlafzimmer, ein Wohnzimmer, eine voll ausgestattete Küche mit Kühlschrank und Kaffeemaschine sowie 1 Bad mit Dusche. Handtücher und Bettwäsche sind inklusive.",
+      "paragraph3": "In der Umgebung können Sie Rad fahren und die natürliche Landschaft des Ebro-Deltas genießen. Die Kathedrale von Tortosa ist 26 km entfernt, der Flughafen Reus liegt 72 km entfernt."
     }
   },
   "contact": {

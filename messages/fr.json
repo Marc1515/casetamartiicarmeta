@@ -61,7 +61,10 @@
   },
   "gallery": {
     "title": "Galerie",
-    "lead": "Decouvrez chaque espace de la caseta: le porche pour les petits-dejeuners en plein air, la piscine pour se detendre, les chambres lumineuses et les pieces communes confortables.\n\nCette location de vacances est parfaite pour explorer le Delta de l'Ebre et profiter d'un sejour paisible entre nature, mer et gastronomie locale.",
+    "lead": "Decouvrez chaque espace de la caseta: le porche pour les petits-dejeuners en plein air, la piscine pour se detendre, les chambres lumineuses et les pieces communes confortables.",
+    "location": {
+      "viewMap": "Voir la carte"
+    },
     "imageAlts": {
       "house": "Facade principale de la caseta",
       "house2": "Vue laterale exterieure de l'hebergement",
@@ -90,6 +93,59 @@
       "bedroom2": "Chambre avec mobilier fonctionnel",
       "bedroom3": "Vue laterale de la chambre",
       "bedroom4": "Chambre preparee pour les voyageurs"
+    },
+    "highlights": {
+      "sectionAriaLabel": "Principales caractéristiques de l’hébergement",
+      "entireHome": {
+        "label": "Logement entier pour vous"
+      },
+      "area": {
+        "label": "79 m² de superficie"
+      },
+      "freeParking": {
+        "label": "Parking gratuit sur place"
+      },
+      "outdoorPool": {
+        "label": "Piscine extérieure"
+      },
+      "privateBathroom": {
+        "label": "Salle de bain privée"
+      },
+      "airConditioning": {
+        "label": "Climatisation"
+      },
+      "privatePool": {
+        "label": "Piscine privée"
+      },
+      "freeWifi": {
+        "label": "Wi-Fi gratuit"
+      },
+      "kitchen": {
+        "label": "Cuisine"
+      },
+      "shower": {
+        "label": "Douche"
+      },
+      "garden": {
+        "label": "Jardin"
+      },
+      "terrace": {
+        "label": "Terrasse"
+      },
+      "barbecue": {
+        "label": "Barbecue"
+      },
+      "familyFriendly": {
+        "label": "Adapté aux familles"
+      },
+      "natureViews": {
+        "label": "Vues sur la nature"
+      }
+    },
+    "description": {
+      "paragraph1": "Casa Martí i Carmeta dispose d'une terrasse et propose un hébergement à Deltebre avec Wi-Fi gratuit et vue sur la piscine. L'hébergement est proche du Delta de l'Ebre et comporte une piscine extérieure de saison et un parking privé gratuit.",
+      "paragraph2": "Cette maison ou chalet climatisé comprend 2 chambres, un salon, une cuisine entièrement équipée avec réfrigérateur et machine à café, et 1 salle de bain avec douche. Des serviettes et du linge de lit sont également fournis.",
+      "paragraph3": "Le vélo est possible dans les environs et vous pourrez profiter du cadre naturel du Delta de l'Ebre. La cathédrale de Tortosa est à 26 km et l'aéroport de Reus se trouve à 72 km."
     }
   },
   "contact": {

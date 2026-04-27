@@ -8,6 +8,11 @@ import { useReducedMotion } from "framer-motion";
 import GalleryMosaicDesktop from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicDesktop";
 import GalleryMosaicMobile from "@/modules/public-site/presentation/ui/gallery/GalleryMosaicMobile";
 import GalleryModal from "@/modules/public-site/presentation/ui/gallery/GalleryModal";
+import GalleryHighlights from "@/modules/public-site/presentation/ui/gallery/GalleryHighlights";
+import GalleryDescription from "@/modules/public-site/presentation/ui/gallery/GalleryDescription";
+import { MapPin } from "lucide-react";
+import { getContactSectionDirectionsHref } from "@/modules/public-site/application/contact-section";
+import { LOCATION } from "@/modules/seo/application/seo";
 
 const galleryContainerVariants = {
   hidden: {},
@@ -56,10 +61,13 @@ const IMAGES = [
 
 export default function GallerySection() {
   const t = useTranslations("gallery");
-  const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState<number>(0); // índice de la imagen activa en el modal
 
-  // Mosaico principal (como lo dejamos)
+  const directionsHref = getContactSectionDirectionsHref();
+  const address = `${LOCATION.streetAddress}, ${LOCATION.postalCode} ${LOCATION.locality}, ${LOCATION.country}`;
+
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState<number>(0);
+
   const main = IMAGES[0];
   const stack = IMAGES.slice(1, 3);
   const restLine = IMAGES.slice(3, 7);
@@ -70,15 +78,15 @@ export default function GallerySection() {
     setOpen(true);
   };
 
-  // Helpers carrusel
   const prev = () => setIndex((i) => (i - 1 + IMAGES.length) % IMAGES.length);
   const next = () => setIndex((i) => (i + 1) % IMAGES.length);
 
-  // Hacer que la miniatura activa quede visible centrada
   const stripRef = useRef<HTMLDivElement | null>(null);
   const activeThumbRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     if (!open) return;
+
     activeThumbRef.current?.scrollIntoView({
       inline: "center",
       block: "nearest",
@@ -86,21 +94,23 @@ export default function GallerySection() {
     });
   }, [index, open]);
 
-  // Accesos rápidos con teclado
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") prev();
+      if (event.key === "ArrowRight") next();
     };
+
     window.addEventListener("keydown", onKey);
+
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Previene layout shift calculando tamaño de la imagen grande
   const mainSizes = useMemo(() => ({ width: 1600, height: 1200 }), []);
   const prefersReducedMotion = useReducedMotion();
   const hasReducedMotion = Boolean(prefersReducedMotion);
+
   const getImageKey = (src: string) =>
     src.split("/").pop()?.split(".")[0] ?? "";
   const getImageAlt = (src: string) => t(`imageAlts.${getImageKey(src)}`);
@@ -114,26 +124,54 @@ export default function GallerySection() {
       leadClassName="text-sm md:text-base text-[#393E46]"
       lead={t("lead")}
     >
-      <GalleryMosaicDesktop
-        main={main}
-        stack={stack}
-        title={t("title")}
-        prefersReducedMotion={hasReducedMotion}
-        galleryContainerVariants={galleryContainerVariants}
-        galleryItemVariants={galleryItemVariants}
-        onOpenModalAt={openModalAt}
-        getImageAlt={getImageAlt}
-      />
+      <div className="mb-6 flex items-end gap-2 text-xs md:text-sm leading-snug text-[#393E46]">
+        <MapPin className="h-5 w-5 shrink-0 text-red-500" aria-hidden />
 
-      <GalleryMosaicMobile
-        restLine={restLine}
-        title={t("title")}
-        prefersReducedMotion={hasReducedMotion}
-        galleryContainerVariants={galleryContainerVariants}
-        galleryItemVariants={galleryItemVariants}
-        onOpenModalAt={openModalAt}
-        getImageAlt={getImageAlt}
-      />
+        <span className="min-w-0">{address}</span>
+
+        <span className="hidden md:inline" aria-hidden>
+          —
+        </span>
+
+        <a
+          href={directionsHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-blue-600 underline-offset-2 hover:underline"
+        >
+          {t("location.viewMap")}
+        </a>
+      </div>
+      <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
+        <div className="min-w-0 space-y-3 xl:col-span-2">
+          <GalleryMosaicDesktop
+            main={main}
+            stack={stack}
+            title={t("title")}
+            prefersReducedMotion={hasReducedMotion}
+            galleryContainerVariants={galleryContainerVariants}
+            galleryItemVariants={galleryItemVariants}
+            onOpenModalAt={openModalAt}
+            getImageAlt={getImageAlt}
+          />
+
+          <GalleryMosaicMobile
+            restLine={restLine}
+            title={t("title")}
+            prefersReducedMotion={hasReducedMotion}
+            galleryContainerVariants={galleryContainerVariants}
+            galleryItemVariants={galleryItemVariants}
+            onOpenModalAt={openModalAt}
+            getImageAlt={getImageAlt}
+          />
+        </div>
+
+        <div className="min-w-0 xl:col-span-1 xl:h-full">
+          <GalleryHighlights />
+        </div>
+      </div>
+
+      <GalleryDescription />
 
       <GalleryModal
         open={open}
