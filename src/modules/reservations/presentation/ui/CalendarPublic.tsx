@@ -26,7 +26,7 @@ export default function CalendarPublic() {
   }
 
   return (
-    <div className="public-calendar h-[320px] [@media(max-height:420px)]:h-[280px] [@media(max-height:500px)]:h-[340px] sm:h-[520px] lg:h-[600px]">
+    <div className="public-calendar h-[320px] [@media(max-height:420px)]:h-[280px] [@media(max-height:500px)]:h-[340px] sm:h-[520px] lg:h-[450px]">
       <Calendar<ReservationCalendarEvent>
         culture={locale}
         localizer={reservationCalendarLocalizer}

@@ -39,12 +39,10 @@
   },
   "calendar": {
     "title": "Calendari de disponibilitat",
-    "leadIntro": "Consulta aquí la disponibilitat real de la caseta.",
     "leadMarkedAs": "Els dies assenyalats com a",
     "reserved": "RESERVAT",
     "reservedDayTitle": "Dia reservat",
-    "leadMiddle": "no estan lliures; la resta es poden sol·licitar. Si estàs planificant una estada llarga o tens flexibilitat de dates, et recomanem revisar diverses setmanes per trobar el millor encaix.",
-    "leadEnd": "Quan tinguis les teves dates, continua cap a la secció de contacte, et respondrem el més aviat possible."
+    "leadMiddle": "no estan lliures; la resta es poden sol·licitar. Si estàs planificant una estada llarga o tens flexibilitat de dates, et recomanem revisar diverses setmanes per trobar el millor encaix."
   },
   "calendarMessages": {
     "month": "Mes",

@@ -39,12 +39,10 @@
   },
   "calendar": {
     "title": "Kalender",
-    "leadIntro": "Hier sehen Sie die tatsächliche Verfügbarkeit der Caseta.",
     "leadMarkedAs": "Die als",
     "reserved": "GEBUCHT",
     "reservedDayTitle": "Gebuchter Tag",
-    "leadMiddle": "markierten Tage sind nicht verfügbar; die übrigen können angefragt werden. Wenn Sie einen längeren Aufenthalt planen oder flexible Daten haben, empfehlen wir, mehrere Wochen zu betrachten, um die beste Option zu finden.",
-    "leadEnd": "Wenn Ihre Wunschdaten feststehen, fahren Sie mit dem Kontaktbereich fort – wir melden uns so schnell wie möglich."
+    "leadMiddle": "markierten Tage sind nicht verfügbar; die übrigen können angefragt werden. Wenn Sie einen längeren Aufenthalt planen oder flexible Daten haben, empfehlen wir, mehrere Wochen zu betrachten, um die beste Option zu finden."
   },
   "calendarMessages": {
     "month": "Monat",

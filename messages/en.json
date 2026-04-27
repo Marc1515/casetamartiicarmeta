@@ -39,12 +39,11 @@
   },
   "calendar": {
     "title": "Availability calendar",
-    "leadIntro": "Check the caseta’s real availability here.",
+
     "leadMarkedAs": "The days marked as",
     "reserved": "BOOKED",
     "reservedDayTitle": "Booked day",
-    "leadMiddle": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit.",
-    "leadEnd": "Once you have your dates, head to the contact section and we’ll get back to you as soon as possible."
+    "leadMiddle": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit."
   },
   "calendarMessages": {
     "month": "Month",

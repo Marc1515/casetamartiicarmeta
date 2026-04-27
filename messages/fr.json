@@ -39,12 +39,10 @@
   },
   "calendar": {
     "title": "Calendrier des disponibilités",
-    "leadIntro": "Consultez ici les disponibilités réelles de la caseta.",
     "leadMarkedAs": "Les jours marqués",
     "reserved": "RÉSERVÉ",
     "reservedDayTitle": "Jour réservé",
-    "leadMiddle": "ne sont pas disponibles ; les autres peuvent être demandés. Si vous prévoyez un long séjour ou que vos dates sont flexibles, nous vous recommandons de regarder plusieurs semaines pour trouver le meilleur créneau.",
-    "leadEnd": "Une fois vos dates choisies, rendez-vous dans la section contact, nous vous répondrons au plus vite."
+    "leadMiddle": "ne sont pas disponibles ; les autres peuvent être demandés. Si vous prévoyez un long séjour ou que vos dates sont flexibles, nous vous recommandons de regarder plusieurs semaines pour trouver le meilleur créneau."
   },
   "calendarMessages": {
     "month": "Mois",
