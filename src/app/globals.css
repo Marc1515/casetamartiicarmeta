@@ -39,6 +39,7 @@
    */
   --app-root-font-size: 16px;
   --app-inapp-root-font-size: 12px;
+  --public-calendar-reserved-font-size: clamp(7px, 1.5vw, 10px);
 }
 
 @layer base {
@@ -275,7 +276,7 @@ dialog::backdrop {
     pointer-events: none;
     font-weight: 700;
     letter-spacing: 0.15em;
-    font-size: clamp(8px, 1.8vw, 12px);
+    font-size: var(--public-calendar-reserved-font-size);
     color: hsl(var(--primary) / 0.35);
     transform: rotate(-32deg) scale(1.05);
     white-space: nowrap;
