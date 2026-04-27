@@ -42,7 +42,15 @@
     "leadMarkedAs": "Die als",
     "reserved": "GEBUCHT",
     "reservedDayTitle": "Gebuchter Tag",
-    "lead": "markierten Tage sind nicht verfügbar; die übrigen können angefragt werden. Wenn Sie einen längeren Aufenthalt planen oder flexible Daten haben, empfehlen wir, mehrere Wochen zu betrachten, um die beste Option zu finden."
+    "lead": "markierten Tage sind nicht verfügbar; die übrigen können angefragt werden. Wenn Sie einen längeren Aufenthalt planen oder flexible Daten haben, empfehlen wir, mehrere Wochen zu betrachten, um die beste Option zu finden.",
+    "info": {
+      "intro": "Im folgenden Kalender können Sie die Verfügbarkeit der Unterkunft Monat für Monat einfach überprüfen.",
+      "intro2": "Sobald Sie Ihre Daten haben, können Sie uns kontaktieren, um die Reservierung zu bestätigen.",
+      "highSeasonTitle": "Hochsaison",
+      "highSeasonText": "Juli und August sowie besondere Zeiträume wie Weihnachten und Ostern.",
+      "additionalInfoTitle": "Zusätzliche Informationen",
+      "additionalInfoText": "Der Mindestaufenthalt beträgt 3 Nächte. In der Hochsaison beträgt der Mindestaufenthalt 4 Nächte. Feiertage und verlängerte Wochenenden können je nach Kalender besondere Bedingungen haben. Für längere Aufenthalte kontaktieren Sie uns gerne."
+    }
   },
   "calendarMessages": {
     "month": "Monat",
