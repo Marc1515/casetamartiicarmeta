@@ -24,7 +24,7 @@ export default async function CalendarSection() {
             aria-hidden
             title={t("reservedDayTitle")}
           />{" "}
-          {t("leadMiddle")}
+          {t("lead")}
         </>
       }
     >

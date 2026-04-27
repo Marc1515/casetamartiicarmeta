@@ -42,7 +42,7 @@
     "leadMarkedAs": "Les jours marqués",
     "reserved": "RÉSERVÉ",
     "reservedDayTitle": "Jour réservé",
-    "leadMiddle": "ne sont pas disponibles ; les autres peuvent être demandés. Si vous prévoyez un long séjour ou que vos dates sont flexibles, nous vous recommandons de regarder plusieurs semaines pour trouver le meilleur créneau."
+    "lead": "ne sont pas disponibles ; les autres peuvent être demandés. Si vous prévoyez un long séjour ou que vos dates sont flexibles, nous vous recommandons de regarder plusieurs semaines pour trouver le meilleur créneau."
   },
   "calendarMessages": {
     "month": "Mois",

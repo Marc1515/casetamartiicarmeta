@@ -42,7 +42,7 @@
     "leadMarkedAs": "Els dies assenyalats com a",
     "reserved": "RESERVAT",
     "reservedDayTitle": "Dia reservat",
-    "leadMiddle": "no estan lliures; la resta es poden sol·licitar. Si estàs planificant una estada llarga o tens flexibilitat de dates, et recomanem revisar diverses setmanes per trobar el millor encaix."
+    "lead": "no estan lliures; la resta es poden sol·licitar. Si estàs planificant una estada llarga o tens flexibilitat de dates, et recomanem revisar diverses setmanes per trobar el millor encaix."
   },
   "calendarMessages": {
     "month": "Mes",

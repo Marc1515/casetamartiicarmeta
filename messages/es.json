@@ -42,7 +42,7 @@
     "leadMarkedAs": "Los días señalados como",
     "reserved": "RESERVADO",
     "reservedDayTitle": "Día reservado",
-    "leadMiddle": "no están libres; el resto pueden solicitarse. Si estás planificando una estancia larga o tienes flexibilidad de fechas, te recomendamos revisar varias semanas para encontrar el mejor encaje."
+    "lead": "no están libres; el resto pueden solicitarse. Si estás planificando una estancia larga o tienes flexibilidad de fechas, te recomendamos revisar varias semanas para encontrar el mejor encaje."
   },
   "calendarMessages": {
     "month": "Mes",

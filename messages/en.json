@@ -43,7 +43,7 @@
     "leadMarkedAs": "The days marked as",
     "reserved": "BOOKED",
     "reservedDayTitle": "Booked day",
-    "leadMiddle": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit."
+    "lead": "are not available; the rest can be requested. If you’re planning a long stay or have flexible dates, we recommend checking several weeks to find the best fit."
   },
   "calendarMessages": {
     "month": "Month",
