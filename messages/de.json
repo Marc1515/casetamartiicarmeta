@@ -146,6 +146,42 @@
       "paragraph1": "Casa Martí i Carmeta verfügt über eine Terrasse und bietet Unterkunft in Deltebre mit kostenlosem WLAN und Blick auf den Pool. Die Unterkunft liegt nahe dem Ebro-Delta und hat einen saisonalen Außenpool sowie kostenlose private Parkplätze.",
       "paragraph2": "Dieses klimatisierte Haus umfasst 2 Schlafzimmer, ein Wohnzimmer, eine voll ausgestattete Küche mit Kühlschrank und Kaffeemaschine sowie 1 Bad mit Dusche. Handtücher und Bettwäsche sind inklusive.",
       "paragraph3": "In der Umgebung können Sie Rad fahren und die natürliche Landschaft des Ebro-Deltas genießen. Die Kathedrale von Tortosa ist 26 km entfernt, der Flughafen Reus liegt 72 km entfernt."
+    },
+    "surroundings": {
+      "title": "Umgebung der Unterkunft",
+      "nearby": {
+        "title": "Was ist in der Nähe?",
+        "parcDelRiu": "Parc del Riu",
+        "ecoherbesPark": "Ecoherbes Park",
+        "deltaEbro": "Ebro-Delta",
+        "ullalsBaltasar": "Ullals de'n Baltasar",
+        "naturalPark": "Naturpark Ebro-Delta"
+      },
+      "restaurants": {
+        "title": "Restaurants und Cafés",
+        "casaRius": "Restaurant · Restaurant Casa Rius",
+        "loMut": "Restaurant · Lo Mut Restaurant",
+        "masPrades": "Restaurant · Mas Prades"
+      },
+      "beaches": {
+        "title": "Strände in der Umgebung",
+        "arenal": "Strand L'Arenal",
+        "fangar": "Strand Fangar",
+        "riumar": "Strand Riumar",
+        "trabucador": "Strand Trabucador",
+        "migjorn": "Strand von Migjorn",
+        "eucaliptus": "Strand Eucaliptus"
+      },
+      "transport": {
+        "title": "Öffentliche Verkehrsmittel",
+        "camarlesDeltebre": "Zug · Camarles - Deltebre",
+        "aldeaAmposta": "Zug · l'Aldea - Amposta"
+      },
+      "airports": {
+        "title": "Nächste Flughäfen",
+        "reus": "Flughafen Reus",
+        "castellon": "Flughafen Castellón - Costa Azahar"
+      }
     }
   },
   "contact": {

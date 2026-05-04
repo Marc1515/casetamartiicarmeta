@@ -13,6 +13,7 @@ import GalleryDescription from "@/modules/public-site/presentation/ui/gallery/Ga
 import { MapPin } from "lucide-react";
 import { getContactSectionDirectionsHref } from "@/modules/public-site/application/contact-section";
 import { LOCATION } from "@/modules/seo/application/seo";
+import GallerySurroundings from "./gallery/GallerySurroundings";
 
 const galleryContainerVariants = {
   hidden: {},
@@ -172,6 +173,8 @@ export default function GallerySection() {
       </div>
 
       <GalleryDescription />
+
+      <GallerySurroundings />
 
       <GalleryModal
         open={open}

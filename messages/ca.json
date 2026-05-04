@@ -146,6 +146,42 @@
       "paragraph1": "Casa Martí i Carmeta disposa de terrassa i ofereix allotjament a Deltebre amb wifi gratuït i vistes a la piscina. L'allotjament és a prop del Delta de l'Ebre i compta amb piscina de temporada exterior i aparcament privat gratuït.",
       "paragraph2": "Aquesta casa o xalet amb aire condicionat consta de 2 dormitoris, un saló, una cuina totalment equipada amb nevera i cafetera, i 1 bany amb dutxa. També s'inclouen tovalloles i roba de llit.",
       "paragraph3": "Als voltants es pot practicar el ciclisme i gaudir de l'entorn natural del Delta de l'Ebre. La Catedral de Tortosa és a 26 km i l'aeroport de Reus es troba a 72 km."
+    },
+    "surroundings": {
+      "title": "Entorn de l'allotjament",
+      "nearby": {
+        "title": "Què hi ha a prop?",
+        "parcDelRiu": "Parc del Riu",
+        "ecoherbesPark": "Ecoherbes Park",
+        "deltaEbro": "Delta de l'Ebre",
+        "ullalsBaltasar": "Ullals de'n Baltasar",
+        "naturalPark": "Parc Natural del Delta de l'Ebre"
+      },
+      "restaurants": {
+        "title": "Restaurants i cafeteries",
+        "casaRius": "Restaurant · Restaurant Casa Rius",
+        "loMut": "Restaurant · Lo Mut Restaurant",
+        "masPrades": "Restaurant · Mas Prades"
+      },
+      "beaches": {
+        "title": "Platges de la zona",
+        "arenal": "Platja de l'Arenal",
+        "fangar": "Platja del Fangar",
+        "riumar": "Platja de Riumar",
+        "trabucador": "Platja del Trabucador",
+        "migjorn": "Platja de Migjorn",
+        "eucaliptus": "Platja de l'Eucaliptus"
+      },
+      "transport": {
+        "title": "Transport públic",
+        "camarlesDeltebre": "Tren · Camarles - Deltebre",
+        "aldeaAmposta": "Tren · l'Aldea - Amposta"
+      },
+      "airports": {
+        "title": "Aeroports més propers",
+        "reus": "Aeroport de Reus",
+        "castellon": "Aeroport de Castelló - Costa Azahar"
+      }
     }
   },
   "contact": {
