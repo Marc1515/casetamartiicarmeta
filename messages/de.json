@@ -10,6 +10,7 @@
     "home": "Startseite",
     "calendario": "Kalender",
     "fotos": "Galerie",
+    "servicios": "Ausstattung",
     "contacto": "Kontakt",
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
@@ -26,6 +27,7 @@
       "home": "Startseite",
       "calendario": "Kalender",
       "fotos": "Galerie",
+      "servicios": "Ausstattung",
       "contacto": "Kontakt"
     },
     "copyright": "© {year} Caseta Martí i Carmeta"
@@ -182,6 +184,119 @@
         "reus": "Flughafen Reus",
         "castellon": "Flughafen Castellón - Costa Azahar"
       }
+    }
+  },
+  "services": {
+    "title": "Ausstattung der Casa Martí i Carmeta",
+    "lead": "Top-Ausstattung! Bewertung: 8,8",
+    "popularTitle": "Beliebteste Ausstattung",
+    "badge": {
+      "free": "Kostenlos!"
+    },
+    "popular": {
+      "outdoorPool": "Außenpool",
+      "freeParking": "Kostenlose Parkplätze",
+      "freeWifi": "Kostenloses WLAN"
+    },
+    "groups": {
+      "idealStay": {
+        "title": "Ideal für Ihren Aufenthalt"
+      },
+      "parking": {
+        "title": "Parken",
+        "description": "Kostenfreie Privatparkplätze sind vor Ort verfügbar. Eine Reservierung ist nicht erforderlich."
+      },
+      "internet": {
+        "title": "Internet",
+        "description": "WLAN steht in der gesamten Unterkunft zur Verfügung. Kostenfrei."
+      },
+      "kitchen": {
+        "title": "Küche"
+      },
+      "bedroom": {
+        "title": "Schlafzimmer"
+      },
+      "bathroom": {
+        "title": "Badezimmer"
+      },
+      "livingArea": {
+        "title": "Wohnbereich"
+      },
+      "mediaAndTechnology": {
+        "title": "Medien und Technik"
+      },
+      "roomAmenities": {
+        "title": "Zimmerausstattung"
+      },
+      "outdoors": {
+        "title": "Außenbereich"
+      },
+      "outdoorPool": {
+        "title": "Außenpool"
+      },
+      "activities": {
+        "title": "Aktivitäten"
+      },
+      "views": {
+        "title": "Ausblick und Außenbereich"
+      },
+      "buildingCharacteristics": {
+        "title": "Gebäudemerkmale"
+      },
+      "miscellaneous": {
+        "title": "Sonstiges"
+      },
+      "spokenLanguages": {
+        "title": "Gesprochene Sprachen"
+      }
+    },
+    "items": {
+      "parking": "Parkplatz",
+      "privateBathroom": "Privates Badezimmer",
+      "freeParking": "Kostenlose Parkplätze",
+      "airConditioning": "Klimaanlage",
+      "freeWifi": "Kostenloses WLAN",
+      "kitchen": "Küche",
+      "terrace": "Terrasse",
+      "flatScreenTv": "Flachbild-TV",
+      "washingMachine": "Waschmaschine",
+      "outdoorPool": "Außenpool",
+      "diningTable": "Esstisch",
+      "coffeeMachine": "Kaffeemaschine",
+      "toaster": "Toaster",
+      "oven": "Backofen",
+      "kitchenware": "Küchenutensilien",
+      "dishwasher": "Geschirrspüler",
+      "microwave": "Mikrowelle",
+      "fridge": "Kühlschrank",
+      "kitchenette": "Kochnische",
+      "linen": "Bettwäsche",
+      "towels": "Handtücher",
+      "shower": "Dusche",
+      "diningArea": "Essbereich",
+      "seatingArea": "Sitzbereich",
+      "sofaBed": "Schlafsofa",
+      "privateEntrance": "Privater Eingang",
+      "iron": "Bügeleisen",
+      "sunTerrace": "Terrasse / Solarium",
+      "privatePool": "Privater Pool",
+      "seasonal": "Saisonal",
+      "bikeTours": "Fahrradtouren",
+      "walkingTours": "Fußtouren",
+      "cycling": "Radfahren",
+      "hiking": "Wandern",
+      "fishing": "Angeln",
+      "poolView": "Poolblick",
+      "gardenView": "Gartenblick",
+      "detached": "Freistehend",
+      "noSmoking": "Rauchen in der gesamten Unterkunft nicht gestattet",
+      "heating": "Heizung",
+      "catalan": "Katalanisch",
+      "german": "Deutsch",
+      "english": "Englisch",
+      "spanish": "Spanisch",
+      "french": "Französisch",
+      "italian": "Italienisch"
     }
   },
   "contact": {

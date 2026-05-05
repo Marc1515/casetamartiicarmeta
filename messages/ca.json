@@ -10,6 +10,7 @@
     "home": "Inici",
     "calendario": "Calendari",
     "fotos": "Galeria",
+    "servicios": "Serveis",
     "contacto": "Contacte",
     "openMenu": "Obrir menú",
     "closeMenu": "Tancar menú",
@@ -26,6 +27,7 @@
       "home": "Inici",
       "calendario": "Calendari",
       "fotos": "Galeria",
+      "servicios": "Serveis",
       "contacto": "Contacte"
     },
     "copyright": "© {year} Caseta Martí i Carmeta"
@@ -182,6 +184,119 @@
         "reus": "Aeroport de Reus",
         "castellon": "Aeroport de Castelló - Costa Azahar"
       }
+    }
+  },
+  "services": {
+    "title": "Serveis de Casa Martí i Carmeta",
+    "lead": "Bons serveis! Puntuació: 8,8",
+    "popularTitle": "Serveis més populars",
+    "badge": {
+      "free": "Gratuït!"
+    },
+    "popular": {
+      "outdoorPool": "Piscina exterior",
+      "freeParking": "Aparcament gratuït",
+      "freeWifi": "WiFi gratuït"
+    },
+    "groups": {
+      "idealStay": {
+        "title": "Ideal per a la teva estada"
+      },
+      "parking": {
+        "title": "Aparcament",
+        "description": "Hi ha aparcament privat gratuït a l'establiment. No cal reservar."
+      },
+      "internet": {
+        "title": "Internet",
+        "description": "Hi ha connexió Wi-Fi a tot l'establiment. Gratuïta."
+      },
+      "kitchen": {
+        "title": "Cuina"
+      },
+      "bedroom": {
+        "title": "Habitació"
+      },
+      "bathroom": {
+        "title": "Bany"
+      },
+      "livingArea": {
+        "title": "Zona d'estar"
+      },
+      "mediaAndTechnology": {
+        "title": "Equipament audiovisual i tecnològic"
+      },
+      "roomAmenities": {
+        "title": "Instal·lacions de l'habitació"
+      },
+      "outdoors": {
+        "title": "Exteriors"
+      },
+      "outdoorPool": {
+        "title": "Piscina exterior"
+      },
+      "activities": {
+        "title": "Activitats"
+      },
+      "views": {
+        "title": "Vistes i exteriors"
+      },
+      "buildingCharacteristics": {
+        "title": "Característiques de l'edifici"
+      },
+      "miscellaneous": {
+        "title": "Altres"
+      },
+      "spokenLanguages": {
+        "title": "Idiomes que es parlen"
+      }
+    },
+    "items": {
+      "parking": "Aparcament",
+      "privateBathroom": "Bany privat",
+      "freeParking": "Aparcament gratuït",
+      "airConditioning": "Aire condicionat",
+      "freeWifi": "WiFi gratuït",
+      "kitchen": "Cuina",
+      "terrace": "Terrassa",
+      "flatScreenTv": "TV de pantalla plana",
+      "washingMachine": "Rentadora",
+      "outdoorPool": "Piscina exterior",
+      "diningTable": "Taula de menjador",
+      "coffeeMachine": "Cafetera",
+      "toaster": "Torradora",
+      "oven": "Forn",
+      "kitchenware": "Estris de cuina",
+      "dishwasher": "Rentaplats",
+      "microwave": "Microones",
+      "fridge": "Nevera",
+      "kitchenette": "Zona de cuina",
+      "linen": "Roba de llit",
+      "towels": "Tovalloles",
+      "shower": "Dutxa",
+      "diningArea": "Zona de menjador",
+      "seatingArea": "Zona d'estar",
+      "sofaBed": "Sofà llit",
+      "privateEntrance": "Entrada privada",
+      "iron": "Planxa",
+      "sunTerrace": "Terrassa / solàrium",
+      "privatePool": "Piscina privada",
+      "seasonal": "De temporada",
+      "bikeTours": "Tours en bicicleta",
+      "walkingTours": "Tours a peu",
+      "cycling": "Ciclisme",
+      "hiking": "Senderisme",
+      "fishing": "Pesca",
+      "poolView": "Vistes a la piscina",
+      "gardenView": "Vistes al jardí",
+      "detached": "Independent",
+      "noSmoking": "Prohibit fumar a tot l'allotjament",
+      "heating": "Calefacció",
+      "catalan": "Català",
+      "german": "Alemany",
+      "english": "Anglès",
+      "spanish": "Espanyol",
+      "french": "Francès",
+      "italian": "Italià"
     }
   },
   "contact": {
