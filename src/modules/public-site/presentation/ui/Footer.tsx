@@ -10,7 +10,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-[#393E46] bg-[#222831] text-[#EEEEEE]">
-      <div className="mx-auto max-w-5xl px-4 py-10">
+      <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-3">
             <div className="font-semibold text-[#EEEEEE]">{t("title")}</div>

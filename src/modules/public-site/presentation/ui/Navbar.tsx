@@ -72,7 +72,7 @@ export default function Navbar() {
               : "bg-gradient-to-b from-black/60 to-transparent",
         )}
       />
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-7xl px-4">
         <nav
           className={cx(
             "flex items-center justify-between",
