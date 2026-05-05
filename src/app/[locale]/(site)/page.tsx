@@ -11,6 +11,7 @@ import {
   buildVacationRentalJsonLd,
   buildWebsiteJsonLd,
 } from "@/modules/seo/application/structured-data";
+import Banner3 from "@/modules/public-site/presentation/ui/Banner3";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -37,6 +38,7 @@ export default async function HomePage({ params }: Props) {
       <CalendarSection />
       <Banner1 />
       <GallerySection />
+      <Banner3 />
       <ServicesSection />
       <Banner2 />
       <ContactSection />

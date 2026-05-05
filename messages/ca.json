@@ -315,6 +315,9 @@
   "banner2": {
     "ariaLabel": "Paisatge del delta"
   },
+  "banner3": {
+    "ariaLabel": "Paisatge del Delta de l'Ebre"
+  },
   "seo": {
     "locationShort": "Delta de l'Ebre",
     "locationFull": "Terres de l'Ebre, Tarragona, Catalunya",
