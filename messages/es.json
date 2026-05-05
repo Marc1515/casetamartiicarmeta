@@ -10,6 +10,7 @@
     "home": "Inicio",
     "calendario": "Calendario",
     "fotos": "Galería",
+    "servicios": "Servicios",
     "contacto": "Contacto",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
@@ -26,6 +27,7 @@
       "home": "Inicio",
       "calendario": "Calendario",
       "fotos": "Galería",
+      "servicios": "Servicios",
       "contacto": "Contacto"
     },
     "copyright": "© {year} Caseta Martí i Carmeta"
@@ -184,6 +186,119 @@
       }
     }
   },
+  "services": {
+    "title": "Servicios de Casa Martí i Carmeta",
+    "lead": "¡Buenos servicios! Puntuación: 8,8",
+    "popularTitle": "Servicios más populares",
+    "badge": {
+      "free": "¡Gratis!"
+    },
+    "popular": {
+      "outdoorPool": "Piscina al aire libre",
+      "freeParking": "Parking gratis",
+      "freeWifi": "WiFi gratis"
+    },
+    "groups": {
+      "idealStay": {
+        "title": "Ideal para tu estancia"
+      },
+      "parking": {
+        "title": "Aparcamiento",
+        "description": "Hay parking gratis privado en el establecimiento. No es necesario reservar."
+      },
+      "internet": {
+        "title": "Internet",
+        "description": "Hay conexión a internet Wi-Fi disponible en todo el establecimiento. Gratis."
+      },
+      "kitchen": {
+        "title": "Cocina"
+      },
+      "bedroom": {
+        "title": "Habitación"
+      },
+      "bathroom": {
+        "title": "Baño"
+      },
+      "livingArea": {
+        "title": "Zona de estar"
+      },
+      "mediaAndTechnology": {
+        "title": "Equipamiento audiovisual y tecnológico"
+      },
+      "roomAmenities": {
+        "title": "Instalaciones de la habitación"
+      },
+      "outdoors": {
+        "title": "Exteriores"
+      },
+      "outdoorPool": {
+        "title": "Piscina al aire libre"
+      },
+      "activities": {
+        "title": "Actividades"
+      },
+      "views": {
+        "title": "Vistas y exteriores"
+      },
+      "buildingCharacteristics": {
+        "title": "Características del edificio"
+      },
+      "miscellaneous": {
+        "title": "Varios"
+      },
+      "spokenLanguages": {
+        "title": "Idiomas que se hablan"
+      }
+    },
+    "items": {
+      "parking": "Parking",
+      "privateBathroom": "Baño privado",
+      "freeParking": "Parking gratis",
+      "airConditioning": "Aire acondicionado",
+      "freeWifi": "WiFi gratis",
+      "kitchen": "Cocina",
+      "terrace": "Terraza",
+      "flatScreenTv": "TV de pantalla plana",
+      "washingMachine": "Lavadora",
+      "outdoorPool": "Piscina al aire libre",
+      "diningTable": "Mesa de comedor",
+      "coffeeMachine": "Cafetera",
+      "toaster": "Tostadora",
+      "oven": "Horno",
+      "kitchenware": "Utensilios de cocina",
+      "dishwasher": "Lavavajillas",
+      "microwave": "Microondas",
+      "fridge": "Nevera",
+      "kitchenette": "Zona de cocina",
+      "linen": "Ropa de cama",
+      "towels": "Toallas",
+      "shower": "Ducha",
+      "diningArea": "Zona de comedor",
+      "seatingArea": "Zona de estar",
+      "sofaBed": "Sofá cama",
+      "privateEntrance": "Entrada privada",
+      "iron": "Plancha para ropa",
+      "sunTerrace": "Terraza / solárium",
+      "privatePool": "Piscina privada",
+      "seasonal": "De temporada",
+      "bikeTours": "Tours en bici",
+      "walkingTours": "Tours a pie",
+      "cycling": "Ciclismo",
+      "hiking": "Senderismo",
+      "fishing": "Pesca",
+      "poolView": "Vistas a la piscina",
+      "gardenView": "Vistas al jardín",
+      "detached": "Independiente",
+      "noSmoking": "Prohibido fumar en todo el alojamiento",
+      "heating": "Calefacción",
+      "catalan": "Catalán",
+      "german": "Alemán",
+      "english": "Inglés",
+      "spanish": "Español",
+      "french": "Francés",
+      "italian": "Italiano"
+    }
+  },
   "contact": {
     "title": "Contacto",
     "lead": "¿Quieres reservar tu estancia en la caseta? Escríbenos y te responderemos lo antes posible.\n\nPuedes contactarnos por WhatsApp, teléfono o correo electrónico.\n\nTambién te ayudamos con indicaciones para llegar, ideas para descubrir el Delta del Ebro y recomendaciones locales para tu viaje.",
@@ -199,6 +314,9 @@
   },
   "banner2": {
     "ariaLabel": "Paisaje del delta"
+  },
+  "banner3": {
+    "ariaLabel": "Paisaje del Delta del Ebro"
   },
   "seo": {
     "locationShort": "Delta del Ebro",

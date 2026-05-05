@@ -3,6 +3,7 @@ import CalendarSection from "@/modules/public-site/presentation/ui/CalendarSecti
 import Banner1 from "@/modules/public-site/presentation/ui/Banner1";
 import Banner2 from "@/modules/public-site/presentation/ui/Banner2";
 import GallerySection from "@/modules/public-site/presentation/ui/GallerySection";
+import ServicesSection from "@/modules/public-site/presentation/ui/ServicesSection";
 import ContactSection from "@/modules/public-site/presentation/ui/ContactSection";
 import JsonLd from "@/modules/seo/presentation/components/JsonLd";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -10,6 +11,7 @@ import {
   buildVacationRentalJsonLd,
   buildWebsiteJsonLd,
 } from "@/modules/seo/application/structured-data";
+import Banner3 from "@/modules/public-site/presentation/ui/Banner3";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -36,6 +38,8 @@ export default async function HomePage({ params }: Props) {
       <CalendarSection />
       <Banner1 />
       <GallerySection />
+      <Banner3 />
+      <ServicesSection />
       <Banner2 />
       <ContactSection />
     </main>

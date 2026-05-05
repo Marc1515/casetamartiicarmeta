@@ -10,6 +10,7 @@
     "home": "Home",
     "calendario": "Calendar",
     "fotos": "Gallery",
+    "servicios": "Services",
     "contacto": "Contact",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
@@ -26,6 +27,7 @@
       "home": "Home",
       "calendario": "Calendar",
       "fotos": "Gallery",
+      "servicios": "Services",
       "contacto": "Contact"
     },
     "copyright": "© {year} Caseta Martí i Carmeta"
@@ -185,6 +187,119 @@
       }
     }
   },
+  "services": {
+    "title": "Services at Casa Martí i Carmeta",
+    "lead": "Great facilities! Rating: 8.8",
+    "popularTitle": "Most popular facilities",
+    "badge": {
+      "free": "Free!"
+    },
+    "popular": {
+      "outdoorPool": "Outdoor pool",
+      "freeParking": "Free parking",
+      "freeWifi": "Free WiFi"
+    },
+    "groups": {
+      "idealStay": {
+        "title": "Perfect for your stay"
+      },
+      "parking": {
+        "title": "Parking",
+        "description": "Free private parking is available on site. Reservation is not needed."
+      },
+      "internet": {
+        "title": "Internet",
+        "description": "Wi-Fi is available throughout the property. Free of charge."
+      },
+      "kitchen": {
+        "title": "Kitchen"
+      },
+      "bedroom": {
+        "title": "Bedroom"
+      },
+      "bathroom": {
+        "title": "Bathroom"
+      },
+      "livingArea": {
+        "title": "Living area"
+      },
+      "mediaAndTechnology": {
+        "title": "Media and technology"
+      },
+      "roomAmenities": {
+        "title": "Room facilities"
+      },
+      "outdoors": {
+        "title": "Outdoors"
+      },
+      "outdoorPool": {
+        "title": "Outdoor pool"
+      },
+      "activities": {
+        "title": "Activities"
+      },
+      "views": {
+        "title": "Views and outdoors"
+      },
+      "buildingCharacteristics": {
+        "title": "Building features"
+      },
+      "miscellaneous": {
+        "title": "Miscellaneous"
+      },
+      "spokenLanguages": {
+        "title": "Languages spoken"
+      }
+    },
+    "items": {
+      "parking": "Parking",
+      "privateBathroom": "Private bathroom",
+      "freeParking": "Free parking",
+      "airConditioning": "Air conditioning",
+      "freeWifi": "Free WiFi",
+      "kitchen": "Kitchen",
+      "terrace": "Terrace",
+      "flatScreenTv": "Flat-screen TV",
+      "washingMachine": "Washing machine",
+      "outdoorPool": "Outdoor pool",
+      "diningTable": "Dining table",
+      "coffeeMachine": "Coffee machine",
+      "toaster": "Toaster",
+      "oven": "Oven",
+      "kitchenware": "Kitchenware",
+      "dishwasher": "Dishwasher",
+      "microwave": "Microwave",
+      "fridge": "Refrigerator",
+      "kitchenette": "Kitchenette",
+      "linen": "Bed linen",
+      "towels": "Towels",
+      "shower": "Shower",
+      "diningArea": "Dining area",
+      "seatingArea": "Seating area",
+      "sofaBed": "Sofa bed",
+      "privateEntrance": "Private entrance",
+      "iron": "Iron",
+      "sunTerrace": "Sun terrace / solarium",
+      "privatePool": "Private pool",
+      "seasonal": "Seasonal",
+      "bikeTours": "Bike tours",
+      "walkingTours": "Walking tours",
+      "cycling": "Cycling",
+      "hiking": "Hiking",
+      "fishing": "Fishing",
+      "poolView": "Pool view",
+      "gardenView": "Garden view",
+      "detached": "Detached",
+      "noSmoking": "No smoking throughout the property",
+      "heating": "Heating",
+      "catalan": "Catalan",
+      "german": "German",
+      "english": "English",
+      "spanish": "Spanish",
+      "french": "French",
+      "italian": "Italian"
+    }
+  },
   "contact": {
     "title": "Contact",
     "lead": "Want to book your stay? Get in touch and we will reply as soon as possible.\n\nYou can contact us by WhatsApp, phone or email.\n\nWe can also help with directions, local tips around the Ebro Delta and practical details for your trip.",
@@ -200,6 +315,9 @@
   },
   "banner2": {
     "ariaLabel": "Delta landscape"
+  },
+  "banner3": {
+    "ariaLabel": "Ebro Delta landscape"
   },
   "seo": {
     "locationShort": "Ebro Delta",
