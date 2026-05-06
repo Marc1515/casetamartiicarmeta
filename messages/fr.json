@@ -301,7 +301,7 @@
   },
   "contact": {
     "title": "Contact",
-    "lead": "Vous souhaitez reserver votre sejour ? Ecrivez-nous et nous vous repondrons rapidement.\n\nVous pouvez nous contacter par WhatsApp, telephone ou e-mail.\n\nNous pouvons aussi vous aider avec l'itineraire, des conseils autour du Delta de l'Ebre et les details utiles pour votre voyage.",
+    "lead": "Vous souhaitez reserver votre sejour ? Ecrivez-nous et nous vous repondrons rapidement.",
     "hint": "Indiquez les dates et le nombre de personnes, nous vous répondrons rapidement.",
     "emailLabel": "Envoyer un e-mail",
     "whatsapp": "WhatsApp",
