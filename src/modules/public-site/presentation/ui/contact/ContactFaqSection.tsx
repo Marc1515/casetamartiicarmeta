@@ -8,10 +8,10 @@ export default function ContactFaqSection() {
   const t = useTranslations("contact.faqs");
 
   return (
-    <div className="mt-14">
-      <div className="mb-6 flex items-start gap-3">
+    <div className="mt-20">
+      <div className="mb-12 flex items-start gap-3">
         <div>
-          <h3 className="text-2xl font-semibold tracking-tight text-[#393E46] md:text-3xl">
+          <h3 className="mb-6 text-2xl font-semibold tracking-tight text-[#393E46] md:text-3xl">
             {t("title")}
           </h3>
 
@@ -25,7 +25,7 @@ export default function ContactFaqSection() {
         {CONTACT_FAQS.map((faq) => (
           <details
             key={faq.id}
-            className="group rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm transition hover:shadow-md"
+            className="group rounded-2xl border border-black/10 bg-[#EEEEEE] p-5 shadow-sm transition hover:shadow-md"
           >
             <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left">
               <span className="font-semibold leading-snug text-[#393E46]">
