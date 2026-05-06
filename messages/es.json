@@ -301,13 +301,63 @@
   },
   "contact": {
     "title": "Contacto",
-    "lead": "¿Quieres reservar tu estancia en la caseta? Escríbenos y te responderemos lo antes posible.\n\nPuedes contactarnos por WhatsApp, teléfono o correo electrónico.\n\nTambién te ayudamos con indicaciones para llegar, ideas para descubrir el Delta del Ebro y recomendaciones locales para tu viaje.",
+    "lead": "¿Quieres reservar tu estancia en la caseta? Escríbenos y te responderemos lo antes posible.",
     "hint": "Indica fechas y número de personas, te responderemos pronto.",
     "emailLabel": "Escribir email",
     "whatsapp": "WhatsApp",
     "directions": "Cómo llegar",
     "mapTitle": "Ubicación Caseta Martí i Carmeta",
-    "mapCaption": "Mapa orientativo de la zona de la caseta."
+    "mapCaption": "Mapa orientativo de la zona de la caseta.",
+    "faqs": {
+      "title": "Preguntas frecuentes sobre Casa Martí i Carmeta",
+      "lead": "Resolvemos algunas dudas habituales antes de reservar. Si necesitas más información, puedes escribirnos por WhatsApp, teléfono o correo electrónico.",
+      "capacity": {
+        "question": "¿Cuántas personas pueden dormir en Casa Martí i Carmeta?",
+        "answer": "En Casa Martí i Carmeta puede alojarse un grupo de:",
+        "items": ["5 personas"]
+      },
+      "bedrooms": {
+        "question": "¿Cuántos dormitorios tiene Casa Martí i Carmeta?",
+        "answer": "Casa Martí i Carmeta dispone de:",
+        "items": ["2 dormitorios"]
+      },
+      "privatePool": {
+        "question": "¿Hay piscina privada en Casa Martí i Carmeta?",
+        "answer": "Sí, la casa cuenta con piscina privada de temporada, ideal para relajarse durante la estancia."
+      },
+      "price": {
+        "question": "¿Cuánto cuesta alojarse en Casa Martí i Carmeta?",
+        "answer": "El precio puede variar según las fechas, la duración de la estancia y la temporada. Escríbenos con tus fechas y te confirmaremos la disponibilidad y el precio."
+      },
+      "activities": {
+        "question": "¿Qué se puede hacer cerca de Casa Martí i Carmeta?",
+        "answer": "La zona es ideal para disfrutar del entorno natural del Delta del Ebro. Algunas actividades habituales son:",
+        "items": [
+          "Ciclismo",
+          "Senderismo",
+          "Pesca",
+          "Tours a pie",
+          "Piscina",
+          "Tours en bici"
+        ]
+      },
+      "terrace": {
+        "question": "¿Casa Martí i Carmeta tiene terraza?",
+        "answer": "Sí, la casa dispone de terraza y zonas exteriores para comer al aire libre, descansar y disfrutar del entorno."
+      },
+      "checkInOut": {
+        "question": "¿Cuál es el horario de entrada y salida?",
+        "answer": "La entrada se puede realizar a partir de las 12:00 y la salida hasta las 10:00. Si necesitas otro horario, consúltanos y veremos si es posible."
+      },
+      "distanceToCenter": {
+        "question": "¿A qué distancia está Casa Martí i Carmeta del centro de Deltebre?",
+        "answer": "Casa Martí i Carmeta está aproximadamente a 3,7 km del centro de Deltebre."
+      },
+      "families": {
+        "question": "¿Casa Martí i Carmeta es adecuada para familias?",
+        "answer": "Sí, la casa suele gustar mucho a familias que buscan tranquilidad, espacio exterior y una estancia cerca del Delta del Ebro."
+      }
+    }
   },
   "banner1": {
     "ariaLabel": "Jardín de la caseta"
