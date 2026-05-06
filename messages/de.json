@@ -307,7 +307,57 @@
     "whatsapp": "WhatsApp",
     "directions": "Anreise",
     "mapTitle": "Lage der Caseta Marti i Carmeta",
-    "mapCaption": "Karte der Umgebung der Caseta."
+    "mapCaption": "Karte der Umgebung der Caseta.",
+    "faqs": {
+      "title": "Haufige Fragen zu Casa Martí i Carmeta",
+      "lead": "Hier beantworten wir einige haufige Fragen vor der Buchung. Wenn Sie weitere Informationen brauchen, schreiben Sie uns per WhatsApp, Telefon oder E-Mail.",
+      "capacity": {
+        "question": "Wie viele Personen konnen in Casa Martí i Carmeta schlafen?",
+        "answer": "In Casa Martí i Carmeta kann eine Gruppe von folgenden Personen unterkommen:",
+        "items": ["5 Personen"]
+      },
+      "bedrooms": {
+        "question": "Wie viele Schlafzimmer hat Casa Martí i Carmeta?",
+        "answer": "Casa Martí i Carmeta verfugt uber:",
+        "items": ["2 Schlafzimmer"]
+      },
+      "privatePool": {
+        "question": "Gibt es in Casa Martí i Carmeta einen privaten Pool?",
+        "answer": "Ja, das Haus verfugt uber einen saisonalen privaten Pool, ideal zum Entspannen wahrend des Aufenthalts."
+      },
+      "price": {
+        "question": "Wie viel kostet ein Aufenthalt in Casa Martí i Carmeta?",
+        "answer": "Der Preis kann je nach Datum, Aufenthaltsdauer und Saison variieren. Schreiben Sie uns Ihre Daten, und wir bestatigen Verfugbarkeit und Preis."
+      },
+      "activities": {
+        "question": "Was kann man in der Nahe von Casa Martí i Carmeta unternehmen?",
+        "answer": "Die Gegend ist ideal, um die Natur des Ebro-Deltas zu genießen. Typische Aktivitäten sind:",
+        "items": [
+          "Radfahren",
+          "Wandern",
+          "Angeln",
+          "Fußtouren",
+          "Pool",
+          "Fahrradtouren"
+        ]
+      },
+      "terrace": {
+        "question": "Hat Casa Martí i Carmeta eine Terrasse?",
+        "answer": "Ja, das Haus verfügt über eine Terrasse und Außenbereiche zum Essen im Freien, Entspannen und Genießen der Umgebung."
+      },
+      "checkInOut": {
+        "question": "Wie sind die Check-in- und Check-out-Zeiten?",
+        "answer": "Der Check-in ist ab 12:00 moglich und der Check-out bis 10:00. Wenn Sie andere Zeiten brauchen, fragen Sie uns, und wir prufen, ob es moglich ist."
+      },
+      "distanceToCenter": {
+        "question": "Wie weit ist Casa Martí i Carmeta vom Zentrum von Deltebre entfernt?",
+        "answer": "Casa Martí i Carmeta liegt etwa 3,7 km vom Zentrum von Deltebre entfernt."
+      },
+      "families": {
+        "question": "Ist Casa Martí i Carmeta fur Familien geeignet?",
+        "answer": "Ja, Familien, die Ruhe, AuBenbereich und einen Aufenthalt nahe dem Ebro-Delta suchen, sind in der Regel sehr zufrieden."
+      }
+    }
   },
   "banner1": {
     "ariaLabel": "Garten der Caseta"

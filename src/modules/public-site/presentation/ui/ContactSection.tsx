@@ -15,6 +15,7 @@ import {
   getContactSectionPhoneHref,
   getContactSectionWhatsappHref,
 } from "@/modules/public-site/application/contact-section";
+import ContactFaqSection from "./contact/ContactFaqSection";
 
 export default function ContactSection() {
   const t = useTranslations("contact");
@@ -138,6 +139,7 @@ export default function ContactSection() {
           </div>
         </ScrollReveal>
       </div>
+      <ContactFaqSection />
     </Section>
   );
 }
