@@ -68,9 +68,9 @@ export default function ServicesSection() {
       titleClassName="text-3xl md:text-5xl text-[#222831]"
       leadClassName="text-sm md:text-base text-[#393E46]"
     >
-      <div className="space-y-12 text-[#222831]">
-        <div>
-          <h3 className="mb-5 text-lg font-semibold">{t("popularTitle")}</h3>
+      <div className="mt-8 rounded-2xl border bg-[#EEEEEE] p-5 text-sm leading-7 text-[#393E46] shadow-sm md:p-6 md:text-base">
+        <div className="mb-8">
+          <h3 className="mb-4 text-lg font-semibold">{t("popularTitle")}</h3>
 
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-sm">
             {popularServices.map((service) => {
