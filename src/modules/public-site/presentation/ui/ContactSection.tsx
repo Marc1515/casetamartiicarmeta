@@ -58,107 +58,104 @@ export default function ContactSection() {
                       className="absolute inset-0 h-full w-full border-0"
                     />
                   </div>
-
-                  <p
-                    id="map-description"
-                    className="px-3 py-2 text-sm text-muted-foreground"
-                  >
-                    {t("mapCaption")}
-                  </p>
                 </div>
               </ScrollReveal>
             </div>
           </ScrollReveal>
         </div>
 
-        <div className="min-w-0 xl:col-span-1">
-          <ScrollReveal delay={0.15}>
-            <div className="h-full rounded-lg border overflow-hidden">
-              <ScrollReveal className="min-w-0 xl:col-span-2">
-                <div className="h-full space-y-1 text-sm md:text-base">
-                  <p className="flex items-center gap-2">
-                    <Phone
-                      className="h-5 w-5 text-muted-foreground"
-                      aria-hidden
-                    />
-                    <a
-                      href={phoneHref}
-                      className="hover:underline underline-offset-2"
-                    >
-                      {phone}
-                    </a>
-                  </p>
+        <div className="h-full min-w-0 xl:col-span-1">
+          <div className="h-full rounded-2xl border bg-[#EEEEEE] p-5 text-sm leading-7 text-[#393E46] shadow-sm md:p-6 md:text-base">
+            <ScrollReveal delay={0.15} className="h-full ">
+              <div className="flex h-full flex-col overflow-hidden">
+                <ScrollReveal className="h-full min-w-0 xl:col-span-2">
+                  <div className="flex h-full min-h-[260px] flex-col justify-between gap-4 text-sm md:text-base">
+                    <div className="space-y-4">
+                      <p className="flex items-center gap-2">
+                        <Phone
+                          className="h-5 w-5 text-muted-foreground"
+                          aria-hidden
+                        />
+                        <a
+                          href={phoneHref}
+                          className="hover:underline underline-offset-2"
+                        >
+                          {phone}
+                        </a>
+                      </p>
 
-                  <p className="flex items-center gap-2">
-                    <Mail
-                      className="h-5 w-5 text-muted-foreground"
-                      aria-hidden
-                    />
-                    <a
-                      href={`mailto:${email}`}
-                      className="hover:underline underline-offset-2"
-                    >
-                      {email}
-                    </a>
-                  </p>
+                      <p className="flex items-center gap-2">
+                        <Mail
+                          className="h-5 w-5 text-muted-foreground"
+                          aria-hidden
+                        />
+                        <a
+                          href={`mailto:${email}`}
+                          className="hover:underline underline-offset-2"
+                        >
+                          {email}
+                        </a>
+                      </p>
+                    </div>
 
-                  <p className="text-muted-foreground py-3">{t("hint")}</p>
+                    <p className="text-muted-foreground">{t("hint")}</p>
 
-                  <div className="mt-3 flex flex-wrap gap-6 pb-3">
-                    <Button
-                      asChild
-                      size="icon"
-                      className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
-                      title={t("emailLabel")}
-                      aria-label={t("emailLabel")}
-                    >
-                      <a
-                        href={gmailComposeHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <div className="flex flex-wrap gap-6">
+                      <Button
+                        asChild
+                        size="icon"
+                        className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        title={t("emailLabel")}
+                        aria-label={t("emailLabel")}
                       >
-                        <Icon icon="logos:google-gmail" />
-                        <span className="sr-only">{t("emailLabel")}</span>
-                      </a>
-                    </Button>
+                        <a
+                          href={gmailComposeHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon icon="logos:google-gmail" />
+                          <span className="sr-only">{t("emailLabel")}</span>
+                        </a>
+                      </Button>
 
-                    <Button
-                      asChild
-                      size="icon"
-                      variant="secondary"
-                      className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
-                      title={t("whatsapp")}
-                      aria-label={t("whatsapp")}
-                    >
-                      <a
-                        href={whatsappHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Button
+                        asChild
+                        size="icon"
+                        variant="secondary"
+                        className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        title={t("whatsapp")}
+                        aria-label={t("whatsapp")}
                       >
-                        <Icon icon="logos:whatsapp-icon" />
-                        <span className="sr-only">{t("whatsapp")}</span>
-                      </a>
-                    </Button>
+                        <a
+                          href={whatsappHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon icon="logos:whatsapp-icon" />
+                          <span className="sr-only">{t("whatsapp")}</span>
+                        </a>
+                      </Button>
 
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="rounded-full"
-                      title={t("directions")}
-                    >
-                      <a
-                        href={directionsHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="rounded-full"
+                        title={t("directions")}
                       >
-                        {t("directions")}
-                      </a>
-                    </Button>
+                        <a
+                          href={directionsHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {t("directions")}
+                        </a>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </ScrollReveal>
+                </ScrollReveal>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </div>
 
