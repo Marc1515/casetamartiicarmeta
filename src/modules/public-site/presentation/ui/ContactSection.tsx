@@ -69,7 +69,8 @@ export default function ContactSection() {
             <ScrollReveal delay={0.15} className="h-full ">
               <div className="flex h-full flex-col overflow-hidden">
                 <ScrollReveal className="h-full min-w-0 xl:col-span-2">
-                  <div className="flex h-full min-h-[260px] flex-col justify-between gap-4 text-sm md:text-base">
+                  <div className="flex h-full min-h-[260px] flex-col justify-between text-sm md:text-base">
+                    <p className="text-muted-foreground">{t("hint")}</p>
                     <div className="space-y-4">
                       <p className="flex items-center gap-2">
                         <Phone
@@ -98,9 +99,22 @@ export default function ContactSection() {
                       </p>
                     </div>
 
-                    <p className="text-muted-foreground">{t("hint")}</p>
-
                     <div className="flex flex-wrap gap-6">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="rounded-full"
+                        title={t("directions")}
+                      >
+                        <a
+                          href={directionsHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {t("directions")}
+                        </a>
+                      </Button>
+
                       <Button
                         asChild
                         size="icon"
@@ -133,21 +147,6 @@ export default function ContactSection() {
                         >
                           <Icon icon="logos:whatsapp-icon" />
                           <span className="sr-only">{t("whatsapp")}</span>
-                        </a>
-                      </Button>
-
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="rounded-full"
-                        title={t("directions")}
-                      >
-                        <a
-                          href={directionsHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {t("directions")}
                         </a>
                       </Button>
                     </div>
