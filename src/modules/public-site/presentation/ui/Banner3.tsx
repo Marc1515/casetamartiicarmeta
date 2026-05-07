@@ -14,7 +14,7 @@ export default function Banner3() {
       className="relative w-full min-h-screen"
     >
       {/* Imagen de fondo fija a pantalla completa */}
-      <div className="absolute inset-0 bg-[url('/img/deltaLandscape2.png')] bg-cover bg-center bg-fixed" />
+      <div className="absolute inset-0 bg-[url('/img/delta_small_devices.jpg')] bg-cover bg-center bg-fixed lg:bg-[url('/img/deltaLandscape2.png')]" />
 
       {/* Capa que aparece al hacer scroll */}
       <ScrollReveal className="relative z-10 flex min-h-screen w-full items-center justify-center bg-black/20">
