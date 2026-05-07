@@ -121,8 +121,11 @@ export function useNavbarScrollState({
             const thresholdY = window.scrollY + navigationHeight + 1;
             let nextActive = sections[0]?.id;
 
+            // Use absolute Y from getBoundingClientRect for robust section tracking
+            // even when layout/transform changes make offsetTop unreliable.
             for (const element of sections) {
-                if (element.offsetTop <= thresholdY) {
+                const elementTop = window.scrollY + element.getBoundingClientRect().top;
+                if (elementTop <= thresholdY) {
                     nextActive = element.id;
                     continue;
                 }

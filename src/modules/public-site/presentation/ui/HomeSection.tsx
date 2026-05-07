@@ -42,12 +42,20 @@ export default function HomeSection() {
             style={prefersReduced ? undefined : { y: yBg }}
           >
             <Image
+              src="/img/home-main-img-small-devices.jpg"
+              alt={heroImageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover scale-105 lg:hidden"
+            />
+            <Image
               src="/img/housebetter.png"
               alt={heroImageAlt}
               fill
               priority
               sizes="100vw"
-              className="object-cover scale-105"
+              className="hidden object-cover scale-105 lg:block"
             />
           </motion.div>
 
