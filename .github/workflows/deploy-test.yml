@@ -3,7 +3,7 @@ name: Deploy test
 on:
   push:
     branches:
-      - integration/public-site
+      - dev
 
 jobs:
   deploy:
@@ -14,6 +14,6 @@ jobs:
         run: |
           cd ~/apps/casetamartiicarmeta-test
           git fetch origin
-          git checkout integration/public-site
-          git pull origin integration/public-site
+          git checkout dev
+          git pull origin dev
           docker compose -f docker-compose.test.yml up -d --build
