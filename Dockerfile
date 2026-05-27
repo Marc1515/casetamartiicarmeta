@@ -25,6 +25,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
+RUN npm install -g prisma@6.15.0
+
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
@@ -38,4 +40,4 @@ USER nextjs
 
 EXPOSE 3000
 
-CMD ["sh", "-lc", "npx prisma migrate deploy && node server.js"]
+CMD ["sh", "-lc", "prisma migrate deploy && node server.js"]
