@@ -10,6 +10,7 @@ services:
     env_file:
       - .env.development
     networks:
+      - casetamartiicarmeta-test_backend
       - traefik-proxy
     labels:
       - traefik.enable=true
@@ -27,5 +28,7 @@ services:
       - traefik.http.middlewares.casetamartiicarmeta-dev-redirect.redirectscheme.scheme=https
 
 networks:
+  casetamartiicarmeta-test_backend:
+    external: true
   traefik-proxy:
     external: true
