@@ -12,7 +12,6 @@ import type {
 import {
   Bike,
   Building,
-  Car,
   Check,
   CookingPot,
   Languages,
