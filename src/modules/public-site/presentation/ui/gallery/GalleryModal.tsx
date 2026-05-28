@@ -53,6 +53,7 @@ export default function GalleryModal({
   const isThumbnailDraggingRef = useRef(false);
   const hasThumbnailDraggedRef = useRef(false);
   const thumbnailInertiaFrameRef = useRef<number | null>(null);
+  const pendingThumbnailIndexRef = useRef<number | null>(null);
 
   function handleMainImagePointerDown(event: PointerEvent<HTMLDivElement>) {
     pointerStartXRef.current = event.clientX;
@@ -131,6 +132,36 @@ export default function GalleryModal({
     thumbnailInertiaFrameRef.current = window.requestAnimationFrame(animate);
   }
 
+  function getThumbnailIndexFromEvent(
+    event: PointerEvent<HTMLDivElement>,
+  ): number | null {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) {
+      return null;
+    }
+
+    const thumbnailButton = target.closest("[data-gallery-thumbnail-index]");
+
+    if (!(thumbnailButton instanceof HTMLButtonElement)) {
+      return null;
+    }
+
+    const rawIndex = thumbnailButton.dataset.galleryThumbnailIndex;
+
+    if (!rawIndex) {
+      return null;
+    }
+
+    const parsedIndex = Number(rawIndex);
+
+    if (!Number.isInteger(parsedIndex)) {
+      return null;
+    }
+
+    return parsedIndex;
+  }
+
   function handleThumbnailPointerDown(event: PointerEvent<HTMLDivElement>) {
     const stripElement = stripRef.current;
 
@@ -146,6 +177,7 @@ export default function GalleryModal({
     thumbnailDragVelocityRef.current = 0;
     isThumbnailDraggingRef.current = true;
     hasThumbnailDraggedRef.current = false;
+    pendingThumbnailIndexRef.current = getThumbnailIndexFromEvent(event);
 
     stripElement.setPointerCapture(event.pointerId);
   }
@@ -201,8 +233,16 @@ export default function GalleryModal({
     thumbnailDragLastTimeRef.current = null;
     isThumbnailDraggingRef.current = false;
 
+    const pendingThumbnailIndex = pendingThumbnailIndexRef.current;
+    pendingThumbnailIndexRef.current = null;
+
     if (hasThumbnailDraggedRef.current) {
       startThumbnailInertia();
+      return;
+    }
+
+    if (pendingThumbnailIndex !== null) {
+      onSelect(pendingThumbnailIndex);
     }
   }
 
@@ -218,20 +258,9 @@ export default function GalleryModal({
     thumbnailDragLastTimeRef.current = null;
     thumbnailDragVelocityRef.current = 0;
     isThumbnailDraggingRef.current = false;
+    pendingThumbnailIndexRef.current = null;
   }
 
-  function handleThumbnailButtonPointerUp(
-    event: PointerEvent<HTMLButtonElement>,
-    selectedIndex: number,
-  ) {
-    if (hasThumbnailDraggedRef.current) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-
-    onSelect(selectedIndex);
-  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl overflow-hidden bg-background p-0">
@@ -300,12 +329,7 @@ export default function GalleryModal({
                   key={src}
                   ref={isActive ? activeThumbRef : null}
                   type="button"
-                  onPointerUp={(event) =>
-                    handleThumbnailButtonPointerUp(event, i)
-                  }
-                  onClick={(event) => {
-                    event.preventDefault();
-                  }}
+                  data-gallery-thumbnail-index={i}
                   aria-label={`Ver foto ${i + 1}`}
                   className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
                     isActive
