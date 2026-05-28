@@ -40,6 +40,10 @@ export default function GalleryModal({
 }: GalleryModalProps) {
   const pointerStartXRef = useRef<number | null>(null);
   const pointerStartYRef = useRef<number | null>(null);
+  const thumbnailDragStartXRef = useRef<number | null>(null);
+  const thumbnailDragScrollLeftRef = useRef<number>(0);
+  const isThumbnailDraggingRef = useRef(false);
+  const hasThumbnailDraggedRef = useRef(false);
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
     pointerStartXRef.current = event.clientX;
@@ -73,6 +77,60 @@ export default function GalleryModal({
     }
 
     onPrev();
+  }
+
+  function handleThumbnailPointerDown(event: PointerEvent<HTMLDivElement>) {
+    const stripElement = stripRef.current;
+
+    if (!stripElement) {
+      return;
+    }
+
+    thumbnailDragStartXRef.current = event.clientX;
+    thumbnailDragScrollLeftRef.current = stripElement.scrollLeft;
+    isThumbnailDraggingRef.current = true;
+    hasThumbnailDraggedRef.current = false;
+
+    stripElement.setPointerCapture(event.pointerId);
+  }
+
+  function handleThumbnailPointerMove(event: PointerEvent<HTMLDivElement>) {
+    const stripElement = stripRef.current;
+    const startX = thumbnailDragStartXRef.current;
+
+    if (!stripElement || startX === null || !isThumbnailDraggingRef.current) {
+      return;
+    }
+
+    const deltaX = event.clientX - startX;
+
+    if (Math.abs(deltaX) > 4) {
+      hasThumbnailDraggedRef.current = true;
+    }
+
+    stripElement.scrollLeft = thumbnailDragScrollLeftRef.current - deltaX;
+  }
+
+  function handleThumbnailPointerUp(event: PointerEvent<HTMLDivElement>) {
+    const stripElement = stripRef.current;
+
+    if (stripElement?.hasPointerCapture(event.pointerId)) {
+      stripElement.releasePointerCapture(event.pointerId);
+    }
+
+    thumbnailDragStartXRef.current = null;
+    isThumbnailDraggingRef.current = false;
+  }
+
+  function handleThumbnailPointerCancel(event: PointerEvent<HTMLDivElement>) {
+    const stripElement = stripRef.current;
+
+    if (stripElement?.hasPointerCapture(event.pointerId)) {
+      stripElement.releasePointerCapture(event.pointerId);
+    }
+
+    thumbnailDragStartXRef.current = null;
+    isThumbnailDraggingRef.current = false;
   }
 
   return (
@@ -132,7 +190,11 @@ export default function GalleryModal({
         <div className="relative overflow-hidden border-t bg-background">
           <div
             ref={stripRef}
-            className="gallery-thumbnail-strip flex gap-2 overflow-x-auto p-3"
+            className="gallery-thumbnail-strip flex cursor-grab gap-2 overflow-x-auto scroll-smooth p-3 select-none active:cursor-grabbing"
+            onPointerDown={handleThumbnailPointerDown}
+            onPointerMove={handleThumbnailPointerMove}
+            onPointerUp={handleThumbnailPointerUp}
+            onPointerCancel={handleThumbnailPointerCancel}
           >
             {images.map((src, i) => {
               const isActive = i === index;
@@ -142,7 +204,15 @@ export default function GalleryModal({
                   key={src}
                   ref={isActive ? activeThumbRef : null}
                   type="button"
-                  onClick={() => onSelect(i)}
+                  onClick={(event) => {
+                    if (hasThumbnailDraggedRef.current) {
+                      event.preventDefault();
+                      hasThumbnailDraggedRef.current = false;
+                      return;
+                    }
+
+                    onSelect(i);
+                  }}
                   aria-label={`Ver foto ${i + 1}`}
                   className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
                     isActive
