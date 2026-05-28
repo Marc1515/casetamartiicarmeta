@@ -143,7 +143,7 @@ export default function GallerySection() {
         </a>
       </div>
       <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
-        <div className="min-w-0 space-y-3 xl:col-span-2">
+        <div className="min-w-0 space-y-3 xl:col-span-2 xl:flex xl:h-full xl:flex-col xl:space-y-0 xl:gap-3">
           <GalleryMosaicDesktop
             main={main}
             stack={stack}
