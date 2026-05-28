@@ -34,8 +34,8 @@ export default function ContactSection() {
       id="contacto"
       className="whitespace-pre-line"
       title={t("title")}
-      titleClassName="text-3xl md:text-5xl text-[#393E46]"
-      leadClassName="text-sm md:text-base text-[#393E46]"
+      titleClassName="public-section-title"
+      leadClassName="public-section-lead"
       lead={t("lead")}
       center
     >
@@ -65,7 +65,7 @@ export default function ContactSection() {
         </div>
 
         <div className="h-full min-w-0 xl:col-span-1">
-          <div className="h-full rounded-2xl border bg-[#EEEEEE] p-5 text-sm leading-7 text-[#393E46] shadow-sm md:p-6 md:text-base">
+          <div className="brand-card h-full p-5 text-sm leading-7 md:p-6 md:text-base">
             <ScrollReveal delay={0.15} className="h-full ">
               <div className="flex h-full flex-col overflow-hidden">
                 <ScrollReveal className="h-full min-w-0 xl:col-span-2">
@@ -102,7 +102,7 @@ export default function ContactSection() {
                     <div className="flex flex-wrap gap-6">
                       <Button
                         asChild
-                        variant="outline"
+                        variant="maps"
                         className="rounded-full"
                         title={t("directions")}
                       >
@@ -118,7 +118,8 @@ export default function ContactSection() {
                       <Button
                         asChild
                         size="icon"
-                        className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        variant="ghost"
+                        className="overflow-hidden rounded-md bg-transparent p-0 transition duration-200 hover:scale-110 hover:bg-transparent hover:drop-shadow-md active:scale-95 [&_svg]:h-full [&_svg]:w-full"
                         title={t("emailLabel")}
                         aria-label={t("emailLabel")}
                       >
@@ -135,8 +136,8 @@ export default function ContactSection() {
                       <Button
                         asChild
                         size="icon"
-                        variant="secondary"
-                        className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        variant="ghost"
+                        className="overflow-hidden rounded-full bg-transparent p-0 transition duration-200 hover:scale-110 hover:bg-transparent hover:drop-shadow-md active:scale-95 [&_svg]:h-full [&_svg]:w-full"
                         title={t("whatsapp")}
                         aria-label={t("whatsapp")}
                       >

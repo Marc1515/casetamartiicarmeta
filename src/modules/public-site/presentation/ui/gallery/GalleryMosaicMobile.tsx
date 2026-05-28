@@ -27,7 +27,7 @@ export default function GalleryMosaicMobile({
 
   return (
     <motion.div
-      className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3"
+      className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 xl:mt-0"
       variants={prefersReducedMotion ? undefined : galleryContainerVariants}
       initial={prefersReducedMotion ? false : "hidden"}
       whileInView={prefersReducedMotion ? undefined : "visible"}

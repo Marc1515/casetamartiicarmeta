@@ -63,11 +63,11 @@ export default function ServicesSection() {
       id="servicios"
       title={t("title")}
       lead={t("lead")}
-      className="bg-[#EEEEEE]"
-      titleClassName="text-3xl md:text-5xl text-[#222831]"
-      leadClassName="text-sm md:text-base text-[#393E46]"
+      className="bg-brand-surface"
+      titleClassName="public-section-title text-brand-dark"
+      leadClassName="public-section-lead"
     >
-      <div className="mt-8 rounded-2xl border bg-[#EEEEEE] p-5 text-sm leading-7 text-[#393E46] shadow-sm md:p-6 md:text-base">
+      <div className="brand-card mt-8 p-5 text-sm leading-7 md:p-6 md:text-base">
         <div className="mb-8">
           <h3 className="mb-4 text-lg font-semibold">{t("popularTitle")}</h3>
 
@@ -99,7 +99,7 @@ export default function ServicesSection() {
                 </header>
 
                 {group.hasDescription ? (
-                  <p className="mb-3 text-sm leading-6 text-[#393E46]">
+                  <p className="mb-3 text-sm leading-6 text-brand-text">
                     {t(`groups.${group.id}.description`)}
                   </p>
                 ) : null}

@@ -1,0 +1,59 @@
+@layer components {
+  .app-container {
+    @apply mx-auto w-full max-w-5xl px-4;
+  }
+
+  .app-section {
+    @apply relative min-h-screen w-full pt-20 pb-16 md:pt-32;
+  }
+
+  .app-section-title {
+    @apply mb-8 text-4xl font-semibold tracking-tight md:text-7xl;
+  }
+
+  .app-section-lead {
+    @apply mt-4 mb-14 max-w-prose border-l-4 border-brand-accent pl-4 whitespace-pre-line text-muted-foreground [text-wrap:pretty] md:pl-6;
+  }
+
+  .public-section-title {
+    @apply text-3xl text-brand-text md:text-5xl;
+  }
+
+  .public-section-lead {
+    @apply text-sm text-brand-text md:text-base;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border bg-card text-card-foreground shadow-sm;
+  }
+
+  .brand-card {
+    @apply rounded-2xl border bg-brand-surface text-brand-text shadow-sm;
+  }
+
+  .brand-footer {
+    @apply border-t border-brand-text bg-brand-dark text-brand-surface;
+  }
+
+  .gallery-thumbnail-strip {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--brand-text) / 0.45) transparent;
+  }
+
+  .gallery-thumbnail-strip::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+
+  .gallery-thumbnail-strip::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .gallery-thumbnail-strip::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: hsl(var(--brand-text) / 0.35);
+  }
+
+  .gallery-thumbnail-strip::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--brand-text) / 0.55);
+  }
+}

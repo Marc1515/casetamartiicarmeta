@@ -27,7 +27,7 @@ export default function GalleryMosaicDesktop({
 }: GalleryMosaicDesktopProps) {
   return (
     <motion.div
-      className="grid gap-3 md:grid-cols-2 md:grid-rows-2 md:aspect-[8/3]"
+      className="grid gap-3 md:grid-cols-2 md:grid-rows-2 md:aspect-[8/3] xl:flex-1 xl:aspect-auto"
       variants={prefersReducedMotion ? undefined : galleryContainerVariants}
       initial={prefersReducedMotion ? false : "hidden"}
       whileInView={prefersReducedMotion ? undefined : "visible"}

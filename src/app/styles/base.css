@@ -1,0 +1,73 @@
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: hsl(var(--border));
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: var(--app-root-font-size);
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html[data-inapp-browser="1"] {
+    font-size: var(--app-inapp-root-font-size);
+  }
+
+  body {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+
+    font-family:
+      var(--font-inter),
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      "Apple Color Emoji",
+      "Segoe UI Emoji";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family:
+      var(--font-fraunces),
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      "Apple Color Emoji",
+      "Segoe UI Emoji";
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family:
+      var(--font-inter), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
+  }
+}

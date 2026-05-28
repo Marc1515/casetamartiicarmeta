@@ -7,8 +7,14 @@ import { es as esLocale } from "date-fns/locale";
 import type { UseFormReturn } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 import type { ReservationFormValues } from "@/modules/reservations/presentation/ui/reservation-form.schema";
+import { Input } from "@/shared/presentation/ui/input";
+import { Label } from "@/shared/presentation/ui/label";
+import { Textarea } from "@/shared/presentation/ui/textarea";
 
 registerLocale("es", esLocale);
+
+const datePickerInputClassName =
+  "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-sm";
 
 type Props = {
   form: UseFormReturn<ReservationFormValues>;
@@ -45,12 +51,8 @@ export default function ReservationFormFields({
   return (
     <>
       <div>
-        <label className="mb-1 block text-sm font-medium">Título</label>
-        <input
-          className="w-full rounded border p-2"
-          {...register("title")}
-          placeholder={titlePlaceholder}
-        />
+        <Label className="mb-1 block">Título</Label>
+        <Input {...register("title")} placeholder={titlePlaceholder} />
         {errors.title && (
           <p className="text-sm text-red-600">{errors.title.message}</p>
         )}
@@ -58,7 +60,7 @@ export default function ReservationFormFields({
 
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label className="mb-1 block text-sm font-medium">Inicio</label>
+          <Label className="mb-1 block">Inicio</Label>
           <DatePicker
             selected={start}
             onChange={(date) => {
@@ -77,7 +79,7 @@ export default function ReservationFormFields({
             dateFormat="Pp"
             locale="es"
             minDate={new Date()}
-            className="w-full rounded border p-2"
+            className={datePickerInputClassName}
             placeholderText="Selecciona fecha y hora"
             onFocus={onDateInputFocus}
             popperClassName="admin-datepicker-popper"
@@ -91,7 +93,7 @@ export default function ReservationFormFields({
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium">Fin</label>
+          <Label className="mb-1 block">Fin</Label>
           <DatePicker
             selected={end}
             onChange={(date) => {
@@ -122,7 +124,7 @@ export default function ReservationFormFields({
             dateFormat="Pp"
             locale="es"
             minDate={start ?? new Date()}
-            className="w-full rounded border p-2"
+            className={datePickerInputClassName}
             placeholderText="Selecciona fecha y hora"
             popperClassName="admin-datepicker-popper"
             popperPlacement={isMobile ? "top-start" : "bottom-start"}
@@ -136,14 +138,8 @@ export default function ReservationFormFields({
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium">
-          Notas (solo admin)
-        </label>
-        <textarea
-          className="w-full rounded border p-2"
-          rows={3}
-          {...register("notes")}
-        />
+        <Label className="mb-1 block">Notas (solo admin)</Label>
+        <Textarea rows={3} {...register("notes")} />
       </div>
 
       {showEndAutoHint && endAuto && (

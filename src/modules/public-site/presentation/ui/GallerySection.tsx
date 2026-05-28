@@ -1,4 +1,3 @@
-// src/components/public/GallerySection.tsx
 "use client";
 
 import Section from "./Section";
@@ -121,11 +120,11 @@ export default function GallerySection() {
       id="fotos"
       className="whitespace-pre-line pb-32"
       title={t("title")}
-      titleClassName="text-3xl md:text-5xl text-[#393E46]"
-      leadClassName="text-sm md:text-base text-[#393E46]"
+      titleClassName="public-section-title"
+      leadClassName="public-section-lead"
       lead={t("lead")}
     >
-      <div className="mb-6 flex items-end gap-2 text-xs md:text-sm leading-snug text-[#393E46]">
+      <div className="mb-6 flex items-end gap-2 text-xs leading-snug text-brand-text md:text-sm">
         <MapPin className="h-5 w-5 shrink-0 text-red-500" aria-hidden />
 
         <span className="min-w-0">{address}</span>
@@ -144,7 +143,7 @@ export default function GallerySection() {
         </a>
       </div>
       <div className="grid gap-6 overflow-x-clip xl:grid-cols-3 xl:items-stretch">
-        <div className="min-w-0 space-y-3 xl:col-span-2">
+        <div className="min-w-0 space-y-3 xl:col-span-2 xl:flex xl:h-full xl:flex-col xl:space-y-0 xl:gap-3">
           <GalleryMosaicDesktop
             main={main}
             stack={stack}

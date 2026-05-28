@@ -22,6 +22,18 @@ const config: Config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
+        brand: {
+          dark: "hsl(var(--brand-dark))",
+          surface: "hsl(var(--brand-surface))",
+          text: "hsl(var(--brand-text))",
+          accent: "hsl(var(--brand-accent))",
+        },
+
+        calendar: {
+          background: "hsl(var(--calendar-bg))",
+        },
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -55,4 +67,5 @@ const config: Config = {
   },
   plugins: [animate],
 };
+
 export default config;
