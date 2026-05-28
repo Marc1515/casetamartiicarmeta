@@ -9,16 +9,14 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[#393E46] bg-[#222831] text-[#EEEEEE]">
+    <footer className="brand-footer">
       <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-3">
             <div className="font-semibold text-[#EEEEEE]">{t("title")}</div>
-            <p className="text-sm text-[#EEEEEE] opacity-80">
-              {t("description")}
-            </p>
-            <p className="text-sm text-[#EEEEEE] opacity-80">{t("location")}</p>
-            <p className="text-sm text-[#EEEEEE] opacity-80">
+            <p className="text-sm text-brand-surface/80">{t("description")}</p>
+            <p className="text-sm text-brand-surface/80">{t("location")}</p>
+            <p className="text-sm text-brand-surface/80">
               {t("contact")}:{" "}
               <a href={`tel:${CONTACT.phoneClean}`} className="hover:underline">
                 {CONTACT.phone}

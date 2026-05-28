@@ -1,4 +1,3 @@
-// src/components/public/GallerySection.tsx
 "use client";
 
 import Section from "./Section";
@@ -121,8 +120,8 @@ export default function GallerySection() {
       id="fotos"
       className="whitespace-pre-line pb-32"
       title={t("title")}
-      titleClassName="text-3xl md:text-5xl text-[#393E46]"
-      leadClassName="text-sm md:text-base text-[#393E46]"
+      titleClassName="public-section-title"
+      leadClassName="public-section-lead"
       lead={t("lead")}
     >
       <div className="mb-6 flex items-end gap-2 text-xs md:text-sm leading-snug text-[#393E46]">

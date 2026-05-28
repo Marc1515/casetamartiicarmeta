@@ -34,8 +34,8 @@ export default function ContactSection() {
       id="contacto"
       className="whitespace-pre-line"
       title={t("title")}
-      titleClassName="text-3xl md:text-5xl text-[#393E46]"
-      leadClassName="text-sm md:text-base text-[#393E46]"
+      titleClassName="public-section-title"
+      leadClassName="public-section-lead"
       lead={t("lead")}
       center
     >
@@ -65,7 +65,7 @@ export default function ContactSection() {
         </div>
 
         <div className="h-full min-w-0 xl:col-span-1">
-          <div className="h-full rounded-2xl border bg-[#EEEEEE] p-5 text-sm leading-7 text-[#393E46] shadow-sm md:p-6 md:text-base">
+          <div className="brand-card h-full p-5 text-sm leading-7 md:p-6 md:text-base">
             <ScrollReveal delay={0.15} className="h-full ">
               <div className="flex h-full flex-col overflow-hidden">
                 <ScrollReveal className="h-full min-w-0 xl:col-span-2">
