@@ -136,8 +136,8 @@ export default function ContactSection() {
                       <Button
                         asChild
                         size="icon"
-                        variant="secondary"
-                        className="rounded-full overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        variant="ghost"
+                        className="overflow-hidden rounded-full bg-transparent p-0 hover:bg-transparent [&_svg]:h-full [&_svg]:w-full"
                         title={t("whatsapp")}
                         aria-label={t("whatsapp")}
                       >
