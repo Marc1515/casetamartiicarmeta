@@ -118,7 +118,8 @@ export default function ContactSection() {
                       <Button
                         asChild
                         size="icon"
-                        className="rounded-md overflow-hidden [&_svg]:h-full [&_svg]:w-full"
+                        variant="ghost"
+                        className="overflow-hidden rounded-md bg-transparent p-0 hover:bg-transparent [&_svg]:h-full [&_svg]:w-full"
                         title={t("emailLabel")}
                         aria-label={t("emailLabel")}
                       >
