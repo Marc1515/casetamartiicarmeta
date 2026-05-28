@@ -69,7 +69,7 @@ export default function GallerySurroundings() {
   ];
 
   return (
-    <div className="mt-8 rounded-2xl border bg-[#EEEEEE] p-5 text-[#393E46] shadow-sm md:p-6">
+    <div className="brand-card mt-8 p-5 md:p-6">
       <h3 className="text-2xl font-bold">{t("title")}</h3>
 
       <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
@@ -87,7 +87,7 @@ export default function GallerySurroundings() {
                   className="flex items-start justify-between gap-4"
                 >
                   <span>{item.name}</span>
-                  <span className="shrink-0 text-[#393E46]/80">
+                  <span className="shrink-0 text-brand-text/80">
                     {item.distance}
                   </span>
                 </li>
