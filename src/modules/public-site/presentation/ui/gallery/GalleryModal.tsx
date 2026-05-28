@@ -102,6 +102,14 @@ export default function GalleryModal({
             draggable={false}
           />
 
+          <div className="pointer-events-none absolute bottom-3 left-3 hidden rounded-full bg-black/45 px-3 py-1 text-xs text-white/90 shadow-sm backdrop-blur-sm sm:block">
+            Arrastra para cambiar de foto
+          </div>
+
+          <div className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white shadow-sm backdrop-blur-sm">
+            {index + 1} / {images.length}
+          </div>
+
           <button
             type="button"
             aria-label="Anterior"
@@ -121,37 +129,42 @@ export default function GalleryModal({
           </button>
         </div>
 
-        <div
-          ref={stripRef}
-          className="gallery-thumbnail-strip flex gap-2 overflow-x-auto border-t bg-background p-3"
-        >
-          {images.map((src, i) => {
-            const isActive = i === index;
+        <div className="relative overflow-hidden border-t bg-background">
+          <div
+            ref={stripRef}
+            className="gallery-thumbnail-strip flex gap-2 overflow-x-auto p-3"
+          >
+            {images.map((src, i) => {
+              const isActive = i === index;
 
-            return (
-              <button
-                key={src}
-                ref={isActive ? activeThumbRef : null}
-                type="button"
-                onClick={() => onSelect(i)}
-                aria-label={`Ver foto ${i + 1}`}
-                className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
-                  isActive
-                    ? "ring-2 ring-blue-500"
-                    : "opacity-80 hover:opacity-100"
-                }`}
-              >
-                <Image
-                  src={src}
-                  alt={getImageAlt(src)}
-                  fill
-                  className="object-cover"
-                  sizes="96px"
-                  draggable={false}
-                />
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={src}
+                  ref={isActive ? activeThumbRef : null}
+                  type="button"
+                  onClick={() => onSelect(i)}
+                  aria-label={`Ver foto ${i + 1}`}
+                  className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
+                    isActive
+                      ? "opacity-100 ring-2 ring-brand-accent"
+                      : "opacity-80 hover:opacity-100"
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    alt={getImageAlt(src)}
+                    fill
+                    className="object-cover"
+                    sizes="96px"
+                    draggable={false}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent" />
         </div>
       </DialogContent>
     </Dialog>
