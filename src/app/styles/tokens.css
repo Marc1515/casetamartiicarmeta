@@ -36,7 +36,7 @@
 
   --radius: 0.75rem;
 
-  --app-root-font-size: 16px;
+  --app-root-font-size: 14px;
   --app-inapp-root-font-size: 12px;
   --public-calendar-reserved-font-size: clamp(7px, 1.5vw, 10px);
 }
