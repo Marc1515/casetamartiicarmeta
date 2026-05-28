@@ -119,7 +119,7 @@ export default function ContactSection() {
                         asChild
                         size="icon"
                         variant="ghost"
-                        className="overflow-hidden rounded-md bg-transparent p-0 hover:bg-transparent [&_svg]:h-full [&_svg]:w-full"
+                        className="overflow-hidden rounded-md bg-transparent p-0 transition duration-200 hover:scale-110 hover:bg-transparent hover:drop-shadow-md active:scale-95 [&_svg]:h-full [&_svg]:w-full"
                         title={t("emailLabel")}
                         aria-label={t("emailLabel")}
                       >
@@ -137,7 +137,7 @@ export default function ContactSection() {
                         asChild
                         size="icon"
                         variant="ghost"
-                        className="overflow-hidden rounded-full bg-transparent p-0 hover:bg-transparent [&_svg]:h-full [&_svg]:w-full"
+                        className="overflow-hidden rounded-full bg-transparent p-0 transition duration-200 hover:scale-110 hover:bg-transparent hover:drop-shadow-md active:scale-95 [&_svg]:h-full [&_svg]:w-full"
                         title={t("whatsapp")}
                         aria-label={t("whatsapp")}
                       >
