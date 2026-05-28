@@ -102,7 +102,7 @@ export default function ContactSection() {
                     <div className="flex flex-wrap gap-6">
                       <Button
                         asChild
-                        variant="outline"
+                        variant="maps"
                         className="rounded-full"
                         title={t("directions")}
                       >
