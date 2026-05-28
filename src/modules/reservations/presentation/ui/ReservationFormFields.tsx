@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import type { ReservationFormValues } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { Input } from "@/shared/presentation/ui/input";
 import { Label } from "@/shared/presentation/ui/label";
+import { Textarea } from "@/shared/presentation/ui/textarea";
 
 registerLocale("es", esLocale);
 
@@ -138,11 +139,7 @@ export default function ReservationFormFields({
 
       <div>
         <Label className="mb-1 block">Notas (solo admin)</Label>
-        <textarea
-          className="flex min-h-20 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-sm"
-          rows={3}
-          {...register("notes")}
-        />
+        <Textarea rows={3} {...register("notes")} />
       </div>
 
       {showEndAutoHint && endAuto && (
