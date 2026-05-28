@@ -70,7 +70,7 @@ export default function HomeSection() {
         {/* Bloque que se pega bajo la navbar */}
         <div className="sticky top-16 md:top-20 py-4">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold text-[#EEEEEE] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            className="text-4xl font-bold text-brand-surface drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] md:text-6xl"
             initial={prefersReduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -82,7 +82,7 @@ export default function HomeSection() {
             {t("title")}
           </motion.h1>
           <motion.p
-            className="mt-3 text-[#EEEEEE] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+            className="mt-3 text-brand-surface drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
             initial={prefersReduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
