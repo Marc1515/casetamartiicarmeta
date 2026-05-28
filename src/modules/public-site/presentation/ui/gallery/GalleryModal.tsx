@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/shared/presentation/ui/dialog";
-import type { PointerEvent, RefObject } from "react";
+import type { MouseEvent, PointerEvent, RefObject } from "react";
 import { useRef } from "react";
 
 type GalleryModalProps = {
@@ -23,7 +23,12 @@ type GalleryModalProps = {
   onSelect: (index: number) => void;
 };
 
-const SWIPE_THRESHOLD_PX = 60;
+const MAIN_IMAGE_SWIPE_THRESHOLD_PX = 60;
+
+const THUMBNAIL_DRAG_THRESHOLD_PX = 8;
+const THUMBNAIL_INERTIA_FRICTION = 0.94;
+const THUMBNAIL_MIN_VELOCITY = 0.05;
+const THUMBNAIL_FRAME_DURATION_MS = 16;
 
 export default function GalleryModal({
   open,
@@ -40,17 +45,21 @@ export default function GalleryModal({
 }: GalleryModalProps) {
   const pointerStartXRef = useRef<number | null>(null);
   const pointerStartYRef = useRef<number | null>(null);
+
   const thumbnailDragStartXRef = useRef<number | null>(null);
-  const thumbnailDragScrollLeftRef = useRef<number>(0);
+  const thumbnailDragLastXRef = useRef<number | null>(null);
+  const thumbnailDragLastTimeRef = useRef<number | null>(null);
+  const thumbnailDragVelocityRef = useRef<number>(0);
   const isThumbnailDraggingRef = useRef(false);
   const hasThumbnailDraggedRef = useRef(false);
+  const thumbnailInertiaFrameRef = useRef<number | null>(null);
 
-  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+  function handleMainImagePointerDown(event: PointerEvent<HTMLDivElement>) {
     pointerStartXRef.current = event.clientX;
     pointerStartYRef.current = event.clientY;
   }
 
-  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
+  function handleMainImagePointerUp(event: PointerEvent<HTMLDivElement>) {
     const startX = pointerStartXRef.current;
     const startY = pointerStartYRef.current;
 
@@ -65,7 +74,7 @@ export default function GalleryModal({
     const deltaY = event.clientY - startY;
 
     const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
-    const hasEnoughDistance = Math.abs(deltaX) >= SWIPE_THRESHOLD_PX;
+    const hasEnoughDistance = Math.abs(deltaX) >= MAIN_IMAGE_SWIPE_THRESHOLD_PX;
 
     if (!isHorizontalSwipe || !hasEnoughDistance) {
       return;
@@ -79,6 +88,49 @@ export default function GalleryModal({
     onPrev();
   }
 
+  function resetMainImagePointer() {
+    pointerStartXRef.current = null;
+    pointerStartYRef.current = null;
+  }
+
+  function stopThumbnailInertia() {
+    if (thumbnailInertiaFrameRef.current === null) {
+      return;
+    }
+
+    window.cancelAnimationFrame(thumbnailInertiaFrameRef.current);
+    thumbnailInertiaFrameRef.current = null;
+  }
+
+  function startThumbnailInertia() {
+    stopThumbnailInertia();
+
+    function animate() {
+      const stripElement = stripRef.current;
+
+      if (!stripElement) {
+        thumbnailInertiaFrameRef.current = null;
+        thumbnailDragVelocityRef.current = 0;
+        return;
+      }
+
+      const velocity = thumbnailDragVelocityRef.current;
+
+      if (Math.abs(velocity) < THUMBNAIL_MIN_VELOCITY) {
+        thumbnailInertiaFrameRef.current = null;
+        thumbnailDragVelocityRef.current = 0;
+        return;
+      }
+
+      stripElement.scrollLeft += velocity * THUMBNAIL_FRAME_DURATION_MS;
+      thumbnailDragVelocityRef.current = velocity * THUMBNAIL_INERTIA_FRICTION;
+
+      thumbnailInertiaFrameRef.current = window.requestAnimationFrame(animate);
+    }
+
+    thumbnailInertiaFrameRef.current = window.requestAnimationFrame(animate);
+  }
+
   function handleThumbnailPointerDown(event: PointerEvent<HTMLDivElement>) {
     const stripElement = stripRef.current;
 
@@ -86,8 +138,12 @@ export default function GalleryModal({
       return;
     }
 
+    stopThumbnailInertia();
+
     thumbnailDragStartXRef.current = event.clientX;
-    thumbnailDragScrollLeftRef.current = stripElement.scrollLeft;
+    thumbnailDragLastXRef.current = event.clientX;
+    thumbnailDragLastTimeRef.current = event.timeStamp;
+    thumbnailDragVelocityRef.current = 0;
     isThumbnailDraggingRef.current = true;
     hasThumbnailDraggedRef.current = false;
 
@@ -97,18 +153,40 @@ export default function GalleryModal({
   function handleThumbnailPointerMove(event: PointerEvent<HTMLDivElement>) {
     const stripElement = stripRef.current;
     const startX = thumbnailDragStartXRef.current;
+    const lastX = thumbnailDragLastXRef.current;
+    const lastTime = thumbnailDragLastTimeRef.current;
 
-    if (!stripElement || startX === null || !isThumbnailDraggingRef.current) {
+    if (
+      !stripElement ||
+      startX === null ||
+      lastX === null ||
+      lastTime === null ||
+      !isThumbnailDraggingRef.current
+    ) {
       return;
     }
 
-    const deltaX = event.clientX - startX;
+    const totalDeltaX = event.clientX - startX;
+    const frameDeltaX = event.clientX - lastX;
+    const frameDeltaTime = Math.max(event.timeStamp - lastTime, 1);
 
-    if (Math.abs(deltaX) > 4) {
+    if (Math.abs(totalDeltaX) >= THUMBNAIL_DRAG_THRESHOLD_PX) {
       hasThumbnailDraggedRef.current = true;
     }
 
-    stripElement.scrollLeft = thumbnailDragScrollLeftRef.current - deltaX;
+    if (!hasThumbnailDraggedRef.current) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const scrollDelta = -frameDeltaX;
+
+    stripElement.scrollLeft += scrollDelta;
+    thumbnailDragVelocityRef.current = scrollDelta / frameDeltaTime;
+
+    thumbnailDragLastXRef.current = event.clientX;
+    thumbnailDragLastTimeRef.current = event.timeStamp;
   }
 
   function handleThumbnailPointerUp(event: PointerEvent<HTMLDivElement>) {
@@ -119,7 +197,13 @@ export default function GalleryModal({
     }
 
     thumbnailDragStartXRef.current = null;
+    thumbnailDragLastXRef.current = null;
+    thumbnailDragLastTimeRef.current = null;
     isThumbnailDraggingRef.current = false;
+
+    if (hasThumbnailDraggedRef.current) {
+      startThumbnailInertia();
+    }
   }
 
   function handleThumbnailPointerCancel(event: PointerEvent<HTMLDivElement>) {
@@ -130,7 +214,28 @@ export default function GalleryModal({
     }
 
     thumbnailDragStartXRef.current = null;
+    thumbnailDragLastXRef.current = null;
+    thumbnailDragLastTimeRef.current = null;
+    thumbnailDragVelocityRef.current = 0;
     isThumbnailDraggingRef.current = false;
+  }
+
+  function handleThumbnailClick(
+    event: MouseEvent<HTMLButtonElement>,
+    selectedIndex: number,
+  ) {
+    if (hasThumbnailDraggedRef.current) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      window.setTimeout(() => {
+        hasThumbnailDraggedRef.current = false;
+      }, 0);
+
+      return;
+    }
+
+    onSelect(selectedIndex);
   }
 
   return (
@@ -142,12 +247,9 @@ export default function GalleryModal({
 
         <div
           className="relative cursor-grab select-none active:cursor-grabbing"
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={() => {
-            pointerStartXRef.current = null;
-            pointerStartYRef.current = null;
-          }}
+          onPointerDown={handleMainImagePointerDown}
+          onPointerUp={handleMainImagePointerUp}
+          onPointerCancel={resetMainImagePointer}
         >
           <Image
             src={images[index]}
@@ -190,7 +292,7 @@ export default function GalleryModal({
         <div className="relative overflow-hidden border-t bg-background">
           <div
             ref={stripRef}
-            className="gallery-thumbnail-strip flex cursor-grab gap-2 overflow-x-auto scroll-smooth p-3 select-none active:cursor-grabbing"
+            className="gallery-thumbnail-strip flex cursor-grab select-none gap-2 overflow-x-auto p-3 active:cursor-grabbing"
             onPointerDown={handleThumbnailPointerDown}
             onPointerMove={handleThumbnailPointerMove}
             onPointerUp={handleThumbnailPointerUp}
@@ -204,15 +306,7 @@ export default function GalleryModal({
                   key={src}
                   ref={isActive ? activeThumbRef : null}
                   type="button"
-                  onClick={(event) => {
-                    if (hasThumbnailDraggedRef.current) {
-                      event.preventDefault();
-                      hasThumbnailDraggedRef.current = false;
-                      return;
-                    }
-
-                    onSelect(i);
-                  }}
+                  onClick={(event) => handleThumbnailClick(event, i)}
                   aria-label={`Ver foto ${i + 1}`}
                   className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
                     isActive
