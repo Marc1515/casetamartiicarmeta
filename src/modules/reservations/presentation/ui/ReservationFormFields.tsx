@@ -13,6 +13,9 @@ import { Textarea } from "@/shared/presentation/ui/textarea";
 
 registerLocale("es", esLocale);
 
+const datePickerInputClassName =
+  "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-sm";
+
 type Props = {
   form: UseFormReturn<ReservationFormValues>;
   isMobile: boolean;
@@ -41,9 +44,6 @@ export default function ReservationFormFields({
 
   const start = watch("start");
   const end = watch("end");
-
-  const datePickerInputClassName =
-    "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-sm";
 
   const shouldAutoAdjustEnd =
     typeof endAuto === "boolean" && typeof setEndAuto === "function";
