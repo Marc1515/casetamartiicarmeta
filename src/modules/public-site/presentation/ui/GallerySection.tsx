@@ -124,7 +124,7 @@ export default function GallerySection() {
       leadClassName="public-section-lead"
       lead={t("lead")}
     >
-      <div className="mb-6 flex items-end gap-2 text-xs md:text-sm leading-snug text-[#393E46]">
+      <div className="mb-6 flex items-end gap-2 text-xs leading-snug text-brand-text md:text-sm">
         <MapPin className="h-5 w-5 shrink-0 text-red-500" aria-hidden />
 
         <span className="min-w-0">{address}</span>

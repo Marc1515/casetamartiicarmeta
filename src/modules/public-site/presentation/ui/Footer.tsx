@@ -13,9 +13,11 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-3">
-            <div className="font-semibold text-[#EEEEEE]">{t("title")}</div>
+            <div className="font-semibold text-brand-surface">{t("title")}</div>
+
             <p className="text-sm text-brand-surface/80">{t("description")}</p>
             <p className="text-sm text-brand-surface/80">{t("location")}</p>
+
             <p className="text-sm text-brand-surface/80">
               {t("contact")}:{" "}
               <a href={`tel:${CONTACT.phoneClean}`} className="hover:underline">
@@ -29,15 +31,16 @@ export default function Footer() {
           </div>
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-[#EEEEEE]">
+            <div className="text-sm font-semibold text-brand-surface">
               {t("sections")}
             </div>
+
             <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
               {PUBLIC_SITE_SECTION_LINKS.map((link) => (
                 <a
                   key={link.id}
                   href={link.href}
-                  className="text-[#EEEEEE] opacity-80 hover:opacity-100 transition-colors"
+                  className="text-brand-surface/80 transition-colors hover:text-brand-surface"
                 >
                   {t(`links.${link.translationKey}`)}
                 </a>
@@ -46,10 +49,10 @@ export default function Footer() {
           </div>
 
           <div className="space-y-3">
-            <div className="flex flex-wrap gap-3 text-sm text-[#EEEEEE]">
+            <div className="flex flex-wrap gap-3 text-sm">
               <a
                 href="#home"
-                className="rounded-full bg-[#EEEEEE] text-[#222831] px-4 py-2 hover:opacity-90 transition-colors"
+                className="rounded-full bg-brand-surface px-4 py-2 text-brand-dark transition-colors hover:opacity-90"
               >
                 {t("backToTop")}
               </a>
@@ -57,7 +60,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#393E46] pt-6 text-sm text-[#EEEEEE] opacity-75 text-center">
+        <div className="mt-10 border-t border-brand-text pt-6 text-center text-sm text-brand-surface/75">
           {t("copyright", { year })}
         </div>
       </div>
