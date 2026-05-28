@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/shared/presentation/ui/dialog";
-import type { MouseEvent, PointerEvent, RefObject } from "react";
+import type { PointerEvent, RefObject } from "react";
 import { useRef } from "react";
 
 type GalleryModalProps = {
@@ -220,24 +220,18 @@ export default function GalleryModal({
     isThumbnailDraggingRef.current = false;
   }
 
-  function handleThumbnailClick(
-    event: MouseEvent<HTMLButtonElement>,
+  function handleThumbnailButtonPointerUp(
+    event: PointerEvent<HTMLButtonElement>,
     selectedIndex: number,
   ) {
     if (hasThumbnailDraggedRef.current) {
       event.preventDefault();
       event.stopPropagation();
-
-      window.setTimeout(() => {
-        hasThumbnailDraggedRef.current = false;
-      }, 0);
-
       return;
     }
 
     onSelect(selectedIndex);
   }
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl overflow-hidden bg-background p-0">
@@ -306,7 +300,12 @@ export default function GalleryModal({
                   key={src}
                   ref={isActive ? activeThumbRef : null}
                   type="button"
-                  onClick={(event) => handleThumbnailClick(event, i)}
+                  onPointerUp={(event) =>
+                    handleThumbnailButtonPointerUp(event, i)
+                  }
+                  onClick={(event) => {
+                    event.preventDefault();
+                  }}
                   aria-label={`Ver foto ${i + 1}`}
                   className={`relative h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border transition hover:scale-[1.03] active:scale-95 ${
                     isActive
