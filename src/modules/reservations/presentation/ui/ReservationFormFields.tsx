@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import type { ReservationFormValues } from "@/modules/reservations/presentation/ui/reservation-form.schema";
 import { Input } from "@/shared/presentation/ui/input";
 import { Label } from "@/shared/presentation/ui/label";
-import { cn } from "@/lib/utils";
 
 registerLocale("es", esLocale);
 
