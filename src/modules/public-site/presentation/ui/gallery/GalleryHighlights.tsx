@@ -25,7 +25,7 @@ import type {
   GalleryHighlightId,
 } from "@/modules/public-site/domain/gallery-highlight";
 
-const iconClassName = "h-6 w-6 shrink-0 text-[#393E46]";
+const iconClassName = "h-6 w-6 shrink-0 text-brand-text";
 
 function getHighlightIcon(id: GalleryHighlightId): ReactNode {
   switch (id) {
@@ -144,9 +144,9 @@ function HighlightCard({
       }}
       onBlur={onDeactivate}
       className={[
-        "min-w-0 basis-0 overflow-hidden rounded-xl border border-zinc-300 bg-[#EEEEEE] shadow-sm outline-none",
+        "min-w-0 basis-0 overflow-hidden rounded-xl border border-border bg-brand-surface shadow-sm outline-none",
         "transition-[flex-grow] duration-300 ease-out",
-        "focus-visible:ring-2 focus-visible:ring-[#393E46]/30",
+        "focus-visible:ring-2 focus-visible:ring-brand-text/30",
         isExpanded ? "grow-[1.45]" : "grow",
         isCompressed ? "grow-[0.55]" : "",
       ].join(" ")}
@@ -164,7 +164,8 @@ function HighlightCard({
 
         <span
           className={[
-            "min-w-0 px-2 text-center text-[13px] font-medium leading-tight text-[#393E46]",
+            "min-w-0 px-2 text-center text-[13px] font-medium leading-tight text-brand-text",
+            ,
             "transition-opacity duration-150 ease-out",
             showExpandedText ? "opacity-100" : "opacity-0",
             showExpandedText

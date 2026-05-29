@@ -17,7 +17,7 @@ function ContactFaqItem({ faq }: { faq: ContactFaq }) {
   const items = faq.hasList ? (t.raw(`${faq.id}.items`) as string[]) : [];
 
   return (
-    <article className="min-h-22 rounded-2xl border border-black/10 bg-[#EEEEEE] p-5 shadow-sm transition hover:shadow-md">
+    <article className="brand-card min-h-22 p-5 transition hover:shadow-md">
       <button
         type="button"
         className="flex w-full cursor-pointer items-start justify-between gap-4 text-left"
@@ -25,7 +25,7 @@ function ContactFaqItem({ faq }: { faq: ContactFaq }) {
         aria-controls={panelId}
         onClick={() => setIsOpen((currentValue) => !currentValue)}
       >
-        <span className="font-semibold leading-snug text-[#393E46]">
+        <span className="font-semibold leading-snug text-brand-text">
           {t(`${faq.id}.question`)}
         </span>
 
@@ -44,7 +44,7 @@ function ContactFaqItem({ faq }: { faq: ContactFaq }) {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="mt-4 space-y-3 text-sm leading-relaxed text-[#393E46]">
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-brand-text">
             <p>{t(`${faq.id}.answer`)}</p>
 
             {items.length > 0 ? (
@@ -71,7 +71,7 @@ export default function ContactFaqSection() {
     <div className="mt-20">
       <div className="mb-12 flex items-start gap-3">
         <div>
-          <h3 className="mb-6 text-2xl font-semibold tracking-tight text-[#393E46] md:text-3xl">
+          <h3 className="mb-6 text-2xl font-semibold tracking-tight text-brand-text md:text-3xl">
             {t("title")}
           </h3>
 

@@ -1,4 +1,3 @@
-// src/components/public/HomeSection.tsx
 "use client";
 
 import Image from "next/image";
@@ -32,7 +31,7 @@ export default function HomeSection() {
       id="home"
       sectionRef={sectionRef}
       noPadding
-      contentClassName="max-w-7xl"
+      contentClassName="max-w-6xl"
       bg={
         // 👇 El recorte del fondo va aquí (no afecta al sticky)
         <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -70,7 +69,7 @@ export default function HomeSection() {
         {/* Bloque que se pega bajo la navbar */}
         <div className="sticky top-16 md:top-20 py-4">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold text-[#EEEEEE] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            className="text-4xl font-bold text-brand-surface drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] md:text-6xl"
             initial={prefersReduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -82,7 +81,7 @@ export default function HomeSection() {
             {t("title")}
           </motion.h1>
           <motion.p
-            className="mt-3 text-[#EEEEEE] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+            className="mt-3 text-brand-surface drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
             initial={prefersReduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={

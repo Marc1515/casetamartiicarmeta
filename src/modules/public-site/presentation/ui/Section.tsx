@@ -1,4 +1,3 @@
-// src/components/public/Section.tsx
 "use client";
 
 import type { Ref } from "react";
@@ -11,13 +10,13 @@ type Props = {
   lead?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
-  contentClassName?: string; // ancho/layout del contenedor interno
-  titleClassName?: string; // color/estilo del título de sección (ej. Calendario, Galería, Contacto)
-  leadClassName?: string; // color/estilo del párrafo descripción (lead)
-  center?: boolean; // centra verticalmente el contenido
-  bg?: React.ReactNode; // (opcional) capa de fondo full-bleed
-  noPadding?: boolean; // (opcional) desactiva padding vertical
-  sectionRef?: Ref<HTMLElement>; // ⬅️ ref tipado correctamente (sin any)
+  contentClassName?: string;
+  titleClassName?: string;
+  leadClassName?: string;
+  center?: boolean;
+  bg?: React.ReactNode;
+  noPadding?: boolean;
+  sectionRef?: Ref<HTMLElement>;
 };
 
 export default function Section({
@@ -38,43 +37,29 @@ export default function Section({
     <section
       id={id}
       ref={sectionRef}
-      className={`relative w-full min-h-screen ${
-        noPadding ? "" : "pt-20 md:pt-32 pb-16"
-      } ${className ?? ""}`}
+      className={cn("app-section", noPadding && "pt-0 pb-0 md:pt-0", className)}
     >
       {bg ? <div className="absolute inset-0 -z-10">{bg}</div> : null}
 
       <div
         className={cn(
-          "mx-auto w-full max-w-5xl px-4",
+          "app-container",
           center && "flex flex-col justify-center",
           contentClassName,
         )}
       >
         {title && (
           <ScrollReveal>
-            <h2
-              className={cn(
-                "text-4xl md:text-7xl font-semibold tracking-tight mb-8",
-                titleClassName,
-              )}
-            >
-              {title}
-            </h2>
+            <h2 className={cn("app-section-title", titleClassName)}>{title}</h2>
           </ScrollReveal>
         )}
+
         {lead != null && (
           <ScrollReveal delay={0.1}>
-            <p
-              className={cn(
-                "mt-4 mb-14 pl-4 md:pl-6 border-l-4 border-[#FFD369] [text-wrap:pretty] max-w-prose whitespace-pre-line",
-                leadClassName ?? "text-muted-foreground",
-              )}
-            >
-              {lead}
-            </p>
+            <p className={cn("app-section-lead", leadClassName)}>{lead}</p>
           </ScrollReveal>
         )}
+
         <ScrollReveal delay={0.2}>{children}</ScrollReveal>
       </div>
     </section>

@@ -57,8 +57,8 @@ const NavbarMobile = ({
         className={
           isMobileView
             ? showBrandMobile
-              ? "text-[#222831]"
-              : "text-[#EEEEEE]"
+              ? "text-brand-dark"
+              : "text-brand-surface"
             : "hidden"
         }
         onClick={() => setOpen(true)}
