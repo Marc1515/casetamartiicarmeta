@@ -5102,10 +5102,10 @@ react-datepicker@^8.7.0:
     clsx "^2.1.1"
     date-fns "^4.1.0"
 
-react-dom@19.1.2:
-  version "19.1.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.2.tgz#18ce6b14f682f4871a69cc6b2568d42af2cd5a33"
-  integrity sha512-dEoydsCp50i7kS1xHOmPXq4zQYoGWedUsvqv9H6zdif2r7yLHygyfP9qou71TulRN0d6ng9EbRVsQhSqfUc19g==
+react-dom@19.1.5:
+  version "19.1.5"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.5.tgz#052801f7fac521434dced4142e2c22a5071d360a"
+  integrity sha512-tvMijysf97vcHla1PNI/aU2apv7f4r0ct0OBk3i3QOBfsVhZzHEuPBLemClkfuw8LroE4FH6kXcQOftf2ntPHQ==
   dependencies:
     scheduler "^0.26.0"
 
@@ -5165,10 +5165,10 @@ react-style-singleton@^2.2.2, react-style-singleton@^2.2.3:
     get-nonce "^1.0.0"
     tslib "^2.0.0"
 
-react@19.1.2:
-  version "19.1.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-19.1.2.tgz#fd75c4f684b52fe45101381535c58486f4407545"
-  integrity sha512-MdWVitvLbQULD+4DP8GYjZUrepGW7d+GQkNVqJEzNxE+e9WIa4egVFE/RDfVb1u9u/Jw7dNMmPB4IqxzbFYJ0w==
+react@19.1.5:
+  version "19.1.5"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.1.5.tgz#576af8ef98e2821d0911bbb52fd34538783e962c"
+  integrity sha512-lCX00zqONdNfcnJYEL91LuNYzyWFU70vKhApUR08Y1Fi/Y5FGw6l6hAWtlkq+k/vnx463XLm/5dyQp5HAJCw6Q==
 
 readdirp@^4.0.1:
   version "4.1.2"
