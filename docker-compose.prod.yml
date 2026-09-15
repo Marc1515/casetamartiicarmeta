@@ -7,6 +7,10 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     env_file:
       - .env.production
     networks:
