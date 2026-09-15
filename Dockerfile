@@ -9,7 +9,7 @@ RUN corepack enable
 
 FROM base AS deps
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --network-timeout 600000 --network-concurrency 4
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
